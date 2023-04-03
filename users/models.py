@@ -13,6 +13,10 @@ class Customer(User):
     # user = models.OneToOneField('User', related_name='customer_profile', on_delete=models.CASCADE)
     mc_number = models.CharField(max_length=100, blank=True, null=True)
 
+    class Meta:
+        verbose_name = "Customer"
+        verbose_name_plural = "Customers"
+
 class CustomerAddress(models.Model):
     customer = models.ForeignKey('Customer', related_name='address', on_delete=models.CASCADE)
     address = models.CharField(max_length=100, blank=True, null=True)
@@ -23,14 +27,22 @@ class CustomerAddress(models.Model):
 
 
     def __str__(self):
-        return f'{self.address} + {self.customer}'    
+        return f'{self.address} + {self.customer}'
+    
+    class Meta:
+        verbose_name = "Customer address"
+        verbose_name_plural = "Customer addresses"
 
 class Shipper(User):
     # user = models.OneToOneField('User', related_name='shipper_profile', on_delete=models.CASCADE)
     company_name = models.CharField(max_length=50)
     contact = models.CharField(max_length=100, blank=True, null=True)
     ext = models.CharField(max_length=100, blank=True, null=True)
- 
+
+    class Meta:
+        verbose_name = "Shipper"
+        verbose_name_plural = "Shippers"
+
 class shipperAddress(models.Model):
     shipper = models.ForeignKey('Shipper', related_name='address', on_delete=models.CASCADE)
     address = models.CharField(max_length=100, blank=True, null=True)
@@ -43,12 +55,19 @@ class shipperAddress(models.Model):
     def __str__(self):
         return f'{self.address} + {self.shipper}'    
     
+    class Meta:
+        verbose_name = "Shipper address"
+        verbose_name_plural = "Shipper addresses"
+
 class Consignee(User):
     # user = models.OneToOneField('User', related_name='consignee_profile', on_delete=models.CASCADE)
     contact_person = models.CharField(max_length=50)
     type = models.CharField(max_length=100, blank=True, null=True)
     mc_number = models.CharField(max_length=100, blank=True, null=True)
-  
+
+    class Meta:
+        verbose_name = "Consignee"
+        verbose_name_plural = "Consignees"
    
 class ConsigneeAddress(models.Model):
     consignee = models.ForeignKey('Consignee', related_name='address', on_delete=models.CASCADE)
@@ -61,6 +80,10 @@ class ConsigneeAddress(models.Model):
 
     def __str__(self):
         return f'{self.address} + {self.consignee}'
+    
+    class Meta:
+        verbose_name = "Consignee address"
+        verbose_name_plural = "Consignee addresses"
        
 class Driver(User):
     # user = models.OneToOneField('User', related_name='driver_profile', on_delete=models.CASCADE)
@@ -84,6 +107,10 @@ class Driver(User):
     medical_expiry_date = models.DateField(verbose_name='medical expiry date' ,blank=True, null=True)
     percentage = models.DecimalField(blank=True, null=True, decimal_places=3, max_digits=5)
 
+    class Meta:
+        verbose_name = "Driver"
+        verbose_name_plural = "Drivers"
+
 class DriverAddress(models.Model):
     driver = models.ForeignKey('Driver', related_name='address', on_delete=models.CASCADE)
     address = models.CharField(max_length=100, blank=True, null=True)
@@ -96,6 +123,9 @@ class DriverAddress(models.Model):
     def __str__(self):
         return f'{self.address} +{self.driver}'
 
+    class Meta:
+        verbose_name = "Driver address"
+        verbose_name_plural = "Driver addresses"
 
 class Dispatcher(User): 
     phone = models.CharField(max_length=20, blank=True, null=True)
@@ -104,7 +134,11 @@ class Dispatcher(User):
 
     def __str__(self):
         return self.firstname
-   
+
+    class Meta:
+        verbose_name = "Dispatcher"
+        verbose_name_plural = "Dispatchers"
+
 class DispatcherAddress(models.Model):
     dispatcher = models.ForeignKey('Dispatcher', related_name='address', on_delete=models.CASCADE)
     address = models.CharField(max_length=100, blank=True, null=True)
@@ -117,4 +151,6 @@ class DispatcherAddress(models.Model):
     def __str__(self):
         return f'{self.address} + {self.dispatcher}'
 
-
+    class Meta:
+        verbose_name = "Dispatcher address"
+        verbose_name_plural = "Dispatcher addresses"
