@@ -3,3 +3,5 @@ django-allauth
 djangorestframework
 markdown
 django-filter
+
+django-admin-material-dashboard

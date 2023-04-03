@@ -10,7 +10,6 @@ class User(AbstractUser):
     pass
 
 class Customer(User):
-    # user = models.OneToOneField('User', related_name='customer_profile', on_delete=models.CASCADE)
     mc_number = models.CharField(max_length=100, blank=True, null=True)
 
     class Meta:

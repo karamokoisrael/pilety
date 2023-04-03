@@ -24,17 +24,14 @@ class ShipperAddressAdmin(admin.StackedInline):
 @admin.register(Customer)
 class CustomerAdmin(admin.ModelAdmin):
     '''Admin View for Customer'''
-
-    # list_display = ('',)
-    # list_filter = ('',)
+    list_display = ('id', 'username', 'email', 'telephone', 'mc_number')
+    list_filter = ('is_staff', 'is_active')
+    search_fields = ('username', 'email', 'telephone', 'mc_number')
+  
     inlines = [
         CustomerAddressAdmin,
     ]
-    # raw_id_fields = ('',)
-    # readonly_fields = ('',)
-    # search_fields = ('',)
-    # date_hierarchy = ''
-    # ordering = ('',)
+   
 
     class Meta:
         model = Customer
@@ -44,16 +41,14 @@ class CustomerAdmin(admin.ModelAdmin):
 class ConsigneeAdmin(admin.ModelAdmin):
     '''Admin View for Customer'''
 
-    # list_display = ('',)
-    # list_filter = ('',)
+    list_display = ('id', 'username', 'email', 'telephone', 'mc_number')
+    list_filter = ('is_staff', 'is_active')
+    search_fields = ('username', 'email', 'telephone', 'mc_number')
+ 
     inlines = [
         ConsigneeAddressAdmin,
     ]
-    # raw_id_fields = ('',)
-    # readonly_fields = ('',)
-    # search_fields = ('',)
-    # date_hierarchy = ''
-    # ordering = ('',)
+   
 
     class Meta:
         model = Consignee
@@ -62,17 +57,14 @@ class ConsigneeAdmin(admin.ModelAdmin):
 @admin.register(Driver)
 class DriverAdmin(admin.ModelAdmin):
     '''Admin View for Driver'''
-
-    # list_display = ('',)
-    # list_filter = ('',)
+    list_display = ('id', 'username', 'email', 'telephone', 'status')
+    list_filter = ('is_staff', 'is_active')
+    search_fields = ('username', 'email', 'telephone', 'status')
+ 
     inlines = [
         DriverAddressAdmin,
     ]
-    # raw_id_fields = ('',)
-    # readonly_fields = ('',)
-    # search_fields = ('',)
-    # date_hierarchy = ''
-    # ordering = ('',)
+  
 
     class Meta:
         model = Driver
@@ -81,17 +73,14 @@ class DriverAdmin(admin.ModelAdmin):
 @admin.register(Dispatcher)
 class DispatcherAdmin(admin.ModelAdmin):
     '''Admin View for Dispatcher'''
-
-    # list_display = ('',)
-    # list_filter = ('',)
+    list_display = ('id', 'username', 'email', 'telephone', 'rate')
+    list_filter = ('is_staff', 'is_active')
+    search_fields = ('username', 'email', 'telephone', 'rate')
+ 
     inlines = [
         DispatcherAddressAdmin,
     ]
-    # raw_id_fields = ('',)
-    # readonly_fields = ('',)
-    # search_fields = ('',)
-    # date_hierarchy = ''
-    # ordering = ('',)
+  
 
     class Meta:
         model = Dispatcher
@@ -100,17 +89,14 @@ class DispatcherAdmin(admin.ModelAdmin):
 @admin.register(Shipper)
 class ShipperAdmin(admin.ModelAdmin):
     '''Admin View for Shipper'''
-
-    # list_display = ('',)
-    # list_filter = ('',)
+    list_display = ('id', 'username', 'email', 'telephone', 'ext')
+    list_filter = ('is_staff', 'is_active')
+    search_fields = ('username', 'email', 'telephone', 'ext')
+ 
     inlines = [
         ShipperAddressAdmin,
     ]
-    # raw_id_fields = ('',)
-    # readonly_fields = ('',)
-    # search_fields = ('',)
-    # date_hierarchy = ''
-    # ordering = ('',)
+  
 
     class Meta:
         model = Shipper
