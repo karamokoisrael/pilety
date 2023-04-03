@@ -1,0 +1,5 @@
+django
+django-allauth
+djangorestframework
+markdown
+django-filter
