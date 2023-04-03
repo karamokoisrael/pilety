@@ -26,4 +26,13 @@ class Driver(User):
     # user = models.OneToOneField('User', related_name='driver_profile', on_delete=models.CASCADE)
     license_number = models.CharField(max_length=20)
     address = models.CharField(max_length=100)
+
+
+class Dispatcher(User):
+    phone = models.CharField(max_length=20, blank=True, null=True)
+    rate = models.DecimalField(blank=True, null=True, max_digits=7, decimal_places=3,)
     
+
+    def __str__(self):
+        return self.firstname
+   
