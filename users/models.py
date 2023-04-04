@@ -1,7 +1,7 @@
 from django.db import models
-
-# Create your models here.
 from django.contrib.auth.models import AbstractUser, Group
+from choices import PAY_TYPE_CHOICES, DRIVER_STATUS_CHOICES
+
 
 class User(AbstractUser):
     telephone = models.CharField(max_length=100, blank=True, null=True)
@@ -85,6 +85,7 @@ class ConsigneeAddress(models.Model):
         verbose_name_plural = "Consignee addresses"
        
 class Driver(User):
+    STATUS_CHOICES = DRIVER_STATUS_CHOICES
     # user = models.OneToOneField('User', related_name='driver_profile', on_delete=models.CASCADE)
     license_number = models.CharField(max_length=20)
     SSN = models.CharField(max_length=100, blank=True, null=True)
@@ -96,7 +97,7 @@ class Driver(User):
     pay_type = models.CharField(max_length=100, blank=True, null=True)
     per_type = models.CharField(max_length=100, blank=True, null=True)
     empty_mile = models.CharField(max_length=100, blank=True, null=True)
-    status = models.CharField(max_length=100, blank=True, null=True)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='ACTIVE', blank=True, null=True)
     prepass = models.CharField(max_length=100, blank=True, null=True)
     load_board = models.CharField(max_length=100, blank=True, null=True)
     trailer_rent = models.CharField(max_length=100, blank=True, null=True)

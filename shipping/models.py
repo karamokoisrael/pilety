@@ -1,14 +1,17 @@
 from django.db import models
 from users.models import Consignee, Customer, Shipper, Driver
+from choices import LOAD_TYPE_CHOICES
+
 
 class Shipment(models.Model):
+    LOAD_TYPE_CHOICES = LOAD_TYPE_CHOICES
     customer = models.ForeignKey(Customer, related_name='shipments', on_delete=models.CASCADE)
     driver = models.ForeignKey(Driver, related_name='shipments', on_delete=models.CASCADE)
     shipper = models.ForeignKey(Shipper, related_name='shipments', on_delete=models.CASCADE)
     consignee = models.ForeignKey(Consignee, related_name='shipments', on_delete=models.CASCADE)
     load_number = models.CharField(max_length=10, blank=True, null=True)
     load_name = models.CharField(max_length=100,blank=True, null=True)
-    load_type = models.CharField(max_length=3, blank=True, null=True)
+    load_type = models.CharField(max_length=3,choices=LOAD_TYPE_CHOICES, default='LTL', blank=True, null=True)
     pickup_date = models.DateField(verbose_name='Pick up date', blank=True, null=True)
     delivery_date = models.DateField(verbose_name='Delivery date', blank=True, null=True)
     # dispatch = models.ForeignKey('TargetModel', related_name='shipment', on_delete=models.CASCADE)

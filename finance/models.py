@@ -1,6 +1,6 @@
 from django.db import models
 from users.models import Customer
-
+from choices import CURRENCY_CHOICES, ORDERS_STATUS_CHOICES, PRODUCTS_TYPE_CHOICES
 
 class Company(models.Model):
     name = models.CharField(max_length=20, blank=True, null=True)
@@ -90,10 +90,12 @@ class Transfer(models.Model):
        super(Transfer, self).save(*args, **kwargs) # Call the real save() method
 
 class Product(models.Model):
+    CURRENCY_CHOICES = CURRENCY_CHOICES
+    TYPE_CHOICES = PRODUCTS_TYPE_CHOICES
     name = models.CharField(max_length=100, blank=True, null=True)
     price = models.DecimalField(decimal_places=3, max_digits=10, default=0, blank=True, null=True)
-    currency = models.CharField(max_length=10, blank=True, null=True)
-    type = models.CharField(verbose_name='Product or Service' ,max_length=10, blank=True, null=True)
+    currency = models.CharField(max_length=3, choices=CURRENCY_CHOICES, default='RMB', blank=True, null=True)
+    type = models.CharField(verbose_name='Product or Service' ,max_length=7, choices=TYPE_CHOICES, default='PRODUCT', blank=True, null=True)
     description = models.CharField(max_length=200, blank=True, null=True)
 
 
@@ -103,6 +105,7 @@ class Product(models.Model):
 
 
 class Invoice(models.Model):
+    CURRENCY_CHOICES = CURRENCY_CHOICES
     customer = models.ForeignKey(Customer, related_name='invoices', on_delete=models.CASCADE)
     product = models.ForeignKey('Product', verbose_name='Product/Service', related_name='invoices', on_delete=models.CASCADE)
     qty = models.IntegerField(verbose_name='Quantity', default=0, blank=True, null=True)
@@ -110,7 +113,7 @@ class Invoice(models.Model):
     total = models.DecimalField(decimal_places=3, max_digits=10, blank=True, null=True)
     has_tax = models.BooleanField(default=True, blank=True, null=True)
     is_recurring = models.BooleanField(default=False, blank=True, null=True)
-    currency = models.CharField(max_length=10, blank=True, null=True)
+    currency = models.CharField(max_length=3, choices=CURRENCY_CHOICES, default='RMB', blank=True, null=True)
     invoice_no = models.CharField(max_length=10, verbose_name='Invoice number', blank=True, null=True)
     date = models.DateField(verbose_name='Invoice date', blank=True, null=True)
     sales_tax = models.DecimalField(decimal_places=3, max_digits=10, blank=True, null=True)
