@@ -33,8 +33,8 @@ class CompanyAddress(models.Model):
 class Account(models.Model):
     title = models.CharField(max_length=100, blank=True, null=True) 
     description = models.CharField(max_length=300, blank=True, null=True)
-    balance = models.DecimalField(blank=True, null=True, default=0.000, decimal_places=3)
-    account_number = models.IntegerField(blank=True, null=True, max_length=50)
+    balance = models.DecimalField(decimal_places=3, max_digits=10, blank=True, null=True, default=0.000)
+    account_number = models.IntegerField(blank=True, null=True)
     holder = models.ForeignKey(Customer, related_name='account', on_delete=models.CASCADE)
     bank_url = models.URLField(verbose_name=' Internet banking link', blank=True, null=True)
 
@@ -46,7 +46,7 @@ class Deposit(models.Model):
     date = models.DateField(blank=True, null=True)
     description = models.CharField(max_length=200, blank=True, null=True)
     file = models.FileField(upload_to='media/documents/deposits', blank=True, null=True)
-    ammount = models.DecimalField(decimal_places=3, blank=True, null=True)
+    ammount = models.DecimalField(decimal_places=3, max_digits=10, blank=True, null=True)
 
 
     def __str__(self):
@@ -63,7 +63,7 @@ class Expenses(models.Model):
     date = models.DateField(blank=True, null=True)
     description = models.CharField(max_length=200, blank=True, null=True)
     file = models.FileField(upload_to='media/documents/expenses', blank=True, null=True)
-    ammount = models.DecimalField(decimal_places=3, blank=True, null=True)
+    ammount = models.DecimalField(decimal_places=3, max_digits=10, blank=True, null=True)
 
 
     def __str__(self):
@@ -79,7 +79,7 @@ class Transfer(models.Model):
     from_ac = models.ForeignKey('Account', related_name='transfer_to', on_delete=models.CASCADE)
     to_ac = models.ForeignKey('Account', related_name='recieved_from', on_delete=models.CASCADE)
     description = models.CharField(max_length=200, blank=True, null=True)
-    ammount = models.DecimalField(decimal_places=3, blank=True, null=True)
+    ammount = models.DecimalField(decimal_places=3, max_digits=10, blank=True, null=True)
 
     def __str__(self):
         return f'Transferred {self.ammount} from {self.from_ac} to {self.to_ac}'
@@ -88,4 +88,35 @@ class Transfer(models.Model):
        self.to_ac.balance = self.to_ac.balance + self.ammount
        self.from_ac.balance = self.from_ac.balance - self.ammount
        super(Transfer, self).save(*args, **kwargs) # Call the real save() method
+
+class Product(models.Model):
+    name = models.CharField(max_length=100, blank=True, null=True)
+    price = models.DecimalField(decimal_places=3, max_digits=10, default=0, blank=True, null=True)
+    currency = models.CharField(max_length=10, blank=True, null=True)
+    type = models.CharField(verbose_name='Product or Service' ,max_length=10, blank=True, null=True)
+    description = models.CharField(max_length=200, blank=True, null=True)
+
+
+    def __str__(self):
+        return 
+
+
+
+class Invoice(models.Model):
+    customer = models.ForeignKey(Customer, related_name='invoices', on_delete=models.CASCADE)
+    product = models.ForeignKey('Product', verbose_name='Product/Service', related_name='invoices', on_delete=models.CASCADE)
+    qty = models.IntegerField(verbose_name='Quantity', default=0, blank=True, null=True)
+    price = models.DecimalField(decimal_places=3, max_digits=10, blank=True, null=True)
+    total = models.DecimalField(decimal_places=3, max_digits=10, blank=True, null=True)
+    has_tax = models.BooleanField(default=True, blank=True, null=True)
+    is_recurring = models.BooleanField(default=False, blank=True, null=True)
+    currency = models.CharField(max_length=10, blank=True, null=True)
+    invoice_no = models.CharField(max_length=10, verbose_name='Invoice number', blank=True, null=True)
+    date = models.DateField(verbose_name='Invoice date', blank=True, null=True)
+    sales_tax = models.DecimalField(decimal_places=3, max_digits=10, blank=True, null=True)
+    
+
+    def __str__(self):
+        return f'{self.customer}\'s'
+
 
