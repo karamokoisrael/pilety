@@ -1,5 +1,7 @@
 from django.db import models
-from users.models import Consignee, Customer, Shipper, Driver
+from users.models import (Consignee, Customer, Shipper, 
+                          Driver, Supplier, Dispatcher)
+from finance.models import Product
 from choices import LOAD_TYPE_CHOICES
 
 
@@ -60,3 +62,130 @@ class Vehicle(models.Model):
     def __unicode__(self):
         return self.driver
 
+
+class LooseContainer(models.Model):
+    delivery = models.DateField(verbose_name='Delivery date',
+                                blank=True, null=True
+                                )
+    weight = models.DecimalField(verbose_name='Overall weight',
+                                 max_digits=15, decimal_places=3,
+                                 blank=True, null=True
+                                 )
+    ctns = models.DecimalField(verbose_name='Number of cartons',
+                                 max_digits=15, decimal_places=3,
+                                 blank=True, null=True
+                                 )
+    amount = models.DecimalField(verbose_name='Overall amount',
+                                 max_digits=15, decimal_places=3,
+                                 blank=True, null=True
+                                 )
+    container_number = models.CharField(max_length=30,
+                                        blank=True, null=True
+                                        )
+    dispatcher = models.ForeignKey(Dispatcher, related_name='loose_container_dispatched', on_delete=models.CASCADE)
+    
+    
+
+    def __str__(self):
+        return 
+
+    def __unicode__(self):
+        return 
+
+class FullContainer(models.Model):
+    delivery = models.DateField(verbose_name='Delivery date',
+                                blank=True, null=True
+                                )
+    weight = models.DecimalField(verbose_name='Overall weight',
+                                 max_digits=15, decimal_places=3,
+                                 blank=True, null=True
+                                 )
+    ctns = models.DecimalField(verbose_name='Number of cartons',
+                                 max_digits=15, decimal_places=3,
+                                 blank=True, null=True
+                                 )
+    amount = models.DecimalField(verbose_name='Overall amount',
+                                 max_digits=15, decimal_places=3,
+                                 blank=True, null=True
+                                 )
+    container_number = models.CharField(max_length=30,
+                                        blank=True, null=True
+                                        )
+    dispatcher = models.ForeignKey(Dispatcher, related_name='full_container_dispatched', on_delete=models.CASCADE)
+    
+    
+
+    def __str__(self):
+        return 
+
+    def __unicode__(self):
+        return 
+
+class BaseCargo(models.Model):
+    item_mark = models.CharField(max_length=100,blank=True, null=True
+                                 )
+    qty = models.IntegerField(verbose_name='Quantity in cartons',
+                              blank=True, null=True
+                              )
+    total_pcs = models.IntegerField(verbose_name='Total Pieces',
+                              blank=True, null=True
+                              )
+    total_price = models.DecimalField(max_digits=10, decimal_places=4,
+                                      blank=True, null=True
+                                      )
+    total_weight = models.DecimalField(verbose_name='weight in KG',
+                                       max_digits=10, decimal_places=4,
+                                       blank=True, null=True
+                                      )
+    checked_by = models.ForeignKey(Dispatcher, related_name='checked_cargo',
+                                    on_delete=models.CASCADE,
+                                    blank=True, null=True
+                                    )
+    class Meta:
+        abstract = True
+
+class LooseCargo(BaseCargo):
+    receiver = models.ForeignKey(Customer, related_name='customer', 
+                                 on_delete=models.CASCADE,
+                                 blank=True, null=True
+                                 )
+    loose_container = models.ForeignKey(LooseContainer, 
+                                        related_name='cargo', 
+                                        on_delete=models.CASCADE,
+                                        blank=True, null=True
+                                        )
+    container_number = models.CharField(max_length=30, 
+                                        blank=True, null=True
+                                        )
+
+class FullCargo(BaseCargo):
+    receiver = models.ForeignKey(Customer, related_name='customer', 
+                                 on_delete=models.CASCADE,
+                                 blank=True, null=True
+                                 )
+    full_container = models.ForeignKey(FullContainer, 
+                                        related_name='cargo', 
+                                        on_delete=models.CASCADE,
+                                        blank=True, null=True
+                                        )
+    container_number = models.CharField(max_length=30, 
+                                        blank=True, null=True
+                                        )
+    
+
+
+class FullCargo(BaseCargo):
+    receiver = models.ForeignKey(Customer, related_name='customer', on_delete=models.CASCADE)
+
+
+
+
+
+    
+
+  
+    def __str__(self):
+        return 
+
+    def __unicode__(self):
+        return 

@@ -1,5 +1,6 @@
 from django.db import models
 from users.models import Customer, Dispatcher, Supplier
+from shipping import LooseCargo, FullCargo
 from choices import (CURRENCY_CHOICES, 
                      ORDERS_STATUS_CHOICES, 
                      PRODUCTS_TYPE_CHOICES, 
@@ -203,7 +204,12 @@ class Product(models.Model):
     pic = models.ImageField(upload_to='media/product_pic',
                             blank=True, null=True
                             )
-
+    loose_cargo = models.ForeignKey(LooseCargo, related_name='products', 
+                                    on_delete=models.CASCADE, 
+                                    blank=True, null=True)
+    full_cargo = models.ForeignKey(FullCargo, related_name='products', 
+                                   on_delete=models.CASCADE, 
+                                   blank=True, null=True)
     def __str__(self):
         return 
 
@@ -271,14 +277,14 @@ class Invoice(models.Model):
         return f'{self.customer}\'s Invoice'
 
 
-class Name(models.Model):
-    customer = models.ForeignKey(Customer, related_name='full_container', on_delete=models.CASCADE
-                                    )
-    dispatcher = models.ForeignKey(Dispatcher, related_name='disp_fullcontainer', on_delete=models.CASCADE
-                                    )
+# class Name(models.Model):
+#     customer = models.ForeignKey(Customer, related_name='full_container', on_delete=models.CASCADE
+#                                     )
+#     dispatcher = models.ForeignKey(Dispatcher, related_name='disp_fullcontainer', on_delete=models.CASCADE
+#                                     )
 
-    def __str__(self):
-        return 
+#     def __str__(self):
+#         return 
 
-    def __unicode__(self):
-        return 
+#     def __unicode__(self):
+#         return 
