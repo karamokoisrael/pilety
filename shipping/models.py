@@ -7,25 +7,56 @@ from choices import LOAD_TYPE_CHOICES
 
 class Shipment(models.Model):
     LOAD_TYPE_CHOICES = LOAD_TYPE_CHOICES
-    customer = models.ForeignKey(Customer, related_name='shipments', on_delete=models.CASCADE)
-    driver = models.ForeignKey(Driver, related_name='shipments', on_delete=models.CASCADE)
-    shipper = models.ForeignKey(Shipper, related_name='shipments', on_delete=models.CASCADE)
-    consignee = models.ForeignKey(Consignee, related_name='shipments', on_delete=models.CASCADE)
-    load_number = models.CharField(max_length=10, blank=True, null=True)
-    load_name = models.CharField(max_length=100,blank=True, null=True)
-    load_type = models.CharField(max_length=3,choices=LOAD_TYPE_CHOICES, default='LTL', blank=True, null=True)
-    pickup_date = models.DateField(verbose_name='Pick up date', blank=True, null=True)
-    delivery_date = models.DateField(verbose_name='Delivery date', blank=True, null=True)
+    customer = models.ForeignKey(Customer, related_name='shipments', 
+                                 on_delete=models.CASCADE
+                                 )
+    driver = models.ForeignKey(Driver, related_name='shipments', 
+                               on_delete=models.CASCADE
+                               )
+    shipper = models.ForeignKey(Shipper, related_name='shipments', 
+                                on_delete=models.CASCADE
+                                )
+    consignee = models.ForeignKey(Consignee, related_name='shipments', 
+                                  on_delete=models.CASCADE
+                                  )
+    load_number = models.CharField(max_length=10, blank=True, null=True
+                                   )
+    load_name = models.CharField(max_length=100,blank=True, null=True
+                                 )
+    load_type = models.CharField(max_length=3,choices=LOAD_TYPE_CHOICES, 
+                                 default='LTL', blank=True, null=True
+                                 )
+    pickup_date = models.DateField(verbose_name='Pick up date', 
+                                   blank=True, null=True
+                                   )
+    delivery_date = models.DateField(verbose_name='Delivery date', 
+                                     blank=True, null=True
+                                     )
     # dispatch = models.ForeignKey('TargetModel', related_name='shipment', on_delete=models.CASCADE)
-    line_haul_rate = models.DecimalField(blank=True, null=True, max_digits=4, max_length=6, decimal_places=3)
-    unloading_fee = models.DecimalField(blank=True, null=True, max_digits=4, max_length=6, decimal_places=3)
-    detention_fee = models.DecimalField(blank=True, null=True, max_digits=4, max_length=6, decimal_places=3)
-    layovers_fee = models.DecimalField(blank=True, null=True, max_digits=4, max_length=6, decimal_places=3)
-    other_charges = models.DecimalField(blank=True, null=True, max_digits=4, max_length=6, decimal_places=3)
-    total_rates = models.DecimalField(blank=True, null=True, max_digits=4, max_length=6, decimal_places=3)
-    empty_M = models.CharField(max_length=100,blank=True, null=True)
-    loaded_M = models.CharField(max_length=100,blank=True, null=True)
-    per_mile = models.CharField(max_length=100,blank=True, null=True)
+    line_haul_rate = models.DecimalField(blank=True, null=True, max_digits=4, 
+                                        max_length=6, decimal_places=3
+                                        )
+    unloading_fee = models.DecimalField(blank=True, null=True, max_digits=4, 
+                                        max_length=6, decimal_places=3
+                                        )
+    detention_fee = models.DecimalField(blank=True, null=True, max_digits=4, 
+                                        max_length=6, decimal_places=3
+                                        )
+    layovers_fee = models.DecimalField(blank=True, null=True, max_digits=4, 
+                                        max_length=6, decimal_places=3
+                                        )
+    other_charges = models.DecimalField(blank=True, null=True, max_digits=4, 
+                                        max_length=6, decimal_places=3
+                                        )
+    total_rates = models.DecimalField(blank=True, null=True, max_digits=4, 
+                                        max_length=6, decimal_places=3
+                                        )
+    empty_M = models.CharField(max_length=100,blank=True, null=True
+                                )
+    loaded_M = models.CharField(max_length=100,blank=True, null=True
+                                )
+    per_mile = models.CharField(max_length=100,blank=True, null=True
+                                )
 
 
     def __str__(self):
@@ -62,8 +93,19 @@ class Vehicle(models.Model):
     def __unicode__(self):
         return self.driver
 
+class CargoInvoice(models.Model):
+    date = models.DateField(auto_now_add=True,
+                            blank=True, null=True
+                            )
+
+    
+
 
 class LooseContainer(models.Model):
+    invoice = models.ForeignKey(CargoInvoice, 
+                                related_name='loose_cargo_invoices', 
+                                on_delete=models.CASCADE
+                                )
     delivery = models.DateField(verbose_name='Delivery date',
                                 blank=True, null=True
                                 )
@@ -82,15 +124,13 @@ class LooseContainer(models.Model):
     container_number = models.CharField(max_length=30,
                                         blank=True, null=True
                                         )
-    dispatcher = models.ForeignKey(Dispatcher, related_name='loose_container_dispatched', on_delete=models.CASCADE)
+    dispatcher = models.ForeignKey(Dispatcher, 
+                                   related_name='loose_container_dispatched',
+                                   on_delete=models.CASCADE)
     
     
 
-    def __str__(self):
-        return 
-
-    def __unicode__(self):
-        return 
+   
 
 class FullContainer(models.Model):
     delivery = models.DateField(verbose_name='Delivery date',
@@ -111,15 +151,16 @@ class FullContainer(models.Model):
     container_number = models.CharField(max_length=30,
                                         blank=True, null=True
                                         )
-    dispatcher = models.ForeignKey(Dispatcher, related_name='full_container_dispatched', on_delete=models.CASCADE)
-    
+    dispatcher = models.ForeignKey(Dispatcher, 
+                                   related_name='full_container_dispatched',
+                                   on_delete=models.CASCADE
+                                   )
+    invoice = models.ForeignKey(CargoInvoice, 
+                                related_name='cargo_invoices', 
+                                on_delete=models.CASCADE
+                                )   
     
 
-    def __str__(self):
-        return 
-
-    def __unicode__(self):
-        return 
 
 class BaseCargo(models.Model):
     item_mark = models.CharField(max_length=100,blank=True, null=True
@@ -174,18 +215,5 @@ class FullCargo(BaseCargo):
     
 
 
-class FullCargo(BaseCargo):
-    receiver = models.ForeignKey(Customer, related_name='customer', on_delete=models.CASCADE)
 
 
-
-
-
-    
-
-  
-    def __str__(self):
-        return 
-
-    def __unicode__(self):
-        return 
