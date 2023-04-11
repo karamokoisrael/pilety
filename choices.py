@@ -33,4 +33,10 @@ DRIVER_STATUS_CHOICES = (
 
 )
 
+UNIT_PACKAGING_CHOICES = (
+    ('PCS', 'Pieces'),
+    ('ROLLS', 'Rolls'),
+    ('DOZENS', 'Dozens'),
+    ('BAGS', 'Bags'),
+)
 

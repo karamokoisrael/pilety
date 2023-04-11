@@ -32,6 +32,51 @@ class CustomerAddress(models.Model):
         verbose_name = "Customer address"
         verbose_name_plural = "Customer addresses"
 
+class Supplier(User):
+    name = models.CharField(verbose_name='Supplier\'s name',
+                            max_length=100,
+                            blank=True, null=True
+                            )
+    company = models.CharField( verbose_name='Company\'s name',
+                               max_length=100,
+                               blank=True, null=True
+                               )
+    wechat = models.CharField(verbose_name='Wechat id',
+                              max_length=100,
+                              blank=True, null=True
+                              )
+    bzness_card = models.ImageField(verbose_name='Business Card',
+                                    upload_to='/media/business_cards',
+                                    blank=True, null=True
+                                    )
+    
+
+    def __str__(self):
+        return f'{self.name} from {self.company}'
+
+class SupplierAddress(models.Model):
+    supplier = models.ForeignKey(Supplier, related_name='address', 
+                                 on_delete=models.CASCADE
+                                 )
+    address = models.CharField(max_length=100, blank=True, null=True
+                               )
+    city = models.CharField(max_length=100, blank=True, null=True
+                            )
+    province = models.CharField(max_length=100, blank=True, null=True
+                                )
+    phone = models.CharField(verbose_name='Telephone number',
+                             blank=True, null=True
+                             )
+    
+
+    def __str__(self):
+        return f'{self.address} + {self.shipper}'    
+    
+    class Meta:
+        verbose_name = "Supplier address"
+        verbose_name_plural = "Supplier addresses"
+
+
 class Shipper(User):
     # user = models.OneToOneField('User', related_name='shipper_profile', on_delete=models.CASCADE)
     company_name = models.CharField(max_length=50)
