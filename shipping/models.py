@@ -1,7 +1,8 @@
 from django.db import models
 from users.models import (Consignee, Customer, Shipper, 
-                          Driver, Supplier, Dispatcher)
-from finance.models import Product
+                          Driver, Supplier, Dispatcher
+                          )
+# from fisnance.models import Product
 from choices import LOAD_TYPE_CHOICES
 
 
@@ -93,19 +94,14 @@ class Vehicle(models.Model):
     def __unicode__(self):
         return self.driver
 
-class CargoInvoice(models.Model):
-    date = models.DateField(auto_now_add=True,
-                            blank=True, null=True
-                            )
 
-    
 
 
 class LooseContainer(models.Model):
-    invoice = models.ForeignKey(CargoInvoice, 
-                                related_name='loose_cargo_invoices', 
-                                on_delete=models.CASCADE
-                                )
+    # invoice = models.ForeignKey(CargoInvoice, 
+    #                             related_name='loose_cargo_invoices', 
+    #                             on_delete=models.CASCADE
+    #                             )
     delivery = models.DateField(verbose_name='Delivery date',
                                 blank=True, null=True
                                 )
@@ -129,9 +125,6 @@ class LooseContainer(models.Model):
                                    on_delete=models.CASCADE)
     
     
-
-   
-
 class FullContainer(models.Model):
     delivery = models.DateField(verbose_name='Delivery date',
                                 blank=True, null=True
@@ -155,12 +148,11 @@ class FullContainer(models.Model):
                                    related_name='full_container_dispatched',
                                    on_delete=models.CASCADE
                                    )
-    invoice = models.ForeignKey(CargoInvoice, 
-                                related_name='cargo_invoices', 
-                                on_delete=models.CASCADE
-                                )   
+    # invoice = models.ForeignKey(CargoInvoice, 
+    #                             related_name='cargo_invoices', 
+    #                             on_delete=models.CASCADE
+    #                             )   
     
-
 
 class BaseCargo(models.Model):
     item_mark = models.CharField(max_length=100,blank=True, null=True
@@ -178,15 +170,13 @@ class BaseCargo(models.Model):
                                        max_digits=10, decimal_places=4,
                                        blank=True, null=True
                                       )
-    checked_by = models.ForeignKey(Dispatcher, related_name='checked_cargo',
-                                    on_delete=models.CASCADE,
-                                    blank=True, null=True
-                                    )
+    
     class Meta:
         abstract = True
 
+
 class LooseCargo(BaseCargo):
-    receiver = models.ForeignKey(Customer, related_name='customer', 
+    receiver = models.ForeignKey(Customer, related_name='loose_cargos', 
                                  on_delete=models.CASCADE,
                                  blank=True, null=True
                                  )
@@ -198,9 +188,15 @@ class LooseCargo(BaseCargo):
     container_number = models.CharField(max_length=30, 
                                         blank=True, null=True
                                         )
+    checked_by = models.ForeignKey(Dispatcher, 
+                                    related_name='loose_cargo_checked',
+                                    on_delete=models.CASCADE,
+                                    blank=True, null=True
+                                    )
+
 
 class FullCargo(BaseCargo):
-    receiver = models.ForeignKey(Customer, related_name='customer', 
+    receiver = models.ForeignKey(Customer, related_name='full_cargos', 
                                  on_delete=models.CASCADE,
                                  blank=True, null=True
                                  )
@@ -212,8 +208,28 @@ class FullCargo(BaseCargo):
     container_number = models.CharField(max_length=30, 
                                         blank=True, null=True
                                         )
-    
+    checked_by = models.ForeignKey(Dispatcher, 
+                                    related_name='full_cargo_checked',
+                                    on_delete=models.CASCADE,
+                                    blank=True, null=True
+                                    )
 
 
+class LooseCargoInvoice(models.Model):
+    cargo = models.ManyToManyField(LooseContainer, related_name='invoices', 
+                                   blank=True
+                                   )
+    date = models.DateField(auto_now_add=True,
+                            blank=True, null=True
+                            )
+                            
+class FullCargoInvoice(models.Model):
+    cargo = models.ManyToManyField(FullContainer,related_name='invoice', 
+                                   blank=True
+                                   )
+    date = models.DateField(auto_now_add=True,
+                            blank=True, null=True
+                            )
+                            
 
 

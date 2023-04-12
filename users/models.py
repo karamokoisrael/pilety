@@ -58,7 +58,7 @@ class Supplier(User):
                               blank=True, null=True
                               )
     bzness_card = models.ImageField(verbose_name='Business Card',
-                                    upload_to='/media/business_cards',
+                                    upload_to='media/business_cards/',
                                     blank=True, null=True
                                     )
     
@@ -76,7 +76,7 @@ class SupplierAddress(models.Model):
                             )
     province = models.CharField(max_length=100, blank=True, null=True
                                 )
-    phone = models.CharField(verbose_name='Telephone number',
+    phone = models.CharField(max_length=15, verbose_name='Telephone number',
                              blank=True, null=True
                              )
     

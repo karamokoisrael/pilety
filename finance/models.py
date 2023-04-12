@@ -1,6 +1,6 @@
 from django.db import models
 from users.models import Customer, Dispatcher, Supplier
-from shipping import LooseCargo, FullCargo
+from shipping.models import LooseCargo, FullCargo
 from choices import (CURRENCY_CHOICES, 
                      ORDERS_STATUS_CHOICES, 
                      PRODUCTS_TYPE_CHOICES, 
