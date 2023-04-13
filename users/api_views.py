@@ -320,7 +320,7 @@ class DispatcherRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIVi
     permission_classes = (permissions.IsAuthenticated, )
 
 
-class DispatcherAddressListAPIView(generics.ListAPIView):
+class DispatcherAddressRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = DispatcherAddress.objects.all()
     serializer_class = DispatcherAddressSerializer
     permission_classes = (permissions.IsAuthenticated, )
