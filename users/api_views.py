@@ -98,7 +98,7 @@ class DispatcherAddressListAPIView(generics.ListAPIView):
 
 #RetrieveUpdateDestroyAPIViews
 
-class CustomerRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+class CustomerListCreateAPIView(generics.ListCreateAPIView):
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
     permission_classes = (permissions.IsAuthenticated, )
@@ -110,7 +110,7 @@ class CustomerRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView
         return super().perform_create(serializer)
 
 
-class CustomerAddressRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+class CustomerAddressListCreateAPIView(generics.ListCreateAPIView):
     queryset = CustomerAddress.objects.all()
     serializer_class = CustomerAddressSerializer
     permission_classes = (permissions.IsAuthenticated, )
@@ -122,7 +122,7 @@ class CustomerAddressRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroy
         return super().perform_create(serializer)
 
 
-class SupplierRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+class SupplierListCreateAPIView(generics.ListCreateAPIView):
     queryset = Supplier.objects.all()
     serializer_class = SupplierSerializer
     permission_classes = (permissions.IsAuthenticated, )
@@ -134,7 +134,7 @@ class SupplierRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView
         return super().perform_create(serializer)
 
 
-class SupplierAddressRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+class SupplierAddressListCreateAPIView(generics.ListCreateAPIView):
     queryset = SupplierAddress.objects.all()
     serializer_class = SupplierAddressSerializer
     permission_classes = (permissions.IsAuthenticated, )
@@ -146,7 +146,7 @@ class SupplierAddressRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroy
         return super().perform_create(serializer)
 
 
-class ShipperRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+class ShipperListCreateAPIView(generics.ListCreateAPIView):
     queryset = Shipper.objects.all()
     serializer_class = ShipperSerializer
     permission_classes = (permissions.IsAuthenticated, )
@@ -158,7 +158,7 @@ class ShipperRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView)
         return super().perform_create(serializer)
 
 
-class ShipperAddressRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+class ShipperAddressListCreateAPIView(generics.ListCreateAPIView):
     queryset = ShipperAddress.objects.all()
     serializer_class = ShipperAddressSerializer
     permission_classes = (permissions.IsAuthenticated, )
@@ -170,7 +170,7 @@ class ShipperAddressRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyA
         return super().perform_create(serializer)
 
 
-class ConsigneeRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+class ConsigneeListCreateAPIView(generics.ListCreateAPIView):
     queryset = Consignee.objects.all()
     serializer_class = ConsigneeSerializer
     permission_classes = (permissions.IsAuthenticated, )
@@ -182,7 +182,7 @@ class ConsigneeRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIVie
         return super().perform_create(serializer)
 
 
-class ConsigneeAddressRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+class ConsigneeAddressListCreateAPIView(generics.ListCreateAPIView):
     queryset = ConsigneeAddress.objects.all()
     serializer_class = ConsigneeAddressSerializer
     permission_classes = (permissions.IsAuthenticated, )
@@ -194,7 +194,7 @@ class ConsigneeAddressRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestro
         return super().perform_create(serializer)
 
 
-class DriverRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+class DriverListCreateAPIView(generics.ListCreateAPIView):
     queryset = Driver.objects.all()
     serializer_class = DriverSerializer
     permission_classes = (permissions.IsAuthenticated, )
@@ -206,7 +206,7 @@ class DriverRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
         return super().perform_create(serializer)
 
 
-class DriverAddressRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+class DriverAddressListCreateAPIView(generics.ListCreateAPIView):
     queryset = DriverAddress.objects.all()
     serializer_class = DriverAddressSerializer
     permission_classes = (permissions.IsAuthenticated, )
@@ -218,7 +218,7 @@ class DriverAddressRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAP
         return super().perform_create(serializer)
 
 
-class DispatcherRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+class DispatcherListCreateAPIView(generics.ListCreateAPIView):
     queryset = Dispatcher.objects.all()
     serializer_class = DispatcherSerializer
     permission_classes = (permissions.IsAuthenticated, )
@@ -230,7 +230,7 @@ class DispatcherRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIVi
         return super().perform_create(serializer)
 
 
-class DispatcherAddressListAPIView(generics.ListAPIView):
+class DispatcherAddressListCreateAPIView(generics.ListCreateAPIView):
     queryset = DispatcherAddress.objects.all()
     serializer_class = DispatcherAddressSerializer
     permission_classes = (permissions.IsAuthenticated, )
