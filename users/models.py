@@ -101,7 +101,7 @@ class Shipper(User):
         verbose_name = "Shipper"
         verbose_name_plural = "Shippers"
 
-class shipperAddress(models.Model):
+class ShipperAddress(models.Model):
     shipper = models.ForeignKey('Shipper', related_name='address', 
                                 on_delete=models.CASCADE
                                 )

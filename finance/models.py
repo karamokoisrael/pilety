@@ -25,6 +25,7 @@ class Company(models.Model):
         verbose_name = "Company"
         verbose_name_plural = "Companies"
 
+
 class CompanyAddress(models.Model):
     owner = models.ForeignKey(Customer, related_name='companies', 
                               on_delete=models.CASCADE
@@ -51,6 +52,7 @@ class CompanyAddress(models.Model):
         verbose_name = "Company address"
         verbose_name_plural = "Company addresses"
 
+
 class Account(models.Model):
     title = models.CharField(max_length=100, blank=True, null=True
                             ) 
@@ -69,6 +71,7 @@ class Account(models.Model):
 
     def __str__(self):
         return 
+
 
 class Deposit(models.Model):
     account = models.ForeignKey('Account', related_name='deposits', 
@@ -92,7 +95,6 @@ class Deposit(models.Model):
     def save(self, *args, **kwargs):
        self.account.balance = self.account.balance + self.ammount
        super(Deposit, self).save(*args, **kwargs) # Call the real save() method
-
 
 
 class Expenses(models.Model):
@@ -119,7 +121,6 @@ class Expenses(models.Model):
        super(Expenses, self).save(*args, **kwargs) # Call the real save() method
 
 
-
 class Transfer(models.Model):
     from_ac = models.ForeignKey('Account', related_name='transfer_to',
                                  on_delete=models.CASCADE
@@ -140,6 +141,7 @@ class Transfer(models.Model):
        self.to_ac.balance = self.to_ac.balance + self.ammount
        self.from_ac.balance = self.from_ac.balance - self.ammount
        super(Transfer, self).save(*args, **kwargs) # Call the real save() method
+
 
 class Product(models.Model):
     CURRENCY_CHOICES = CURRENCY_CHOICES
@@ -234,7 +236,6 @@ class Product(models.Model):
        super(Product, self).save(*args, **kwargs) # Call the real save() method
                 
 
-
 class Invoice(models.Model):
     CURRENCY_CHOICES = CURRENCY_CHOICES
     customer = models.ForeignKey(Customer, related_name='invoices', 
@@ -277,14 +278,3 @@ class Invoice(models.Model):
         return f'{self.customer}\'s Invoice'
 
 
-# class Name(models.Model):
-#     customer = models.ForeignKey(Customer, related_name='full_container', on_delete=models.CASCADE
-#                                     )
-#     dispatcher = models.ForeignKey(Dispatcher, related_name='disp_fullcontainer', on_delete=models.CASCADE
-#                                     )
-
-#     def __str__(self):
-#         return 
-
-#     def __unicode__(self):
-#         return 

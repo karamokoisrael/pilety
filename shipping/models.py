@@ -95,8 +95,6 @@ class Vehicle(models.Model):
         return self.driver
 
 
-
-
 class LooseContainer(models.Model):
     # invoice = models.ForeignKey(CargoInvoice, 
     #                             related_name='loose_cargo_invoices', 
@@ -222,7 +220,8 @@ class LooseCargoInvoice(models.Model):
     date = models.DateField(auto_now_add=True,
                             blank=True, null=True
                             )
-                            
+
+                           
 class FullCargoInvoice(models.Model):
     cargo = models.ManyToManyField(FullContainer,related_name='invoice', 
                                    blank=True
