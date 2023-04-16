@@ -6,3 +6,9 @@ django-filter
 
 django-admin-material-dashboard
 pillow
+
+
+
+python-environ==0.4.54
+nodeenv # venv for react and js staffs  https://varunver.wordpress.com/2019/09/14/setup-react-and-node-js-on-virtualenv/
+django-cors-headers
