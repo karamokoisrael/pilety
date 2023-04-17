@@ -40,3 +40,9 @@ UNIT_PACKAGING_CHOICES = (
     ('BAGS', 'Bags'),
 )
 
+CONTAINER_STATUS_CHOICES = (
+    ('NF', 'Not Full'),
+    ('FC', 'Full CBM'),
+    ('OW', 'Over weight'),
+    ('NC', 'Needs Confirming'),
+)

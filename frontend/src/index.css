@@ -1,13 +1,278 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+main{
+  min-height: 80vh;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+h3{
+  padding: 1rem 0 ;
+}
+
+.rating{
+  margin: 2%;
+
+}
+
+.dashboard {
+  display: flex;
+  justify-content: space-evenly;
+  gap: 0;
+  overflow-x: auto;
+}
+
+.box {
+  width: 30%;
+  background-color: #f2f2f2;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.box:last-child {
+  margin-right: 0;
+}
+
+.tracking-container {
+  width: 100%;
+  /* max-width: 500px; */
+  margin: auto;
+  background-color: #f1f1f1;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+  margin-top: 2%;
+  margin-bottom: 2%;
+  
+}
+
+.tracking-title {
+  font-size: 28px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.tracking-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tracking-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.tracking-input {
+  font-size: 16px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
+  margin-top: 10px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.tracking-button {
+  background-color: #0071c5;
+  color: #fff;
+  font-size: 16px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 2%;
+}
+
+.tracking-button:hover {
+  background-color: #005da7;
+}
+
+
+
+
+
+.featured-container {
+  background-color: #f1f1f1;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+  /* max-width: 800px; */
+  margin: auto;
+}
+
+.featured-title {
+  font-size: 28px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.featured-scroll {
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap;
+  margin-left: -10px;
+  margin-right: -10px;
+  padding-bottom: 20px;
+}
+
+.featured-item {
+  width: 300px;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  display: inline-block;
+  vertical-align: top;
+}
+
+.featured-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.featured-item-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.featured-item-description {
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+.featured-item-link {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+  color: #555;
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+}
+
+.featured-item-link:hover {
+  color: #000;
+}
+
+
+
+.map-wrapper {
+  position: relative;
+  height: 400px;
+  margin-bottom: 50px;
+}
+
+.map-heading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 20px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  z-index: 1;
+}
+
+
+
+.map-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+}
+
+.map-iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+}
+
+
+
+.product-details-container {
+  display: flex;
+  flex-direction: column;
+  margin: 50px auto;
+  max-width: 1200px;
+}
+
+@media (min-width: 768px) {
+  .product-details-container {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.product-details-image {
+  flex: 1;
+  margin-bottom: 20px;
+}
+
+.product-details-image-container {
+  position: relative;
+  padding-bottom: 50%;
+  /* 1:1 aspect ratio */
+}
+
+.product-details-image img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-details-info {
+  flex: 1;
+}
+
+.product-details-name {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.product-details-quantity,
+.product-details-price,
+.product-details-status {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.product-details-button {
+  font-size: 1.5rem;
+  padding: 10px 20px;
+  background-color: #ff6600;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.product-details-button:hover {
+  background-color: #fff;
+  color: #ff6600;
+  border: 2px solid #ff6600;
+}
+
+@media (min-width: 768px) {
+  .product-details-button {
+    margin-top: 20px;
+  }
 }

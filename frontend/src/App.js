@@ -9,6 +9,7 @@ import Footer from './components/Footer';
 import HomePage from './screens/HomePage';
 import ProductDetails from './screens/ProductDetails';
 import CartScreen from './screens/CartScreen';
+import Det from './screens/Det';
 
 
 function App() {
@@ -20,8 +21,9 @@ function App() {
           <Container>
             <Routes>
               <Route path='/' element={<HomePage/>}  exact />
-              <Route path='/api/merch_detail/:id/' element={<ProductDetails/>}/>
-              <Route path='cart/:id?' element={<CartScreen/>} />
+              <Route path='/det/' element={<Det/>}  exact />
+              {/* <Route path='/api/merch_detail/:id/' element={<ProductDetails/>}/>
+              <Route path='cart/:id?' element={<CartScreen/>} /> */}
             </Routes>
           
           

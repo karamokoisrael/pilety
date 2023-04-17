@@ -3,7 +3,7 @@ from users.models import (Consignee, Customer, Shipper,
                           Driver, Supplier, Dispatcher
                           )
 # from fisnance.models import Product
-from choices import LOAD_TYPE_CHOICES
+from choices import LOAD_TYPE_CHOICES, CONTAINER_STATUS_CHOICES
 
 
 class Shipment(models.Model):
@@ -96,6 +96,8 @@ class Vehicle(models.Model):
 
 
 class LooseContainer(models.Model):
+    STATUS_CHOICES = CONTAINER_STATUS_CHOICES
+
     # invoice = models.ForeignKey(CargoInvoice, 
     #                             related_name='loose_cargo_invoices', 
     #                             on_delete=models.CASCADE
@@ -103,10 +105,20 @@ class LooseContainer(models.Model):
     delivery = models.DateField(verbose_name='Delivery date',
                                 blank=True, null=True
                                 )
+    depature = models.DateField(verbose_name='Depature date',
+                                blank=True, null=True
+                                )
     weight = models.DecimalField(verbose_name='Overall weight',
                                  max_digits=15, decimal_places=3,
                                  blank=True, null=True
                                  )
+    cbm = models.DecimalField(verbose_name='Overall weight',
+                                 max_digits=15, decimal_places=3,
+                                 blank=True, null=True
+                                 )
+    status = models.CharField(max_length=5,choices=STATUS_CHOICES, 
+                              default='NF', blank=True, null=True
+                              )
     ctns = models.DecimalField(verbose_name='Number of cartons',
                                  max_digits=15, decimal_places=3,
                                  blank=True, null=True
@@ -122,15 +134,30 @@ class LooseContainer(models.Model):
                                    related_name='loose_container_dispatched',
                                    on_delete=models.CASCADE)
     
+    def save(self, *args, **kwargs):
+       
+       super(LooseContainer, self).save(*args, **kwargs) # Call the real save() method
+    
     
 class FullContainer(models.Model):
+    STATUS_CHOICES = CONTAINER_STATUS_CHOICES
     delivery = models.DateField(verbose_name='Delivery date',
+                                blank=True, null=True
+                                )
+    depature = models.DateField(verbose_name='Depature date',
                                 blank=True, null=True
                                 )
     weight = models.DecimalField(verbose_name='Overall weight',
                                  max_digits=15, decimal_places=3,
                                  blank=True, null=True
                                  )
+    cbm = models.DecimalField(verbose_name='Overall weight',
+                                 max_digits=15, decimal_places=3,
+                                 blank=True, null=True
+                                 )
+    status = models.CharField(max_length=5,choices=STATUS_CHOICES, 
+                              default='NF', blank=True, null=True
+                              )
     ctns = models.DecimalField(verbose_name='Number of cartons',
                                  max_digits=15, decimal_places=3,
                                  blank=True, null=True
