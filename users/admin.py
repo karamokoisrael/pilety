@@ -3,7 +3,7 @@ from users.models import (Consignee, ConsigneeAddress,
                           Customer, CustomerAddress,
                           Driver, DriverAddress,
                           Dispatcher, DispatcherAddress,
-                          Shipper, shipperAddress)
+                          Shipper, ShipperAddress)
 
 class CustomerAddressAdmin(admin.StackedInline):
     model = CustomerAddress
@@ -18,7 +18,7 @@ class DispatcherAddressAdmin(admin.StackedInline):
     model = DispatcherAddress
 
 class ShipperAddressAdmin(admin.StackedInline):
-    model = shipperAddress
+    model = ShipperAddress
 
 
 @admin.register(Customer)

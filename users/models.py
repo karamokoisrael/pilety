@@ -251,7 +251,7 @@ class Dispatcher(User):
     
 
     def __str__(self):
-        return self.firstname
+        return self.first_name
 
     class Meta:
         verbose_name = "Dispatcher"

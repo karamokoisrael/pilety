@@ -1,5 +1,16 @@
 from django.contrib import admin
 from shipping.models import Vehicle, Shipment
+from shipping.models import (LooseContainer, FullContainer, 
+                             LooseCargo, FullCargo,
+                             LooseCargoInvoice, FullCargoInvoice)
+
+
+class FullCargoStack(admin.StackedInline):
+    model = FullCargo
+
+class LooseCargoStack(admin.StackedInline):
+    model = LooseCargo
+
 
 
 @admin.register(Shipment)
@@ -33,5 +44,60 @@ class VehicleAdmin(admin.ModelAdmin):
     class Meta:
         model = Vehicle
 
+
+
+
+
+@admin.register(LooseContainer)
+class LooseContainerAdmin(admin.ModelAdmin):
+    list_display = ('container_number', 'status', 'dispatcher', 'delivery', 'depature')
+    list_filter = ('status', 'dispatcher', 'delivery', 'depature')
+    search_fields = ('container_number',)
+    linked_models = {'receiver': 'users.Customer', 'checked_by': 'users.Dispatcher'}
+    inlines = [
+        LooseCargoStack,
+    ]
+
+
+@admin.register(FullContainer)
+class FullContainerAdmin(admin.ModelAdmin):
+    list_display = ('container_number', 'status', 'dispatcher', 'delivery', 'depature')
+    list_filter = ('status', 'dispatcher', 'delivery', 'depature')
+    search_fields = ('container_number',)
+    linked_models = {'receiver': 'users.Customer', 'checked_by': 'users.Dispatcher'}
+    inlines = [
+        FullCargoStack,
+    ]
+
+@admin.register(LooseCargo)
+class LooseCargoAdmin(admin.ModelAdmin):
+    list_display = ('item_mark', 'receiver', 'loose_container', 'checked_by')
+    list_filter = ('receiver', 'loose_container', 'checked_by')
+    search_fields = ('item_mark',)
+    linked_models = {'loose_container': 'LooseContainer', 'receiver': 'users.Customer', 'checked_by': 'users.Dispatcher'}
+    
+
+@admin.register(FullCargo)
+class FullCargoAdmin(admin.ModelAdmin):
+    list_display = ('item_mark', 'receiver', 'full_container', 'checked_by')
+    list_filter = ('receiver', 'full_container', 'checked_by')
+    search_fields = ('item_mark',)
+    linked_models = {'full_container': 'FullContainer', 'receiver': 'users.Customer', 'checked_by': 'users.Dispatcher'}
+    # inlines = [
+    #         FullCargoStack,
+    #     ]
+
+@admin.register(LooseCargoInvoice)
+class LooseCargoInvoiceAdmin(admin.ModelAdmin):
+    list_display = ('date',)
+    list_filter = ('date',)
+    search_fields = ()
+
+
+@admin.register(FullCargoInvoice)
+class FullCargoInvoiceAdmin(admin.ModelAdmin):
+    list_display = ('date',)
+    list_filter = ('date',)
+    search_fields = ()
 
 
