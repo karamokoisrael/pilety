@@ -29,7 +29,7 @@ function Featured() {
     },
     {
       id: 5,
-      image: '',
+      image: 'https://picsum.photos/200/300',
       title: 'Item 5',
       description: 'Lorem ipsum .',
     },
