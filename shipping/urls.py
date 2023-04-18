@@ -1,5 +1,7 @@
 from django.urls import path
 from .views import (
+    Homepage,
+    
     LooseContainerListView,
     LooseContainerDetailView,
     FullContainerListView,
@@ -17,6 +19,8 @@ from .views import (
 app_name = 'shipping'
 
 urlpatterns = [
+    path('', Homepage.as_view(), name='homepage'),
+
     path('loose-containers/', LooseContainerListView.as_view(), name='loose_container_list'),
     path('loose-containers/<int:pk>/', LooseContainerDetailView.as_view(), name='loose_container_detail'),
     path('full-containers/', FullContainerListView.as_view(), name='full_container_list'),
