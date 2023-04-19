@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import CreateView, DetailView, ListView, TemplateView
+from django.views.generic import CreateView, DetailView, ListView
 
 from shipping.models import FullCargo, FullContainer, LooseCargo, LooseContainer, FullCargoInvoice, LooseCargoInvoice
 from shipping.forms import (
@@ -10,8 +10,8 @@ from shipping.forms import (
                             LooseCargoInvoiceForm,
                             FullCargoInvoiceForm,)
 
-class Homepage(TemplateView):
-    template_name = 'homepage.html'
+# class Homepage(TemplateView):
+#     template_name = 'homepage.html'
 
 class LooseContainerListView(ListView):
     model = LooseContainer
