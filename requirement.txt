@@ -6,6 +6,8 @@ django-filter
 
 django-admin-material-dashboard
 pillow
+django-crispy-forms
+crispy-bootstrap4
 
 
 

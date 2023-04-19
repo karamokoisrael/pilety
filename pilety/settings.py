@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'rest_framework',
+    'crispy_forms',
+    'crispy_bootstrap4',
 ]
 
 MIDDLEWARE = [
@@ -141,3 +143,7 @@ MEDIA_URL = '/media/'
 STATICFILES_DIRS = [BASE_DIR/ 'frontend/src/static']
 STATIC_ROOT = BASE_DIR/ 'staticfiles'
 
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
+
+CRISPY_TEMPLATE_PACK = "bootstrap4"

@@ -7,8 +7,8 @@ from .models import (LooseContainer, FullContainer,
 class LooseContainerForm(forms.ModelForm):
     class Meta:
         model = LooseContainer
-        fields = ['delivery', 'depature', 'weight', 'cbm', 'status',
-                  'ctns', 'amount', 'container_number', 'dispatcher'
+        fields = ['depature',
+                  'container_number', 'dispatcher'
                  ]
         
 class FullContainerForm(forms.ModelForm):

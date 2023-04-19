@@ -4,6 +4,13 @@ from shipping.models import (LooseContainer, FullContainer,
                              LooseCargo, FullCargo,
                              LooseCargoInvoice, FullCargoInvoice)
 
+class LooseProductInline(admin.TabularInline):
+    model = LooseCargo.product.through
+    extra = 1
+
+class FullProductInline(admin.TabularInline):
+    model = FullCargo.product.through
+    extra = 1
 
 class FullCargoStack(admin.StackedInline):
     model = FullCargo
@@ -75,7 +82,7 @@ class LooseCargoAdmin(admin.ModelAdmin):
     list_filter = ('receiver', 'loose_container', 'checked_by')
     search_fields = ('item_mark',)
     linked_models = {'loose_container': 'LooseContainer', 'receiver': 'users.Customer', 'checked_by': 'users.Dispatcher'}
-    
+    inlines = [LooseProductInline]
 
 @admin.register(FullCargo)
 class FullCargoAdmin(admin.ModelAdmin):
@@ -83,15 +90,21 @@ class FullCargoAdmin(admin.ModelAdmin):
     list_filter = ('receiver', 'full_container', 'checked_by')
     search_fields = ('item_mark',)
     linked_models = {'full_container': 'FullContainer', 'receiver': 'users.Customer', 'checked_by': 'users.Dispatcher'}
-    # inlines = [
-    #         FullCargoStack,
-    #     ]
+    inlines = [FullProductInline]
+    
 
 @admin.register(LooseCargoInvoice)
 class LooseCargoInvoiceAdmin(admin.ModelAdmin):
     list_display = ('date',)
     list_filter = ('date',)
     search_fields = ()
+
+
+# @admin.register(LooseCargoInvoice)
+# class LooseCargoInvoiceAdmin(admin.ModelAdmin):
+#     list_display = ('date',)
+#     list_filter = ('date',)
+#     search_fields = ()
 
 
 @admin.register(FullCargoInvoice)

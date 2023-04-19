@@ -2,7 +2,7 @@ from django.db import models
 from users.models import (Consignee, Customer, Shipper, 
                           Driver, Supplier, Dispatcher
                           )
-# from fisnance.models import Product
+from finance.models import Product
 from choices import LOAD_TYPE_CHOICES, CONTAINER_STATUS_CHOICES
 
 
@@ -102,6 +102,9 @@ class LooseContainer(models.Model):
     #                             related_name='loose_cargo_invoices', 
     #                             on_delete=models.CASCADE
     #                             )
+    name = models.CharField(verbose_name='Holder Name', max_length=200,
+                            blank=True, null=True
+                            )
     delivery = models.DateField(verbose_name='Delivery date',
                                 blank=True, null=True
                                 )
@@ -112,7 +115,7 @@ class LooseContainer(models.Model):
                                  max_digits=15, decimal_places=3,
                                  blank=True, null=True
                                  )
-    cbm = models.DecimalField(verbose_name='Overall weight',
+    cbm = models.DecimalField(verbose_name='Overall CBM',
                                  max_digits=15, decimal_places=3,
                                  blank=True, null=True
                                  )
@@ -134,6 +137,8 @@ class LooseContainer(models.Model):
                                    related_name='loose_container_dispatched',
                                    on_delete=models.CASCADE)
     
+
+
     def save(self, *args, **kwargs):
        
        super(LooseContainer, self).save(*args, **kwargs) # Call the real save() method
@@ -141,6 +146,9 @@ class LooseContainer(models.Model):
     
 class FullContainer(models.Model):
     STATUS_CHOICES = CONTAINER_STATUS_CHOICES
+    name = models.CharField(verbose_name='Holder Name', max_length=200,
+                            blank=True, null=True
+                            )
     delivery = models.DateField(verbose_name='Delivery date',
                                 blank=True, null=True
                                 )
@@ -151,7 +159,7 @@ class FullContainer(models.Model):
                                  max_digits=15, decimal_places=3,
                                  blank=True, null=True
                                  )
-    cbm = models.DecimalField(verbose_name='Overall weight',
+    cbm = models.DecimalField(verbose_name='Overall CBM',
                                  max_digits=15, decimal_places=3,
                                  blank=True, null=True
                                  )
@@ -195,12 +203,21 @@ class BaseCargo(models.Model):
                                        max_digits=10, decimal_places=4,
                                        blank=True, null=True
                                       )
+    cargo_cbm = models.DecimalField(verbose_name='Cargo CBM', 
+                                 decimal_places=5, max_digits=10, default=0, 
+                                 blank=True, null=True
+                                 )
     
     class Meta:
         abstract = True
 
 
 class LooseCargo(BaseCargo):
+    product = models.ManyToManyField(Product,
+                                     verbose_name='cargo/product',
+                                     related_name='loose_cargos',
+                                     blank=True
+                                    )
     receiver = models.ForeignKey(Customer, related_name='loose_cargos', 
                                  on_delete=models.CASCADE,
                                  blank=True, null=True
@@ -218,9 +235,18 @@ class LooseCargo(BaseCargo):
                                     on_delete=models.CASCADE,
                                     blank=True, null=True
                                     )
+    def total_cbm(self):
+        self.cargo_cbm = self.product.volume * self.qty
+        self.loose_container.cbm = self.loose_container.cbm + self.cargo_cbm
+        return
 
 
 class FullCargo(BaseCargo):
+    product = models.ManyToManyField(Product,
+                                     verbose_name='cargo/product',
+                                     related_name='full_cargos',
+                                     blank=True
+                                    )
     receiver = models.ForeignKey(Customer, related_name='full_cargos', 
                                  on_delete=models.CASCADE,
                                  blank=True, null=True

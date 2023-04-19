@@ -1,6 +1,6 @@
 from django.db import models
 from users.models import Customer, Dispatcher, Supplier
-from shipping.models import LooseCargo, FullCargo
+# from shipping.models import LooseCargo, FullCargo
 from choices import (CURRENCY_CHOICES, 
                      ORDERS_STATUS_CHOICES, 
                      PRODUCTS_TYPE_CHOICES, 
@@ -206,14 +206,14 @@ class Product(models.Model):
     pic = models.ImageField(upload_to='media/product_pic',
                             blank=True, null=True
                             )
-    loose_cargo = models.ForeignKey(LooseCargo, related_name='products', 
-                                    on_delete=models.CASCADE, 
-                                    blank=True, null=True)
-    full_cargo = models.ForeignKey(FullCargo, related_name='products', 
-                                   on_delete=models.CASCADE, 
-                                   blank=True, null=True)
+    # loose_cargo = models.ForeignKey(LooseCargo, related_name='products', 
+    #                                 on_delete=models.CASCADE, 
+    #                                 blank=True, null=True)
+    # full_cargo = models.ForeignKey(FullCargo, related_name='products', 
+    #                                on_delete=models.CASCADE, 
+    #                                blank=True, null=True)
     def __str__(self):
-        pass 
+        return f'{self.name}' 
 
     def update_stock(self):
         pass
