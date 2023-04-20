@@ -27,30 +27,30 @@
                             <table class="table">
                                 <thead>
                                 <tr>
-                                    <th>Item Mark</th>
-                                    <th>Qty</th>
-                                    <th>Total Pcs</th>
-                                    <th>Total Price</th>
-                                    <th>Total Weight</th>
-                                    <th>Receiver</th>
-                                    <th>Loose Container</th>
+                                    <th>Item Name</th>
+                                    <th>Delivery Date</th>
+                                    <th>Departure</th>
+                                    <th>Weight</th>
+                                    <th> CBM</th>
+                                    <th>Status</th>
+                                    <th>Cartons</th>
                                     <th>Container Number</th>
                                     <th>Checked By</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {% for item in loose_cargos %}
+                                {% for item in loose_containers %}
                                     <tr>
-                                        <td>{{ item.item_mark }}</td>
-                                        <td>{{ item.qty }}</td>
-                                        <td>{{ item.total_pcs }}</td>
-                                        <td>{{ item.total_price }}</td>
-                                        <td>{{ item.total_weight }}</td>
-                                        <td>{{ item.receiver }}</td>
-                                        <td>{{ item.loose_container }}</td>
+                                        <td>{{ item.name }}</td>
+                                        <td>{{ item.delivery }}</td>
+                                        <td>{{ item.depature }}</td>
+                                        <td>{{ item.weight }}</td>
+                                        <td>{{ item.cbm }}</td>
+                                        <td>{{ item.status }}</td>
+                                        <td>{{ item.ctns }}</td>
                                         <td>{{ item.container_number }}</td>
-                                        <td>{{ item.checked_by }}</td>
-                                        <td><a href="{% url 'shipping:loose_cargo_detail' item.id %}">Details</a></td>
+                                        <td>{{ item.dispature }}</td>
+                                        <td><a href="{% url 'shipping:loose_container_detail' item.id %}">Details</a></td>
 
                                     </tr>
                                 {% endfor %}

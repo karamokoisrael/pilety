@@ -278,3 +278,9 @@ class Invoice(models.Model):
         return f'{self.customer}\'s Invoice'
 
 
+class OtherProduct(models.Model):
+    name = models.CharField(verbose_name='product( unregistered/ random)', max_length=60, blank=True, null=True)
+    volume = models.DecimalField(max_digits=7, decimal_places=3,blank=True, null=True)
+
+    def __str__(self):
+        return f'{self.name}'

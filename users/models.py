@@ -82,7 +82,7 @@ class SupplierAddress(models.Model):
     
 
     def __str__(self):
-        return f'{self.address} + {self.shipper}'    
+        return f'{self.address} + {self.supplier}'    
     
     class Meta:
         verbose_name = "Supplier address"

@@ -138,7 +138,9 @@ class LooseContainer(models.Model):
                                    on_delete=models.CASCADE)
     
 
-
+    def __str__(self):
+        return f'{self.name}'
+    
     def save(self, *args, **kwargs):
        
        super(LooseContainer, self).save(*args, **kwargs) # Call the real save() method
@@ -185,6 +187,8 @@ class FullContainer(models.Model):
     #                             related_name='cargo_invoices', 
     #                             on_delete=models.CASCADE
     #                             )   
+    def __str__(self):
+        return f'{self.name}'
     
 
 class BaseCargo(models.Model):
@@ -235,10 +239,21 @@ class LooseCargo(BaseCargo):
                                     on_delete=models.CASCADE,
                                     blank=True, null=True
                                     )
+    def __str__(self):
+        return f'{self.item_mark}'
+    
     def total_cbm(self):
         self.cargo_cbm = self.product.volume * self.qty
         self.loose_container.cbm = self.loose_container.cbm + self.cargo_cbm
-        return
+    
+    def get_weight(self):
+        self.weight = self.product.weight * self.qty
+
+    def save(self, *args, **kwargs):
+       self.total_pcs = self.qty * self.product.packaging
+       self.total_price = self.product.price * self.total_pcs
+       self.total_cbm()
+       super(LooseCargo, self).save(*args, **kwargs) # Call the real save() method
 
 
 class FullCargo(BaseCargo):
@@ -264,6 +279,10 @@ class FullCargo(BaseCargo):
                                     on_delete=models.CASCADE,
                                     blank=True, null=True
                                     )
+    
+    def __str__(self):
+        return f'{self.item_mark}'
+    
 
 
 class LooseCargoInvoice(models.Model):
