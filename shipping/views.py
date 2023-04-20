@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import CreateView, DetailView, ListView
+from django.views.generic import CreateView, DetailView, ListView, TemplateView
 
 from shipping.models import FullCargo, FullContainer, LooseCargo, LooseContainer, FullCargoInvoice, LooseCargoInvoice
 from shipping.forms import (
@@ -87,32 +87,69 @@ class FullCargoInvoiceCreateView(CreateView):
     form_class = FullCargoInvoiceForm  # Replace with your form class
     success_url = '/fullcargos_invoice/'  # Replace with your success URL
 
+    
 class LooseContainerDetailView(DetailView):
     model = LooseContainer
     template_name = 'shipping/loosecontainer_detail.html' 
     context_object_name = 'loose_container'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['loose_cargos'] = self.object.cargo.all()
+        return context
+    
 
 class FullContainerDetailView(DetailView):
     model = FullContainer
     template_name = 'shipping/fullcontainer_detail.html' 
     context_object_name = 'full_container'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+    
+        return context
+    
 
 class LooseCargoDetailView(DetailView):
     model = LooseCargo
     template_name = 'shipping/loosecargo_detail.html' 
     context_object_name = 'loose_cargo'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['products'] = self.object.product.all()
+        return context
+    
 
 class FullCargoDetailView(DetailView):
     model = FullCargo
     template_name = 'shipping/fullcargo_detail.html' 
     context_object_name = 'full_cargo'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+    
+        return context
+    
 
 class LooseCargoInvoiceDetailView(DetailView):
     model = LooseCargoInvoice
     template_name = 'shipping/loosecargo_invoice_detail.html' 
     context_object_name = 'full_cargo_inv_details'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+    
+        return context
+    
 
 class FullCargoInvoiceDetailView(DetailView):
     model = FullCargoInvoice
     template_name = 'shipping/fullcargo_invoice_detail.html' 
     context_object_name = 'full_cargos_inv_details'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+    
+        return context
+    

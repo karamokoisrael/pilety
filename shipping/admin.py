@@ -58,7 +58,7 @@ class LooseCargoStack(admin.StackedInline):
 @admin.register(LooseContainer)
 class LooseContainerAdmin(admin.ModelAdmin):
     list_display = ('container_number', 'status',
-                    'dispatcher', 'delivery', 'depature', 'total_cargos')
+                    'dispatcher', 'delivery', 'depature', 'total_cargos', 'cbm','cbms')
     list_filter = ('status', 'dispatcher', 'delivery', 'depature')
     search_fields = ('container_number',)
     linked_models = {'receiver': 'users.Customer',
@@ -69,14 +69,18 @@ class LooseContainerAdmin(admin.ModelAdmin):
 
     def total_cargos(self, obj):
         return sum(cargo.qty for cargo in obj.cargo.all())
+    
+    def cbms(self, obj):
+        return sum(cargo.cargo_cbm for cargo in obj.cargo.all())
 
     total_cargos.short_description = 'Total Ctns'
+    cbms.short_description = 'CBM'
 
 
 @admin.register(FullContainer)
 class FullContainerAdmin(admin.ModelAdmin):
     list_display = ('container_number', 'status',
-                    'dispatcher', 'delivery', 'depature', 'total_cargos')
+                    'dispatcher', 'delivery', 'depature', 'total_cargos', 'cbm','cbms')
     list_filter = ('status', 'dispatcher', 'delivery', 'depature')
     search_fields = ('container_number',)
     linked_models = {'receiver': 'users.Customer',
@@ -87,8 +91,12 @@ class FullContainerAdmin(admin.ModelAdmin):
 
     def total_cargos(self, obj):
         return sum(cargo.qty for cargo in obj.cargo.all())
+    
+    def cbms(self, obj):
+        return sum(cargo.cargo_cbm for cargo in obj.cargo.all())
 
     total_cargos.short_description = 'Total Ctns'
+    cbms.short_description = 'CBM'
 
 
 @admin.register(LooseCargo)
