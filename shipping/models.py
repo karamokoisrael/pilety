@@ -2,8 +2,11 @@ from django.db import models
 from users.models import (Consignee, Customer, Shipper, 
                           Driver, Supplier, Dispatcher
                           )
-# from fisnance.models import Product
+from django.db.models import Sum
+
+from finance.models import Product
 from choices import LOAD_TYPE_CHOICES, CONTAINER_STATUS_CHOICES
+
 
 
 class Shipment(models.Model):
@@ -102,6 +105,9 @@ class LooseContainer(models.Model):
     #                             related_name='loose_cargo_invoices', 
     #                             on_delete=models.CASCADE
     #                             )
+    name = models.CharField(verbose_name='Holder Name', max_length=200,
+                            blank=True, null=True
+                            )
     delivery = models.DateField(verbose_name='Delivery date',
                                 blank=True, null=True
                                 )
@@ -112,7 +118,7 @@ class LooseContainer(models.Model):
                                  max_digits=15, decimal_places=3,
                                  blank=True, null=True
                                  )
-    cbm = models.DecimalField(verbose_name='Overall weight',
+    cbm = models.DecimalField(verbose_name='Overall CBM',
                                  max_digits=15, decimal_places=3,
                                  blank=True, null=True
                                  )
@@ -134,13 +140,38 @@ class LooseContainer(models.Model):
                                    related_name='loose_container_dispatched',
                                    on_delete=models.CASCADE)
     
+
+    def __str__(self):
+        return f'{self.name}'
+    
+    
+    
     def save(self, *args, **kwargs):
-       
-       super(LooseContainer, self).save(*args, **kwargs) # Call the real save() method
-    
-    
+        update_cargo = False
+        if self.pk:  # object already exists in db, check if container_no has changed
+            orig = LooseContainer.objects.get(pk=self.pk)
+            if orig.container_number != self.container_number:
+                update_cargo = True
+        else:
+            update_cargo = True  # new object, update cargo
+        super().save(*args, **kwargs)
+        if update_cargo:
+            self.cargo.update(container_number=self.container_number)
+
+
+        # Calculate the total CBM of all related LooseCargo instances
+        total_cbm = self.cargo.aggregate(Sum('cargo_cbm'))['cargo_cbm__sum']
+        
+        # Set the value of cbm to the total CBM
+        self.cbm = total_cbm or 0  # set to 0 if total_cbm is None
+        
+        super(LooseContainer, self).save(*args, **kwargs)
+
 class FullContainer(models.Model):
     STATUS_CHOICES = CONTAINER_STATUS_CHOICES
+    name = models.CharField(verbose_name='Holder Name', max_length=200,
+                            blank=True, null=True
+                            )
     delivery = models.DateField(verbose_name='Delivery date',
                                 blank=True, null=True
                                 )
@@ -151,7 +182,7 @@ class FullContainer(models.Model):
                                  max_digits=15, decimal_places=3,
                                  blank=True, null=True
                                  )
-    cbm = models.DecimalField(verbose_name='Overall weight',
+    cbm = models.DecimalField(verbose_name='Overall CBM',
                                  max_digits=15, decimal_places=3,
                                  blank=True, null=True
                                  )
@@ -177,7 +208,20 @@ class FullContainer(models.Model):
     #                             related_name='cargo_invoices', 
     #                             on_delete=models.CASCADE
     #                             )   
+    def __str__(self):
+        return f'{self.name}'
     
+    # def get_cbms(self):
+    #     self.cbm = sum(self.cargo.all())
+    
+    def save(self, *args, **kwargs):
+        # Calculate the total CBM of all related LooseCargo instances
+        total_cbm = self.cargo.aggregate(Sum('cargo_cbm'))['cargo_cbm__sum']
+
+        # Set the value of cbm to the total CBM
+        self.cbm = total_cbm or 0  # set to 0 if total_cbm is None
+        
+        super().save(*args, **kwargs)
 
 class BaseCargo(models.Model):
     item_mark = models.CharField(max_length=100,blank=True, null=True
@@ -195,12 +239,21 @@ class BaseCargo(models.Model):
                                        max_digits=10, decimal_places=4,
                                        blank=True, null=True
                                       )
+    cargo_cbm = models.DecimalField(verbose_name='Cargo CBM', 
+                                 decimal_places=5, max_digits=10, default=0, 
+                                 blank=True, null=True
+                                 )
     
     class Meta:
         abstract = True
 
 
 class LooseCargo(BaseCargo):
+    product = models.ManyToManyField(Product,
+                                     verbose_name='cargo/product',
+                                     related_name='loose_cargos',
+                                     blank=True
+                                    )
     receiver = models.ForeignKey(Customer, related_name='loose_cargos', 
                                  on_delete=models.CASCADE,
                                  blank=True, null=True
@@ -218,9 +271,37 @@ class LooseCargo(BaseCargo):
                                     on_delete=models.CASCADE,
                                     blank=True, null=True
                                     )
+    def __str__(self):
+        return f'{self.item_mark}'
+    
+    def total_cbm(self):
+        self.cargo_cbm = self.product.volume * self.qty
+        self.loose_container.cbm = self.loose_container.cbm + self.cargo_cbm
+    
+    def get_weight(self):
+        self.weight = self.product.weight * self.qty
+
+    def save(self, *args, **kwargs):
+        # self.total_pcs = self.qty * self.product.packaging
+        # self.total_price = self.product.price * self.total_pcs
+        # self.total_cbm()
+        weight = self.product.aggregate(Sum('weight'))['weight__sum']
+        self.weight = weight or 0  
+        # cargo_cbm = 
+        total_price = self.product.aggregate(Sum('price'))['price__sum']
+        self.total_price = total_price or 0  
+
+        total_price = self.product.aggregate(Sum('price'))['price__sum']
+        self.total_price = total_price or 0  
+        super(LooseCargo, self).save(*args, **kwargs) # Call the real save() method
 
 
 class FullCargo(BaseCargo):
+    product = models.ManyToManyField(Product,
+                                     verbose_name='cargo/product',
+                                     related_name='full_cargos',
+                                     blank=True
+                                    )
     receiver = models.ForeignKey(Customer, related_name='full_cargos', 
                                  on_delete=models.CASCADE,
                                  blank=True, null=True
@@ -238,6 +319,10 @@ class FullCargo(BaseCargo):
                                     on_delete=models.CASCADE,
                                     blank=True, null=True
                                     )
+    
+    def __str__(self):
+        return f'{self.item_mark}'
+    
 
 
 class LooseCargoInvoice(models.Model):

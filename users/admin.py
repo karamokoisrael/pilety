@@ -3,7 +3,8 @@ from users.models import (Consignee, ConsigneeAddress,
                           Customer, CustomerAddress,
                           Driver, DriverAddress,
                           Dispatcher, DispatcherAddress,
-                          Shipper, shipperAddress)
+                          Shipper, ShipperAddress,
+                          Supplier, SupplierAddress)
 
 class CustomerAddressAdmin(admin.StackedInline):
     model = CustomerAddress
@@ -18,7 +19,10 @@ class DispatcherAddressAdmin(admin.StackedInline):
     model = DispatcherAddress
 
 class ShipperAddressAdmin(admin.StackedInline):
-    model = shipperAddress
+    model = ShipperAddress
+
+class SupplierAddressAdmin(admin.StackedInline):
+    model = SupplierAddress
 
 
 @admin.register(Customer)
@@ -101,3 +105,18 @@ class ShipperAdmin(admin.ModelAdmin):
     class Meta:
         model = Shipper
 
+
+@admin.register(Supplier)
+class SupplierAdmin(admin.ModelAdmin):
+    '''Admin View for Supplier'''
+    list_display = ('id', 'username', 'company', 'wechat', )
+    list_filter = ('is_staff', 'is_active')
+    search_fields = ('username', 'name', 'company', 'wechat')
+ 
+    inlines = [
+        SupplierAddressAdmin,
+    ]
+  
+
+    class Meta:
+        model = Supplier

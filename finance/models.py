@@ -1,10 +1,11 @@
 from django.db import models
 from users.models import Customer, Dispatcher, Supplier
-from shipping.models import LooseCargo, FullCargo
+# from shipping.models import LooseCargo, FullCargo
 from choices import (CURRENCY_CHOICES, 
                      ORDERS_STATUS_CHOICES, 
                      PRODUCTS_TYPE_CHOICES, 
                      UNIT_PACKAGING_CHOICES)
+from decimal import Decimal
 
 class Company(models.Model):
     name = models.CharField(max_length=20, blank=True, null=True
@@ -184,7 +185,7 @@ class Product(models.Model):
                                       default='PCS', max_length=15, 
                                       blank=True, null=True
                                       )
-    Packaging = models.IntegerField(verbose_name='No. of items in a carton',
+    packaging = models.IntegerField(verbose_name='No. of items in a carton',
                                     default=0, blank=True, null=True
                                     )
     height = models.DecimalField(verbose_name='Height in centimeters' ,
@@ -206,34 +207,36 @@ class Product(models.Model):
     pic = models.ImageField(upload_to='media/product_pic',
                             blank=True, null=True
                             )
-    loose_cargo = models.ForeignKey(LooseCargo, related_name='products', 
-                                    on_delete=models.CASCADE, 
-                                    blank=True, null=True)
-    full_cargo = models.ForeignKey(FullCargo, related_name='products', 
-                                   on_delete=models.CASCADE, 
-                                   blank=True, null=True)
+    # loose_cargo = models.ForeignKey(LooseCargo, related_name='products', 
+    #                                 on_delete=models.CASCADE, 
+    #                                 blank=True, null=True)
+    # full_cargo = models.ForeignKey(FullCargo, related_name='products', 
+    #                                on_delete=models.CASCADE, 
+    #                                blank=True, null=True)
     def __str__(self):
-        pass 
+        return f'{self.name}' 
 
     def update_stock(self):
         pass
 
     def calc_cbm(self):
         if not self.volume:
-            if self.height and self.width and self.length:
-            
-                self.volume = self.height/100 *self.width/100 *self.length/100
-                return self.volume
-            else:
-                return f'Please input volume(CBM) or fill in the height, length, and width .'
+            if not (self.height and self.width and self.length):
+                raise ValueError("Either 'cbm' must be provided or 'height', 'width', and 'length' must all be provided.")
+            self.volume = Decimal(self.height * self.width * self.length) / Decimal(1000000)
+            return f'{self.volume}'
         else:
             return self.volume
+        
     def get_price_per_ctn(self):
-        return self.price * self.Packaging
+        return self.price * self.packaging
     
     def save(self, *args, **kwargs):
+        self.calc_cbm()
+        super().save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
        
-       super(Product, self).save(*args, **kwargs) # Call the real save() method
+    #    super(Product, self).save(*args, **kwargs) # Call the real save() method
                 
 
 class Invoice(models.Model):
@@ -278,3 +281,9 @@ class Invoice(models.Model):
         return f'{self.customer}\'s Invoice'
 
 
+class OtherProduct(models.Model):
+    name = models.CharField(verbose_name='product( unregistered/ random)', max_length=60, blank=True, null=True)
+    volume = models.DecimalField(max_digits=7, decimal_places=3,blank=True, null=True)
+
+    def __str__(self):
+        return f'{self.name}'

@@ -1,0 +1,123 @@
+{% load static %}
+
+<!-- Start Pilety Navbar Area -->
+<div class="prevoz-nav-style ">
+    <div class="navbar-area">
+        <!-- Menu For Mobile Device -->
+        <div class="mobile-nav">
+            <a href="/" class="logo">
+                <img src="{% static 'img/logo/logo-one.png' %}" alt="Logo">
+            </a>
+        </div>
+        <!-- Menu For Desktop Device -->
+        <div class="main-nav">
+            <nav class="navbar navbar-expand-md navbar-light">
+                <div class="container">
+                    <a class="navbar-brand" href="/">
+                        <img src="{% static 'img/logo/logo-one.png' %}" alt="Logo">
+                    </a>
+                    <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
+                        <ul class="navbar-nav m-auto">
+                            <li class="nav-item">
+                                <a href="/" class="nav-link dropdown-toggle active">
+                                    Home
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link dropdown-toggle">
+                                    Pages
+                                    <i class='bx bx-chevron-down'></i>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    
+                                    <li class="nav-item">
+                                        <a href="{% url 'shipping:whyus' %}" class="nav-link">Why Choose Us</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{% url 'shipping:team' %}" class="nav-link">Team</a>
+                                    </li>
+                                    <!-- <li class="nav-item">
+                                        <a href="global-location.html" class="nav-link">Global Location</a>
+                                    </li> -->
+                                    <!-- <li class="nav-item">
+                                        <a href="faq.html" class="nav-link">FAQ</a>
+                                    </li> -->
+                                    <!-- <li class="nav-item">
+                                        <a href="terms-conditions.html" class="nav-link">Terms Conditions</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="privacy-policy.html" class="nav-link">Privacy Policy</a>
+                                    </li> -->
+                                </ul>
+                            </li>
+                            <!-- <li class="nav-item">
+                                <a href="#" class="nav-link dropdown-toggle">
+                                    Company
+                                    <i class='bx bx-chevron-down'></i>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li class="nav-item">
+                                        <a href="company-history.html" class="nav-link">Company History</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="company-clients.html" class="nav-link">Company Clients</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="careers.html" class="nav-link">Careers</a>
+                                    </li>
+                                </ul>
+                            </li> -->
+                            <!-- <li class="nav-item">
+                                <a href="#" class="nav-link dropdown-toggle">
+                                    Services
+                                    <i class='bx bx-chevron-down'></i>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li class="nav-item">
+                                        <a href="services.html" class="nav-link">Services</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="road-transport.html" class="nav-link">Road Transport</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="air-transport.html" class="nav-link">Air  Transport</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="service-details.html" class="nav-link">Service Details</a>
+                                    </li>
+                                </ul>
+                            </li> -->
+                            <li class="nav-item">
+                                <a href="{% url 'shipping:services' %}" class="nav-link">Services</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{% url 'shipping:about' %}" class="nav-link">About us</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{% url 'shipping:contact' %}" class="nav-link">Contact</a>
+                            </li>
+                            
+                            
+                        </ul>
+                        <!-- Start Other Option -->
+                        <div class="others-option">
+                            <div class="dark-switch">
+                                <div class="switch-box">
+                                    <label id="switch" class="switch">
+                                        <input type="checkbox" onchange="toggleTheme()" id="slider">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Other Option -->
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+</div>
+<!-- End Pilety Navbar Area -->
+
+
+

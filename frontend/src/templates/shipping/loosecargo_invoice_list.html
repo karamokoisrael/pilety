@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+
+<table>
+    <thead>
+      <tr>
+        <th>Item Mark</th>
+        <th>Qty</th>
+        <th>Total Pcs</th>
+        <th>Total Price</th>
+        <th>Total Weight</th>
+        <th>Receiver</th>
+        <th>Loose Container</th>
+        <th>Container Number</th>
+        <th>Checked By</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in loose_cargo %}
+        <tr>
+          <td>{{ item.item_mark }}</td>
+          <td>{{ item.qty }}</td>
+          <td>{{ item.total_pcs }}</td>
+          <td>{{ item.total_price }}</td>
+          <td>{{ item.total_weight }}</td>
+          <td>{{ item.receiver }}</td>
+          <td>{{ item.loose_container }}</td>
+          <td>{{ item.container_number }}</td>
+          <td>{{ item.checked_by }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  
+
+
+{% endblock %}
