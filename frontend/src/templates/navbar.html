@@ -50,23 +50,28 @@
                                     </li> -->
                                 </ul>
                             </li>
-                            <!-- <li class="nav-item">
+                            <li class="nav-item">
                                 <a href="#" class="nav-link dropdown-toggle">
-                                    Company
+                                    shipping
                                     <i class='bx bx-chevron-down'></i>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li class="nav-item">
-                                        <a href="company-history.html" class="nav-link">Company History</a>
+                                        <a href="{% url 'shipping:full_container_list' %}" class="nav-link">Full Container</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="company-clients.html" class="nav-link">Company Clients</a>
+                                        <a href="{% url 'shipping:loose_container_list' %}" class="nav-link">Loose Container</a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="careers.html" class="nav-link">Careers</a>
-                                    </li>
+                                    
+                                    {% comment %}
+                                        <!-- <li class="nav-item">
+                                        <a href="{% url 'shipping:' %}"" class="nav-link">Products</a>
+                                    </li> -->
+                                    {% endcomment %}
+                                        
+                                    
                                 </ul>
-                            </li> -->
+                            </li>
                             <!-- <li class="nav-item">
                                 <a href="#" class="nav-link dropdown-toggle">
                                     Services
