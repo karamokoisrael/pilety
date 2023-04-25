@@ -23,36 +23,36 @@ class LooseCargoStack(admin.StackedInline):
     model = LooseCargo
 
 
-# @admin.register(Shipment)
-# class ShipmentAdmin(admin.ModelAdmin):
-#     '''Admin View for Shipment'''
-#     list_display = ('driver', 'consignee', 'customer', 'delivery_date', 'pickup_date', 'total_rates')
-#     list_filter = ('delivery_date', 'pickup_date')
-#     search_fields = ('driver', 'consignee', 'customer', 'delivery_date', 'pickup_date', 'total_rates')
+@admin.register(Shipment)
+class ShipmentAdmin(admin.ModelAdmin):
+    '''Admin View for Shipment'''
+    list_display = ('driver', 'consignee', 'customer', 'delivery_date', 'pickup_date', 'total_rates')
+    list_filter = ('delivery_date', 'pickup_date')
+    search_fields = ('driver', 'consignee', 'customer', 'delivery_date', 'pickup_date', 'total_rates')
 
-#     # inlines = [
-#     #     ShipperAddressAdmin,
-#     # ]
-
-
-#     class Meta:
-#         model = Shipment
+    # inlines = [
+    #     ShipperAddressAdmin,
+    # ]
 
 
-# @admin.register(Vehicle)
-# class VehicleAdmin(admin.ModelAdmin):
-#     '''Admin View for Vehicle'''
-#     list_display = ('id', 'driver', 'plate_number', 'make', 'mileage')
-#     list_filter = ('mileage', 'weight', 'province')
-#     search_fields = ('make', 'driver', 'plate_number', 'owner')
-
-#     # inlines = [
-#     #     ShipperAddressAdmin,
-#     # ]
+    class Meta:
+        model = Shipment
 
 
-#     class Meta:
-#         model = Vehicle
+@admin.register(Vehicle)
+class VehicleAdmin(admin.ModelAdmin):
+    '''Admin View for Vehicle'''
+    list_display = ('id', 'driver', 'plate_number', 'make', 'mileage')
+    list_filter = ('mileage', 'weight', 'province')
+    search_fields = ('make', 'driver', 'plate_number', 'owner')
+
+    # inlines = [
+    #     ShipperAddressAdmin,
+    # ]
+
+
+    class Meta:
+        model = Vehicle
 
 
 @admin.register(LooseContainer)
