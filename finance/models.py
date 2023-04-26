@@ -6,7 +6,7 @@ from choices import (CURRENCY_CHOICES,
                      PRODUCTS_TYPE_CHOICES, 
                      UNIT_PACKAGING_CHOICES)
 from decimal import Decimal
-
+ 
 class Company(models.Model):
     name = models.CharField(max_length=20, blank=True, null=True
                             )
@@ -287,3 +287,4 @@ class OtherProduct(models.Model):
 
     def __str__(self):
         return f'{self.name}'
+

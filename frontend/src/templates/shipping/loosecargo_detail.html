@@ -31,6 +31,10 @@
                                     <td>{{ loose_cargo.item_mark }}</td>
                                   </tr>
                                   <tr>
+                                    <th scope="row">Name:</th>
+                                    <td>{{ loose_cargo.product.name }}</td>
+                                  </tr>
+                                  <tr>
                                     <th scope="row">Quantity:</th>
                                     <td>{{ loose_cargo.qty }}</td>
                                   </tr>
@@ -64,16 +68,16 @@
                                   </tr>
                                   <tr>
                                     <th scope="row">Product Name:</th>
-                                    <td>{{ loose_cargo.product.name }}</td>
+                                    <td>{{ loose_cargo.product }}</td>
                                   </tr>
-                                  <tr>
+                                  <!-- <tr>
                                     <th scope="row">Checked By:</th>
                                     <td>{{ loose_cargo.checked_by }}</td>
                                   </tr>
                                   <tr>
                                     <th scope="row">Checked By:</th>
                                     <td>{{ loose_cargo.checked_by }}</td>
-                                  </tr>
+                                  </tr> -->
                                   
                                 </tbody>
                               </table>
@@ -84,8 +88,8 @@
                                         <thead>
                                         <tr>
                                             <th>Item Name</th>
-                                            <th>Item Mark</th>
-                                            <th>Qty</th>
+                                            <th>Item Number</th>
+                                            <th>Supplier</th>
                                             <th>Total Pcs</th>
                                             <th>Total Price</th>
                                             <th>Total Weight</th>
@@ -109,7 +113,7 @@
                                                 <td>{{ item.receiver }}</td>
                                                 <td>{{ item.description }}</td>
                                                 <td>{{ item.container_number }}</td>
-                                                <td>{{ item.checked_by }}</td>
+                                                <td>{{ item.loose_cargos }}</td>
                                                 <td><a href="{% url 'shipping:loose_cargo_detail' item.id %}">Details</a></td>
         
                                             </tr>

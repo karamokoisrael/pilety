@@ -106,6 +106,7 @@ class FullContainerDetailView(DetailView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['full_cargos'] = self.object.cargo.all()
     
         return context
     
@@ -128,6 +129,7 @@ class FullCargoDetailView(DetailView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['products'] = self.object.product.all()
     
         return context
     
