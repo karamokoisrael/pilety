@@ -15,8 +15,8 @@ ORDERS_STATUS_CHOICES = (
 )
 
 PRODUCTS_TYPE_CHOICES = (
-    ('SERVICE', 'SERVICE'),
-    ('PRODUCT', 'PRODUCT'),
+    ('S', 'SERVICE'),
+    ('P', 'PRODUCT'),
 )
 
 # Drivers model from users 
@@ -45,4 +45,25 @@ CONTAINER_STATUS_CHOICES = (
     ('FC', 'Full CBM'),
     ('OW', 'Over weight'),
     ('NC', 'Needs Confirming'),
+)
+
+EXPENSES_RECURRANCE_CHOICES = (
+    ('D', 'Daily'),
+    ('W', 'Weekly'),
+    ('M', 'Monthly'),
+    ('Q', 'Quaterly'),
+    ('S', 'Semi Annual'),
+    ('A', 'Annual'),
+    
+)
+
+CARGO_STATUS_CHOICES = (
+    ('RW', 'Recieved in China Warehouse'),
+    ('DC', 'Departed China '),
+    ('AT', 'Arrived in Tanzania'),
+    ('RC', 'Recieved by Client'),
+)
+CARGO_TYPE_CHOICES = (
+    ('F', 'Full Cargo'),
+    ('L', 'Loose Cargo'),
 )

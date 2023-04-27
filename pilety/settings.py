@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'users',
     'finance',
     'shipping',
+    'allin',
 
     'allauth',
     'allauth.account',

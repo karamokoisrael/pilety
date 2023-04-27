@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+
+<!-- Start 404 Error -->
+<div class="error-area">
+    <div class="d-table">
+        <div class="d-table-cell">
+            <div class="error-contact-wrap">
+                <img src="{% static 'img/404.gif' %}" alt="404">
+                <h3>Oops! Page Not Found</h3>
+                <p>The page you were looking for could not be found.</p>
+                <a href="index-2.html" class="default-btn btn-two">
+                    Return Home page
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
+
+		
