@@ -1,7 +1,6 @@
 from django.db import models
 
-
-from django.db import models
+from django.db.models import Sum
 from users.models import Customer, Dispatcher, Supplier
 # from shipping.models import LooseCargo, FullCargo
 from choices import (CURRENCY_CHOICES, 
@@ -16,16 +15,29 @@ class Product(models.Model):
     name = models.CharField(max_length = 150)
     types = models.CharField(max_length = 150, default='', 
                              choices=TYPE_CHOICES, blank=True, null=True)
-    qty = models.IntegerField()
-    packaging = models.IntegerField()
-    cbm = models.DecimalField(max_digits=10, decimal_places=3)
-    weight = models.DecimalField(max_digits=10, decimal_places=3)
-    height = models.DecimalField(max_digits=10, decimal_places=3)
-    length = models.DecimalField(max_digits=10, decimal_places=3)
-    width = models.DecimalField(max_digits=10, decimal_places=3)
-    owner = models.ForeignKey(Customer, related_name='products', on_delete=models.CASCADE)
-    buyer = models.ForeignKey(Customer, related_name='products', on_delete=models.CASCADE)
-    Supplier = models.ForeignKey(Supplier, related_name='product', on_delete=models.CASCADE)
+    qty = models.IntegerField(blank=True, null=True)
+    packaging = models.IntegerField(blank=True, null=True)
+    cbm = models.DecimalField(max_digits=10, decimal_places=3,
+                              blank=True, null=True)
+    price = models.DecimalField(max_digits=10, decimal_places=3,
+                              blank=True, null=True)
+    weight = models.DecimalField(max_digits=10, decimal_places=3,
+                                    blank=True, null=True)
+    height = models.DecimalField(max_digits=10, decimal_places=3,
+                                    blank=True, null=True)
+    length = models.DecimalField(max_digits=10, decimal_places=3,
+                                    blank=True, null=True)
+    width = models.DecimalField(max_digits=10, decimal_places=3,
+                                    blank=True, null=True)
+    owner = models.ForeignKey(Customer, related_name='products', 
+                                    on_delete=models.CASCADE,
+                                    blank=True, null=True)
+    buyer = models.ForeignKey(Customer, related_name='products_bought', 
+                                    on_delete=models.CASCADE,
+                                    blank=True, null=True)
+    Supplier = models.ForeignKey(Supplier, related_name='product', 
+                                    on_delete=models.CASCADE,
+                                    blank=True, null=True)
     stock = models.IntegerField()
     has_stock = models.BooleanField()
     
@@ -33,44 +45,95 @@ class Product(models.Model):
     def __str__(self):
         return f'{self.name}'
 
+    def update_stock(self):
+        pass
 
-
+    def calc_cbm(self):
+        if not self.volume:
+            if not (self.height and self.width and self.length):
+                raise ValueError("Either 'cbm' must be provided or 'height', 'width', and 'length' must all be provided.")
+            self.volume = Decimal(self.height * self.width * self.length) / Decimal(1000000)
+            return f'{self.volume}'
+        else:
+            return self.volume
+        
+    def save(self, *args, **kwargs):
+        self.calc_cbm()
+        super().save(*args, **kwargs)
 
 
 class BaseCargo(models.Model):
     
     mark = models.CharField(max_length = 150, blank=True, null=True)
-    recieved = models.DateField(auto_now=False, auto_now_add=False)
-    depature = models.DateField(auto_now=False, auto_now_add=False)
-    arrived = models.DateField(auto_now=False, auto_now_add=False)
-    weight = models.DecimalField(max_digits=10, decimal_places=3)
-    cbms = models.DecimalField(max_digits=10, decimal_places=3)
-    ctns = models.DecimalField(max_digits=10, decimal_places=3)
+    recieved = models.DateField(auto_now=False, auto_now_add=False,
+                                        blank=True, null=True)
+    depature = models.DateField(auto_now=False, auto_now_add=False,
+                                        blank=True, null=True)
+    arrived = models.DateField(auto_now=False, auto_now_add=False,
+                                        blank=True, null=True)
+    weight = models.DecimalField(max_digits=10, decimal_places=3,
+                                        blank=True, null=True)
+    cbms = models.DecimalField(max_digits=10, decimal_places=3,
+                                        blank=True, null=True)
+    ctns = models.DecimalField(max_digits=10, decimal_places=3,
+                                        blank=True, null=True)
        
     class Meta:
         abstract = True
-
-
+  
     
 class LooseCargo(BaseCargo):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, 
-                                related_name='loose_cargo')
-    status = models.CharField( max_length=3, choices=, default='')
-    reciever = models.ForeignKey(Customer, related_name='loose_cargos_dispatched', on_delete=models.CASCADE)    
-    dispater = models.ForeignKey(Dispatcher, related_name='loose_cargos_dispatched', on_delete=models.CASCADE)    
+                                related_name='loose_cargo',
+                                blank=True, null=True)
+    # status = models.CharField( max_length=3, choices=, default='',
+    # blank=True, null=True)
+    reciever = models.ForeignKey(Customer, 
+                                related_name='loose_cargos_dispatched',
+                                on_delete=models.CASCADE,
+                                blank=True, null=True)    
+    dispater = models.ForeignKey(Dispatcher, 
+                                related_name='loose_cargos_dispatched',
+                                on_delete=models.CASCADE,
+                                blank=True, null=True)    
     
     def __str__(self):
         return self.product.name
+    
+    def save(self, *args, **kwargs):
+        # self.total_pcs = self.qty * self.product.packaging
+        # self.total_price = self.product.price * self.total_pcs
+        # self.total_cbm()
+        weight = self.product.aggregate(Sum('weight'))['weight__sum']
+        self.weight = weight or 0  
+        # cargo_cbm = 
+        # total_price = self.product.aggregate(Sum('price'))['price__sum']
+        # self.total_price = total_price or 0  
+
+        total_qty = self.product.aggregate(Sum('qty'))['qty__sum']
+        self.cbms = total_qty or 0  
+
+        total_ctns = self.product.aggregate(Sum('ctns'))['ctns__sum']
+        self.ctns = total_ctns or 0  
+
+
+        super(LooseCargo, self).save(*args, **kwargs) # Call the real save() method
 
 
 class BaseContainer(models.Model):
 
-    depature = models.DateField(auto_now=False, auto_now_add=False)
-    arrived = models.DateField(auto_now=False, auto_now_add=False)
-    weight = models.DecimalField(max_digits=10, decimal_places=3)
-    cbms = models.DecimalField(max_digits=10, decimal_places=3)
-    ctns = models.DecimalField(max_digits=10, decimal_places=3)
-    status = models.CharField( max_length=3, choices=, default='')
+    depature = models.DateField(auto_now=False, auto_now_add=False,
+                                blank=True, null=True)
+    arrived = models.DateField(auto_now=False, auto_now_add=False,
+                                blank=True, null=True)
+    weight = models.DecimalField(max_digits=10, decimal_places=3,
+                                blank=True, null=True)
+    cbms = models.DecimalField(max_digits=10, decimal_places=3,
+                                blank=True, null=True)
+    ctns = models.DecimalField(max_digits=10, decimal_places=3,
+                                blank=True, null=True)
+    # status = models.CharField( max_length=3, choices=, default='',
+    #                           blank=True, null=True)
 
 
 class LooseContainer(BaseContainer):
@@ -81,12 +144,27 @@ class LooseContainer(BaseContainer):
     def __str__(self):
         return f'{self.name}'
 
+
 class Invoice(models.Model):
     cargo = models.ForeignKey(LooseContainer, related_name='invoices', on_delete=models.CASCADE)
     
 
     def __str__(self):
-        return 
+        return f'{self.cargo}'
 
-    def __unicode__(self):
-        return 
+    
+class Expenses(models.Model):
+    dispature = models.ForeignKey(Dispatcher, related_name='expenses',
+                                  on_delete=models.CASCADE, 
+                                  blank=True, null=True)
+    name = models.CharField(verbose_name='name of expense' ,max_length = 150)
+    amount = models.DecimalField(max_digits=10, decimal_places=2),
+    is_reccuring = models.BooleanField()
+    recurrance = models.CharField(max_length=4, choices=RECURANCE_CHOICES, default='N')
+    notes = models.TextField()
+
+    def __str__(self):
+        return self.name
+    
+    
+    

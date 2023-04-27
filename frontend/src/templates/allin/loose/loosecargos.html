@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<section class="track-area ptb-100">
+	<div class="container">
+		<div class="row">
+            <div class="col-lg-12">
+				<div class="tab quote-list-tab">
+					<ul class="tabs">
+						<li>
+							<a href="#">
+								<!-- <i class="flaticon-truck"></i> -->
+								Loose Cargos
+							</a>
+						</li>
+						<!-- <li>
+							<a href="#">
+								Request A Quote
+								<i class="flaticon-quote"></i>
+							</a>
+						</li> -->
+					</ul>
+					<div class="tab_content">
+						<div>
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>Item Name</th>
+                                    <th>Item Mark</th>
+                                    <th>Qty</th>
+                                    <th>Total Pcs</th>
+                                    <th>Total Price</th>
+                                    <th>Total Weight</th>
+                                    <th>CBM</th>
+                                    <th>Receiver</th>
+                                    <th>Loose Container</th>
+                                    <th>Container Number</th>
+                                    <th>Checked By</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for item in loose_cargos %}
+                                    <tr>
+                                        <td>{{ item.product.name }}</td>
+                                        <td>{{ item.item_mark }}</td>
+                                        <td>{{ item.qty }}</td>
+                                        <td>{{ item.total_pcs }}</td>
+                                        <td>{{ item.total_price }}</td>
+                                        <td>{{ item.total_weight }}</td>
+                                        <td>{{ item.cargo_cbm }}</td>
+                                        <td>{{ item.receiver }}</td>
+                                        <td>{{ item.loose_container }}</td>
+                                        <td>{{ item.container_number }}</td>
+                                        <td>{{ item.checked_by }}</td>
+                                        <td><a href="{% url 'shipping:loose_cargo_detail' item.id %}">Details</a></td>
+
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+            
+
+
+{% endblock %}
