@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<head>
+    <meta charset="utf-8">
+    <title>Invoice</title>
+    <style>
+        /* Define styles for the invoice */
+        .invoice {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            width: 600px;
+            margin: 0 auto;
+        }
+        .invoice-header {
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 20px;
+        }
+        .invoice-header h1 {
+            font-size: 28px;
+            font-weight: bold;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        .invoice-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .invoice-info .left {
+            width: 50%;
+        }
+        .invoice-info .right {
+            text-align: right;
+            width: 50%;
+        }
+        .invoice-table {
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+        .invoice-table th,
+        .invoice-table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+        .invoice-table th {
+            background-color: #eee;
+            font-weight: bold;
+            text-align: left;
+        }
+        .invoice-total {
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <div class="invoice">
+        <div class="invoice-header">
+            <h1>Invoice</h1>
+        </div>
+        <div class="invoice-info">
+            <div class="left">
+                <p><strong>Bill To:</strong></p>
+                <p>{{ customer.name }}</p>
+                <p>{{ customer.address }}</p>
+                <p>{{ customer.city }}, {{ customer.state }} {{ customer.zip }}</p>
+            </div>
+            <div class="right">
+                <p><strong>Invoice #:</strong> {{ invoice.id }}</p>
+                <p><strong>Date:</strong> {{ invoice.date }}</p>
+            </div>
+        </div>
+        <table class="invoice-table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in invoice.items %}
+                <tr>
+                    <td>{{ item.product }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.price }}</td>
+                    <td>{{ item.total }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3" class="invoice-total">Subtotal:</td>
+                    <td>{{ invoice.subtotal }}</td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="invoice-total">Tax:</td>
+                    <td>{{ invoice.tax }}</td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="invoice-total">Total:</td>
+                    <td>{{ invoice.total }}</td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</body>
+{% endblock %}

@@ -10,20 +10,36 @@ from .models import (
 )
 
 
+
 # class BaseCargoAdmin(admin.ModelAdmin):
 #     list_display = ('mark', 'recieved', 'depature', 'arrived', 'weight', 'cbms', 'ctns')
 #     search_fields = ('mark',)
 
+class ProductStack(admin.TabularInline):
+    model = Product
+
+class FullCargoStack(admin.TabularInline):
+    model = FullCargo
+    inlines = [ProductStack]
+
+class LooseCargoStack(admin.TabularInline):
+    model = LooseCargo
+    inlines = [ProductStack]
+
 
 class LooseCargoAdmin(admin.ModelAdmin):
-    list_display = ('mark', 'recieved', 'depature', 'arrived', 'weight', 'cbms', 'ctns', 'status', 'reciever', 'dispater')
-    search_fields = ('mark', 'status', 'reciever__name', 'dispater__name')
-
+    list_display = ('mark', 'recieved', 'depature', 'arrived', 'weight', 'cbms', 'ctns', 'status', 'reciever', 'dispature')
+    search_fields = ('mark', 'status', 'reciever__name', 'dispature__name')
+    inlines = [
+        ProductStack,
+    ]
 
 class FullCargoAdmin(admin.ModelAdmin):
     list_display = ('mark', 'recieved', 'depature', 'arrived', 'weight', 'cbms', 'ctns', 'status')
     search_fields = ('mark', 'status')
-
+    inlines = [
+        ProductStack,
+    ]
 
 # class BaseContainerAdmin(admin.ModelAdmin):
 #     list_display = ('depature', 'arrived', 'weight', 'cbms', 'ctns', 'status')
@@ -33,12 +49,16 @@ class FullCargoAdmin(admin.ModelAdmin):
 class LooseContainerAdmin(admin.ModelAdmin):
     list_display = ('name', 'depature', 'arrived', 'weight', 'cbms', 'ctns', 'status')
     search_fields = ('name', 'status')
-
+    inlines = [
+        LooseCargoStack,
+    ]
 
 class FullContainerAdmin(admin.ModelAdmin):
     list_display = ('name', 'depature', 'arrived', 'weight', 'cbms', 'ctns', 'status', 'invoice', 'reciever')
     search_fields = ('name', 'status', 'invoice', 'reciever__name')
-
+    inlines = [
+        FullCargoStack,
+    ]
 
 class InvoiceAdmin(admin.ModelAdmin):
     list_display = ('cargo',)
@@ -46,8 +66,8 @@ class InvoiceAdmin(admin.ModelAdmin):
 
 
 class ExpensesAdmin(admin.ModelAdmin):
-    list_display = ('name', 'amount', 'is_reccuring', 'recurrance', 'notes', 'dispature')
-    search_fields = ('name', 'dispature__name')
+    list_display = ('date', 'name', 'notes', 'recurrance', 'dispature', 'amount')
+    search_fields = ('name', 'dispature__name', 'amount', 'date',)
 
 
 class ProductAdmin(admin.ModelAdmin):
@@ -62,7 +82,7 @@ admin.site.register(LooseContainer, LooseContainerAdmin)
 admin.site.register(FullContainer, FullContainerAdmin)
 admin.site.register(Invoice, InvoiceAdmin)
 admin.site.register(Expenses, ExpensesAdmin)
-admin.site.register(Product, ProductAdmin)
+# admin.site.register(Product, ProductAdmin)
 
 
 

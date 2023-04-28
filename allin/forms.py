@@ -1,5 +1,5 @@
 from django import forms
-from rest_framework import Forms
+# from rest_framework import Forms
 from allin.models import LooseCargo, LooseContainer, Invoice, Product
 from allin.models import (LooseCargo, LooseContainer, FullCargo, 
                         FullContainer, Invoice, Expenses, Product,)
@@ -33,7 +33,7 @@ class FullContainerForm(forms.ModelForm):
     class Meta:
         model = FullContainer
         fields = ('name', 'depature', 'arrived', 'weight',
-                  'cbms', 'ctns', 'status',' reciever',
+                  'cbms', 'ctns', 'status',
                   )
 
 class InvoiceForm(forms.ModelForm):
@@ -46,7 +46,7 @@ class ExpensesForm(forms.ModelForm):
     
     class Meta:
         model = Expenses
-        fields = ('name', 'amount', 'is_recurring',
+        fields = ('name', 'amount', 'is_reccuring',
                   'recurrance', 'notes',)
         
 class ProductForm(forms.ModelForm):
@@ -54,7 +54,7 @@ class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = (
-            'name', 'cargo_types', 'qty', 'packaging', 'cbm', 
+            'name', 'item_number', 'cargo_types', 'qty', 'packaging', 'cbm', 
             'price', 'weight', 'height', 'length', 'width',
             'owner', 'buyer', 'supplier', 'stock', 'has_stock',
             'l_cargo', 'f_cargo',
