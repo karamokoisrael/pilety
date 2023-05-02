@@ -63,11 +63,13 @@ class LooseContainerCreateView(CreateView):
     form_class = LooseContainerForm
     success_url = '/loosecontainers/'
 
+
 class LooseCargoCreateView(CreateView):
     model = LooseCargo
     template_name = 'allin/loose/loosecargo_form.html' 
     form_class = LooseCargoForm
     success_url = '/l_cargos/'
+
 
 class FullContainerCreateView(CreateView):
     model = FullContainer
@@ -75,11 +77,13 @@ class FullContainerCreateView(CreateView):
     form_class = FullContainerForm
     success_url = '/fullcontainers/'
 
+
 class FullCargoCreateView(CreateView):
     model = FullCargo
     template_name = 'allin/full/fullcargo_form.html' 
     form_class = FullCargoForm
     success_url = '/f_cargos/'
+
 
 class InvoiceCreateView(CreateView):
     model = Invoice
@@ -87,11 +91,13 @@ class InvoiceCreateView(CreateView):
     form_class = InvoiceForm
     success_url = '/invoices/'
 
+
 class ExpensesCreateView(CreateView):
     model = Expenses
     template_name = 'allin/sales/expenses_form.html' 
     form_class = ExpensesForm
     success_url = '/expenses/'
+
 
 class ProductCreateView(CreateView):
     model = Product
@@ -99,7 +105,6 @@ class ProductCreateView(CreateView):
     form_class = ProductForm
     success_url = '/products/'
    
-
 
 class LooseContainerDetailView(DetailView):
     model = LooseContainer
@@ -114,7 +119,6 @@ class LooseContainerDetailView(DetailView):
         return context
     
 
-
 class LooseCargoDetailView(DetailView):
     model = LooseCargo
     template_name = 'allin/loose/loosecargo.html' 
@@ -124,7 +128,7 @@ class LooseCargoDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['products'] = self.object.products.all()
         context['stocks'] = self.object.products.filter(has_stock=True)
-        context['invoices'] = self.object.invoices.all()
+        # context['invoices'] = self.object.invoices.all()
         return context
     
 
@@ -141,7 +145,6 @@ class FullContainerDetailView(DetailView):
         return context
     
 
-
 class FullCargoDetailView(DetailView):
     model = FullCargo
     template_name = 'allin/full/fullcargo.html' 
@@ -153,8 +156,6 @@ class FullCargoDetailView(DetailView):
         context['stocks'] = self.object.products.filter(has_stock=True)
         return context
     
-
-
 
 class InvoiceDetailView(DetailView):
     model = Invoice
@@ -178,7 +179,6 @@ class ExpensesDetailView(DetailView):
         return context
     
 
-
 class ProductDetailView(DetailView):
     model = Product
     template_name = 'allin/sales/product.html' 
@@ -189,4 +189,3 @@ class ProductDetailView(DetailView):
         #  context['loose_cargos'] = self.object.cargo.all()
         return context
     
-

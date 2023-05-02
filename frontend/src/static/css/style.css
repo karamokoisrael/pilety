@@ -3930,10 +3930,11 @@ Top Header Area Style
 .header-style-four .header-right-content .additional-link li {
   display: inline-block;
   font-size: 14px;
+  color: #28a745;
 }
 
 .header-style-four .header-right-content .additional-link li a {
-  color: #ffffff;
+  color: #e63131;
   position: relative;
   line-height: 1;
   padding-right: 20px;
@@ -3950,7 +3951,7 @@ Top Header Area Style
   left: -11px;
   width: 1px;
   height: 100%;
-  background-color: #ffffff;
+  background-color: #3d3939;
 }
 
 .header-style-four .header-right-content .additional-link li:first-child a::before {
@@ -7752,3 +7753,55 @@ Careers Area Style
   padding-bottom: 100px;
 }
 /*# sourceMappingURL=style.css.map */
+
+
+
+
+        /* Define styles for the invoice */
+.invoice {
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  width: 600px;
+  margin: 0 auto;
+}
+.invoice-header {
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 20px;
+}
+.invoice-header h1 {
+  font-size: 28px;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+.invoice-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.invoice-info .left {
+  width: 50%;
+}
+.invoice-info .right {
+  text-align: right;
+  width: 50%;
+}
+.invoice-table {
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  width: 100%;
+}
+.invoice-table th,
+.invoice-table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+.invoice-table th {
+  background-color: #eee;
+  font-weight: bold;
+  text-align: left;
+}
+.invoice-total {
+  text-align: right;
+}

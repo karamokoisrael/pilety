@@ -99,8 +99,8 @@ class LooseCargo(BaseCargo):
         self.weight = weight or 0  
          
 
-        total_cbm = self.products.aggregate(Sum('cbm'))['cbm__sum']
-        self.cbms = total_cbm or 0  
+        total_cbms = self.products.aggregate(Sum('cbms'))['cbms__sum']
+        self.cbms = total_cbms or 0  
 
         total_qty = self.products.aggregate(Sum('qty'))['qty__sum']
         self.ctns = total_qty or 0  
@@ -126,7 +126,9 @@ class FullCargo(BaseCargo):
 
 
 class Invoice(models.Model):
-    cargo = models.ForeignKey(LooseContainer, related_name='invoices', on_delete=models.CASCADE)
+    cargo = models.OneToOneField(LooseCargo, related_name='invoices', on_delete=models.CASCADE)
+    invoice_no = models.CharField(verbose_name='Invoice number ', max_length=150, blank=True, null=True)
+    
      # TODO add the file when saving
 
     def __str__(self):
@@ -161,7 +163,11 @@ class Product(models.Model):
                              choices=CARGO_TYPE_CHOICES, blank=True, null=True)
     qty = models.IntegerField(verbose_name='qty in ctn',blank=True, null=True)
     packaging = models.IntegerField(blank=True, null=True)
-    cbm = models.DecimalField(max_digits=10, decimal_places=3,
+    cbms = models.DecimalField(verbose_name='Total CBM',
+                              max_digits=10, decimal_places=3,
+                              blank=True, null=True)
+    cbm = models.DecimalField(verbose_name='CBM per cartons',
+                              max_digits=10, decimal_places=3,
                               blank=True, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=3,
                               blank=True, null=True)
@@ -206,6 +212,7 @@ class Product(models.Model):
             if not (self.height and self.width and self.length):
                 raise ValueError("Either 'cbm' must be provided or 'height', 'width', and 'length' must all be provided.")
             self.cbm = Decimal(self.height * self.width * self.length) / Decimal(1000000)
+            self.cbms = Decimal(self.cbm * self.qty)
             return f'{self.cbm}'
         else:
             return self.cbm
