@@ -134,13 +134,24 @@ class Invoice(models.Model):
     def __str__(self):
         return f'{self.cargo}'
 
+class ExpenseCategory(models.Model):
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
+
     
 class Expenses(models.Model):
     RECURRANCE_CHOICES = EXPENSES_RECURRANCE_CHOICES
+    name = models.ForeignKey(ExpenseCategory, 
+                                 on_delete=models.CASCADE,
+                                 verbose_name='Name of the expense' 
+                                 )
+
     dispature = models.ForeignKey(Dispatcher, related_name='expenses',
                                   on_delete=models.CASCADE, 
                                   blank=True, null=True)
-    name = models.CharField(verbose_name='Name of the expense' ,max_length = 150)
+    # name = models.CharField(,max_length = 150)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     is_reccuring = models.BooleanField()
     recurrance = models.CharField(max_length=4, choices=RECURRANCE_CHOICES, default='N')
@@ -148,7 +159,7 @@ class Expenses(models.Model):
     date = models.DateField(auto_now=True, auto_now_add=False)
 
     def __str__(self):
-        return self.name
+        return f'{self.amount} ({self.name})'
     
     
 
