@@ -5,7 +5,8 @@ from .models import (
     LooseContainer,
     FullContainer,
     Invoice,
-    Expenses,
+    Expense,
+    ExpenseCategory,
     Product
 )
 
@@ -65,7 +66,10 @@ class InvoiceAdmin(admin.ModelAdmin):
     search_fields = ('cargo__name',)
 
 
-class ExpensesAdmin(admin.ModelAdmin):
+class ExpenseCategoryAdmin(admin.ModelAdmin):
+    pass
+
+class ExpenseAdmin(admin.ModelAdmin):
     list_display = ('date', 'name', 'notes', 'recurrance', 'dispature', 'amount')
     search_fields = ('name', 'dispature__name', 'amount', 'date',)
 
@@ -81,7 +85,8 @@ admin.site.register(FullCargo, FullCargoAdmin)
 admin.site.register(LooseContainer, LooseContainerAdmin)
 admin.site.register(FullContainer, FullContainerAdmin)
 admin.site.register(Invoice, InvoiceAdmin)
-admin.site.register(Expenses, ExpensesAdmin)
+admin.site.register(Expense, ExpenseAdmin)
+admin.site.register(ExpenseCategory, ExpenseCategoryAdmin)
 # admin.site.register(Product, ProductAdmin)
 
 

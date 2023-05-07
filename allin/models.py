@@ -141,11 +141,12 @@ class ExpenseCategory(models.Model):
         return self.name
 
     
-class Expenses(models.Model):
+class Expense(models.Model):
     RECURRANCE_CHOICES = EXPENSES_RECURRANCE_CHOICES
     name = models.ForeignKey(ExpenseCategory, 
                                  on_delete=models.CASCADE,
-                                 verbose_name='Name of the expense' 
+                                 verbose_name='Name of the expense',
+                                 blank=True, null=True
                                  )
 
     dispature = models.ForeignKey(Dispatcher, related_name='expenses',

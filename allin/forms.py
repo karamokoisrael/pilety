@@ -2,7 +2,7 @@ from django import forms
 # from rest_framework import Forms
 from allin.models import LooseCargo, LooseContainer, Invoice, Product
 from allin.models import (LooseCargo, LooseContainer, FullCargo, 
-                        FullContainer, Invoice, Expenses, Product,)
+                        FullContainer, Invoice, ExpenseCategory, Expense, Product,)
 
 
 class LooseCargoForm(forms.ModelForm):
@@ -42,13 +42,20 @@ class InvoiceForm(forms.ModelForm):
         model = Invoice
         fields = ('cargo',)
 
-class ExpensesForm(forms.ModelForm):
+class ExpenseForm(forms.ModelForm):
     
     class Meta:
-        model = Expenses
+        model = Expense
         fields = ('name', 'amount', 'is_reccuring',
                   'recurrance', 'notes',)
-        
+
+
+class FilterForm(forms.Form):
+    name = forms.ModelChoiceField(queryset=ExpenseCategory.objects.all(), required=False)
+    start_date = forms.DateField(required=False)
+    end_date = forms.DateField(required=False)
+
+
 class ProductForm(forms.ModelForm):
     
     class Meta:
@@ -60,3 +67,5 @@ class ProductForm(forms.ModelForm):
             'l_cargo', 'f_cargo',
         )
   
+
+

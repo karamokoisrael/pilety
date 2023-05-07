@@ -2,10 +2,10 @@ from django.shortcuts import render
 from django.views.generic import CreateView, DetailView, ListView
 from allin.forms import (LooseCargoForm, LooseContainerForm, 
                          FullCargoForm, FullContainerForm,
-                         InvoiceForm, ExpensesForm, ProductForm,)
+                         InvoiceForm, ExpenseForm, ProductForm, FilterForm)
 
 from allin.models import (LooseCargo, LooseContainer, FullCargo, 
-                        FullContainer, Invoice, Expenses, Product,)
+                        FullContainer, Invoice, Expense, Product, ExpenseCategory)
 
 
 class LooseContainerListView(ListView):
@@ -44,11 +44,29 @@ class InvoiceListView(ListView):
 
 
 class ExpensesListView(ListView):
-    model = Expenses
+    model = Expense
     template_name = 'allin/sales/expenses.html' 
     context_object_name = 'expenses'
     paginate_by = 10  # Set the number of items per page
 
+class ExpenseFilterView(ListView):
+    model = Expense
+    template_name = 'expenses.html'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        form = FilterForm(self.request.GET)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            start_date = form.cleaned_data['start_date']
+            end_date = form.cleaned_data['end_date']
+            if name:
+                queryset = queryset.filter(name=name)
+            if start_date:
+                queryset = queryset.filter(date__gte=start_date)
+            if end_date:
+                queryset = queryset.filter(date__lte=end_date)
+        return queryset
 
 class ProductListView(ListView):
     model = Product
@@ -93,9 +111,9 @@ class InvoiceCreateView(CreateView):
 
 
 class ExpensesCreateView(CreateView):
-    model = Expenses
+    model = Expense
     template_name = 'allin/sales/expenses_form.html' 
-    form_class = ExpensesForm
+    form_class = ExpenseForm
     success_url = '/expenses/'
 
 
@@ -169,7 +187,7 @@ class InvoiceDetailView(DetailView):
     
 
 class ExpensesDetailView(DetailView):
-    model = Expenses
+    model = Expense
     template_name = 'allin/sales/expense.html' 
     context_object_name = 'expense'
     
