@@ -48,6 +48,7 @@ CONTAINER_STATUS_CHOICES = (
 )
 
 EXPENSES_RECURRANCE_CHOICES = (
+    ('N', 'Not Recurring'),
     ('D', 'Daily'),
     ('W', 'Weekly'),
     ('M', 'Monthly'),

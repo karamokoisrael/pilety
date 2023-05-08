@@ -16,6 +16,7 @@ urlpatterns = [
     path('fn/api/', include('finance.api_urls', namespace='finance_api')),
     path('sh/api/', include('shipping.api_urls', namespace='shipping_api')),
     path('', include('shipping.urls', namespace='shipping')),
+    path('', include('allin.urls', namespace='allin')),
     # path('3', ProductApi.as_view()),
 
 ]

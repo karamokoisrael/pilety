@@ -148,3 +148,13 @@ STATIC_ROOT = BASE_DIR/ 'staticfiles'
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
+
+# Allauth settings
+#AUTH_USER_MODEL = 'accounts.CustomUser'
+ACCOUNT_FORMS = {
+'signup': 'users.forms.CustomSignupForm',
+}
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+
+SITE_ID = 1
+LOGIN_REDIRECT_URL = '/'

@@ -6,6 +6,7 @@ from allin.views import (
     FullContainerListView,
     InvoiceListView,
     ExpensesListView,
+    ExpenseFilterView,
     ProductListView,
 
     LooseContainerCreateView,
@@ -33,7 +34,8 @@ urlpatterns = [
     path('f_containers/', FullContainerListView.as_view(), name='f_containers'),
     path('f_cargos/', FullCargoListView.as_view(), name='f_cargos'),
     path('invoices/', InvoiceListView.as_view(), name='invoices'),
-    path('expenses/', InvoiceListView.as_view(), name='expenses'),
+    path('expenses/', ExpensesListView.as_view(), name='expenses'),
+        path('filter/', ExpenseFilterView.as_view(), name='filter_expenses'),
     path('products/', ProductListView.as_view(), name='products'),
     
 
@@ -42,7 +44,7 @@ urlpatterns = [
     path('create/f_containers/', FullContainerCreateView.as_view(), name='create_f_containers'),
     path('create/f_cargos/', FullCargoCreateView.as_view(), name='create_f_cargos'),
     path('create/invoices/', InvoiceCreateView.as_view(), name='create_invoices'),
-    path('create/expences/', ExpensesCreateView.as_view(), name='create_expences'),
+    path('create/expenses/', ExpensesCreateView.as_view(), name='create_expenses'),
     path('create/products/', ProductCreateView.as_view(), name='create_products'),
     
 

@@ -1,8 +1,8 @@
 from django import forms
-from rest_framework import Forms
+# from rest_framework import Forms
 from allin.models import LooseCargo, LooseContainer, Invoice, Product
 from allin.models import (LooseCargo, LooseContainer, FullCargo, 
-                        FullContainer, Invoice, Expenses, Product,)
+                        FullContainer, Invoice, ExpenseCategory, Expense, Product,)
 
 
 class LooseCargoForm(forms.ModelForm):
@@ -33,7 +33,7 @@ class FullContainerForm(forms.ModelForm):
     class Meta:
         model = FullContainer
         fields = ('name', 'depature', 'arrived', 'weight',
-                  'cbms', 'ctns', 'status',' reciever',
+                  'cbms', 'ctns', 'status',
                   )
 
 class InvoiceForm(forms.ModelForm):
@@ -42,21 +42,30 @@ class InvoiceForm(forms.ModelForm):
         model = Invoice
         fields = ('cargo',)
 
-class ExpensesForm(forms.ModelForm):
+class ExpenseForm(forms.ModelForm):
     
     class Meta:
-        model = Expenses
-        fields = ('name', 'amount', 'is_recurring',
+        model = Expense
+        fields = ('name', 'amount', 'is_reccuring',
                   'recurrance', 'notes',)
-        
+
+
+class FilterForm(forms.Form):
+    name = forms.ModelChoiceField(queryset=ExpenseCategory.objects.all(), required=False)
+    start_date = forms.DateField(required=False)
+    end_date = forms.DateField(required=False)
+
+
 class ProductForm(forms.ModelForm):
     
     class Meta:
         model = Product
         fields = (
-            'name', 'cargo_types', 'qty', 'packaging', 'cbm', 
+            'name', 'item_number', 'cargo_types', 'qty', 'packaging', 'cbm', 
             'price', 'weight', 'height', 'length', 'width',
             'owner', 'buyer', 'supplier', 'stock', 'has_stock',
             'l_cargo', 'f_cargo',
         )
   
+
+
