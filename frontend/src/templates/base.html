@@ -38,15 +38,29 @@
         <!-- Title -->
         <title>Pilety - Transport & Logistics</title>
     </head>
+    <!-- Start Header Area -->
+    <header class="header-area-four six fixed-top">
+    
 
+        {% include 'navbar.html' %}
+
+        
+    </header>
+    <!-- End Header Area -->
 
     <body>
-        {% include "header.html" %}
         {% block content %}
 
         {% endblock content %}
 
         {% include 'footer.html' %}
+        
+        <!-- Start Go Top Area -->
+        <div class="go-top">
+            <i class='bx bx-chevrons-up bx-fade-up'></i>
+            <i class='bx bx-chevrons-up bx-fade-up'></i>
+        </div>
+        <!-- End Go Top Area --> 
 
         <!-- Jquery Min JS -->
         <script src="{% static 'js/jquery.min.js' %}"></script>
@@ -56,6 +70,7 @@
         <script src="{% static 'js/meanmenu.min.js' %}"></script>
         <!-- Wow Min JS -->
         <script src="{% static 'js/wow.min.js' %}"></script>
+       
         <!-- Owl Carousel Min JS -->
         <script src="{% static 'js/owl.carousel.min.js' %}"></script>
         <!-- Owl Magnific Min JS -->

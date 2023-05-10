@@ -1,11 +1,13 @@
+from allin.forms import (ExpenseForm, FilterForm, FullCargoForm,
+                         FullContainerForm, InvoiceForm, LooseCargoForm,
+                         LooseContainerForm, ProductForm)
+from allin.models import (Expense, ExpenseCategory, FullCargo, FullContainer,
+                          Invoice, LooseCargo, LooseContainer, Product)
+from django.db.models import Sum
+from django.db.models.functions import TruncMonth
 from django.shortcuts import render
-from django.views.generic import CreateView, DetailView, ListView
-from allin.forms import (LooseCargoForm, LooseContainerForm, 
-                         FullCargoForm, FullContainerForm,
-                         InvoiceForm, ExpenseForm, ProductForm, FilterForm)
-
-from allin.models import (LooseCargo, LooseContainer, FullCargo, 
-                        FullContainer, Invoice, Expense, Product, ExpenseCategory)
+from django.utils import timezone
+from django.views.generic import CreateView, DetailView, ListView, TemplateView
 
 
 class LooseContainerListView(ListView):
@@ -51,7 +53,7 @@ class ExpensesListView(ListView):
 
 class ExpenseFilterView(ListView):
     model = Expense
-    template_name = 'expenses.html'
+    template_name = 'allin/sales/expenses.html'
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -67,6 +69,24 @@ class ExpenseFilterView(ListView):
             if end_date:
                 queryset = queryset.filter(date__lte=end_date)
         return queryset
+
+class ExpensesView(TemplateView):
+    template_name = 'allin/sales/exp.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        current_month = timezone.now().month
+        expenses_by_category = Expense.objects.filter(
+            date__month=current_month
+        ).values('name__name').annotate(total=Sum('amount'))
+        expenses_by_month = Expense.objects.filter(
+            date__month=current_month
+        ).annotate(month=TruncMonth('date')).values('month').annotate(total=Sum('amount')).order_by('month')
+        total_expenses = Expense.objects.filter(date__month=current_month).aggregate(Sum('amount'))
+        context['expenses_by_category'] = expenses_by_category
+        context['expenses_by_month'] = expenses_by_month
+        context['total_expenses'] = total_expenses['amount__sum']
+        return context
 
 class ProductListView(ListView):
     model = Product

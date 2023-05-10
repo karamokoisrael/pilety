@@ -1083,6 +1083,8 @@ Prevoz Nav Area Style
 ======================================================*/
 .prevoz-nav-style .navbar-area .navbar-brand {
   display: none;
+  position: fixed;
+  width: 100%;
 }
 
 .prevoz-nav-style .navbar-area .main-nav {
@@ -1090,6 +1092,7 @@ Prevoz Nav Area Style
   background: #ffffff;
   padding-top: 0;
   padding-bottom: 0;
+  
 }
 
 .prevoz-nav-style .navbar-area .main-nav nav .navbar-nav .nav-item a {
@@ -2618,8 +2621,8 @@ Footer Top Area Style
 Footer Bottom Area Style
 ======================================================*/
 .footer-bottom-area {
-  /* padding: 30px 0; */
-
+  padding: 30px 0;
+  
 }
 
 .single-widget-bottom ul li {
@@ -3801,6 +3804,7 @@ Footer Top Area Three Style
 .footer-top-area-three {
   background-color: #24416b;
   border-bottom: 1px solid #395277;
+
 }
 
 .footer-top-area-three .single-widget h3 {
@@ -3809,6 +3813,7 @@ Footer Top Area Three Style
 
 .footer-top-area-three .single-widget ul li {
   border-bottom: 1px dashed #556e92;
+  
 }
 
 .footer-top-area-three .single-widget ul li::before {
@@ -3823,45 +3828,6 @@ Footer Top Area Three Style
   color: #fa4612;
 }
 
-/*
-Subscribe Area Three Style 
-======================================================*/
-.subscribe-area-three {
-  background-color: #ffffff;
-  position: relative;
-  z-index: 1;
-}
-
-.subscribe-area-three::before {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 60px;
-  background-color: #24416b;
-  z-index: -1;
-}
-
-.subscribe-area-three .subscribe-wrap {
-  background-color: #ffffff;
-  -webkit-box-shadow: 0 0 20px 3px rgba(0, 0, 0, 0.05);
-          box-shadow: 0 0 20px 3px rgba(0, 0, 0, 0.05);
-  max-width: 1040px;
-  margin: auto;
-  padding: 30px;
-  border-radius: 4px;
-}
-
-.subscribe-area-three .tracking-body .tracking-wrap .input-tracking {
-  background-color: #ffffff;
-  -webkit-box-shadow: 0 0 20px 3px rgba(0, 0, 0, 0.05);
-          box-shadow: 0 0 20px 3px rgba(0, 0, 0, 0.05);
-}
-
-.subscribe-area-three .validation-danger {
-  color: #fa4612 !important;
-}
 
 /*
 Testimonials Area Three Style 
@@ -4469,6 +4435,7 @@ Footer Top Area Four Style
   background-color: #222629;
   position: relative;
   z-index: 1;
+  
 }
 
 .footer-top-area-four .single-widget img {
@@ -7755,54 +7722,3 @@ Careers Area Style
 }
 /*# sourceMappingURL=style.css.map */
 
-
-
-
-        /* Define styles for the invoice */
-.invoice {
-  font-family: Arial, sans-serif;
-  font-size: 12px;
-  width: 600px;
-  margin: 0 auto;
-}
-.invoice-header {
-  border-bottom: 1px solid #ccc;
-  margin-bottom: 20px;
-}
-.invoice-header h1 {
-  font-size: 28px;
-  font-weight: bold;
-  margin: 0;
-  padding: 0;
-  text-align: center;
-}
-.invoice-info {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
-}
-.invoice-info .left {
-  width: 50%;
-}
-.invoice-info .right {
-  text-align: right;
-  width: 50%;
-}
-.invoice-table {
-  border-collapse: collapse;
-  margin-bottom: 20px;
-  width: 100%;
-}
-.invoice-table th,
-.invoice-table td {
-  border: 1px solid #ccc;
-  padding: 10px;
-}
-.invoice-table th {
-  background-color: #eee;
-  font-weight: bold;
-  text-align: left;
-}
-.invoice-total {
-  text-align: right;
-}
