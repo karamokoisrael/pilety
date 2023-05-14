@@ -123,6 +123,8 @@ class FullCargo(BaseCargo):
                                   blank=True, null=True)
     # TODO when saving get the total cbm,weight and cartons and status change when saving
 
+    def __str__(self):
+        return f'{self.mark}'
 
 
 class Invoice(models.Model):
