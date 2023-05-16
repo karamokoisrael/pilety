@@ -2,7 +2,9 @@ from django import forms
 # from rest_framework import Forms
 from allin.models import LooseCargo, LooseContainer, Invoice, Product
 from allin.models import (LooseCargo, LooseContainer, FullCargo, 
-                        FullContainer, Invoice, ExpenseCategory, Expense, Product,)
+                         FullContainer, Invoice, ExpenseCategory, Expense, Product,
+                         Delivery, DeliveryVehicle, ProductQuote, ProductQuoteImages,
+                         ShippingQuote, ProductShippingQuote)
 
 
 class LooseCargoForm(forms.ModelForm):
