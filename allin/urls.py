@@ -9,6 +9,11 @@ from allin.views import (
     ExpenseFilterView,
     ExpensesView,
     ProductListView,
+    DeliveryListView,
+    DeliveryVehicleListView,
+    ProductQuoteListView,
+    ShippingQuoteListView,
+    ProductShippingQuoteListView,
 
     LooseContainerCreateView,
     LooseCargoCreateView,
@@ -17,6 +22,11 @@ from allin.views import (
     InvoiceCreateView,
     ExpensesCreateView,
     ProductCreateView,
+    DeliveryCreateView,
+    DeliveryVehicleCreateView,
+    ProductQuoteCreateView,
+    ShippingQuoteCreateView,
+    ProductShippingQuoteCreateView,
 
     LooseContainerDetailView,
     LooseCargoDetailView,
@@ -39,6 +49,11 @@ urlpatterns = [
     path('filter/', ExpenseFilterView.as_view(), name='filter_expenses'),
     path('exp/', ExpensesView.as_view(), name='exp'),
     path('products/', ProductListView.as_view(), name='products'),
+    path('deliveries/', DeliveryListView.as_view(), name='deliveries'),
+    path('vehicles/', DeliveryVehicleListView.as_view(), name='vehicles'),
+    path('product_quotes/', ProductQuoteListView.as_view(), name='product_quotes'),
+    path('shipping_quotes/', ShippingQuoteListView.as_view(), name='shipping_quotes'),
+    path('products_shipping_quotes/', ProductShippingQuoteListView.as_view(), name='products_shipping_quotes'),
     
 
     path('create/l_containers/', LooseContainerCreateView.as_view(), name='create_l_containers'),
@@ -48,7 +63,13 @@ urlpatterns = [
     path('create/invoices/', InvoiceCreateView.as_view(), name='create_invoices'),
     path('create/expenses/', ExpensesCreateView.as_view(), name='create_expenses'),
     path('create/products/', ProductCreateView.as_view(), name='create_products'),
+    path('deliveries_form/', DeliveryCreateView.as_view(), name='create_deliveries'),
+    path('vehicles_form/', DeliveryVehicleCreateView.as_view(), name='create_vehicles'),
+    path('product_quotes_form/', ProductQuoteCreateView.as_view(), name='create_product_quotes'),
+    path('shipping_quotes_form/', ShippingQuoteCreateView.as_view(), name='create_shipping_quotes'),
+    path('products_shipping_quotes_form/', ProductShippingQuoteCreateView.as_view(), name='create_products_shipping_quotes'),
     
+
 
     path('l_containers/<int:pk>/', LooseContainerDetailView.as_view(), name='l_container'),
     path('l_cargos/<int:pk>/', LooseCargoDetailView.as_view(), name='l_cargo'),

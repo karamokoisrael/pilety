@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from allin.models import (LooseCargo, LooseContainer, FullCargo, 
-                        FullContainer, Invoice, Expense, ExpenseCategory, Product,)
+                        FullContainer, Invoice, Expense, ExpenseCategory, Product,
+                        ProductQuote, ProductQuoteImages, ShippingQuote, 
+                        ProductShippingQuote, Delivery, DeliveryVehicle,)
 
 
 
@@ -44,3 +46,35 @@ class ProductSerializer(serializers.Serializer):
     
     class Meta:
         model = Product
+
+
+class DeliverySerializer(serializers.Serializer):
+    
+    class Meta:
+        model = Delivery
+
+class DeliveryVehicleSerializer(serializers.Serializer):
+    
+    class Meta:
+        model = DeliveryVehicle
+
+class ProductQuoteSerializer(serializers.Serializer):
+    
+    class Meta:
+        model = ProductQuote
+
+class ProductQuoteImagesSerializer(serializers.Serializer):
+    
+    class Meta:
+        model = ProductQuoteImages
+
+class ShippingQuoteSerializer(serializers.Serializer):
+    
+    class Meta:
+        model = ShippingQuote
+
+class ProductShippingQuoteSerializer(serializers.Serializer):
+    
+    class Meta:
+        model = ProductShippingQuote
+

@@ -296,7 +296,8 @@ class ShippingQuote(models.Model):
         return f'{self.mark}'
 
 class ProductShippingQuote(models.Model):
-    product = models.ForeignKey(ShippingQuote, on_delete=models.CASCADE)
+    product = models.ForeignKey(ShippingQuote, on_delete=models.CASCADE,
+                                blank=True, null=True)
     name = models.CharField(max_length = 150)
     cbm = models.DecimalField(max_digits=6, decimal_places=3)
     weight = models.DecimalField(max_digits=6, decimal_places=3)
@@ -306,4 +307,4 @@ class ProductShippingQuote(models.Model):
     def __str__(self):
         return f'{self.name}'
     
-# TODO making  the
+# TODO add quote status
