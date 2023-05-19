@@ -7,7 +7,14 @@ from .models import (
     Invoice,
     Expense,
     ExpenseCategory,
-    Product
+    Product, 
+    DeliveryVehicle,
+    Delivery,
+    ProductQuote,
+    ProductQuoteImages,
+    ShippingQuote,
+    ProductShippingQuote
+
 )
 
 
@@ -88,6 +95,48 @@ admin.site.register(Invoice, InvoiceAdmin)
 admin.site.register(Expense, ExpenseAdmin)
 admin.site.register(ExpenseCategory, ExpenseCategoryAdmin)
 # admin.site.register(Product, ProductAdmin)
+ 
+class ProductQuoteImagesInline(admin.TabularInline):
+    model = ProductQuoteImages
+    extra = 1
+
+class DeliveryInline(admin.TabularInline):
+    model = Delivery
+    extra = 1
+
+class ProductShippingQuoteInline(admin.TabularInline):
+    model = ProductShippingQuote
+    extra = 1
+
+@admin.register(DeliveryVehicle)
+class DeliveryVehicleAdmin(admin.ModelAdmin):
+    list_display = ['name', 'car_model', 'color', 'plate_number', 'status', 'mileage', 'last_checkup']
+    search_fields = ['name', 'car_model', 'plate_number']
+    list_filter = ['status']
+
+@admin.register(Delivery)
+class DeliveryAdmin(admin.ModelAdmin):
+    list_display = ['driver', 'vehicle', 'date', 'status']
+    list_filter = ['status']
+    search_fields = ['driver__name', 'vehicle__name']
+    # inlines = [ProductShippingQuoteInline]
+
+@admin.register(ProductQuote)
+class ProductQuoteAdmin(admin.ModelAdmin):
+    list_display = ['name', 'description', 'status', 'contact', 'qty']
+    search_fields = ['name']
+    inlines = [ProductQuoteImagesInline]
+
+@admin.register(ShippingQuote)
+class ShippingQuoteAdmin(admin.ModelAdmin):
+    list_display = ['mark', 'contact', 'cbms', 'weight']
+    inlines = [ProductShippingQuoteInline]
+
+@admin.register(ProductShippingQuote)
+class ProductShippingQuoteAdmin(admin.ModelAdmin):
+    list_display = ['product', 'name', 'cbm', 'weight', 'qty']
+    search_fields = ['product__name']
+
 
 
 

@@ -268,6 +268,7 @@ class ProductQuote(models.Model):
     contact = models.CharField(max_length = 150,blank=True, null=True)
     description = models.TextField()
     qty = models.IntegerField()
+
     
 
     def __str__(self):
@@ -339,3 +340,5 @@ class ProductShippingQuote(models.Model):
     
     
 # TODO add quote status
+# TODO add ref no for quote product that will be linked with the product model when it is sourced
+
