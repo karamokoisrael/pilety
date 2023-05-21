@@ -263,9 +263,12 @@ class Product(models.Model):
 
 
 class ProductQuote(models.Model):
-    name = models.CharField(max_length = 150)
+    name = models.CharField(verbose_name= 'product name',max_length = 150)
+    status = models.CharField(max_length = 150,blank=True, null=True)
+    contact = models.CharField(max_length = 150,blank=True, null=True)
     description = models.TextField()
     qty = models.IntegerField()
+
     
 
     def __str__(self):
@@ -285,25 +288,58 @@ class ProductQuoteImages(models.Model):
 class ShippingQuote(models.Model):
     mark = models.CharField(max_length = 150)
     contact = models.CharField(max_length = 150)
-    cbms = models.DecimalField(max_digits=6, decimal_places=3)
-    weight = models.DecimalField(max_digits=6, decimal_places=3)
-    
+    cbms = models.DecimalField(max_digits=6, decimal_places=3, blank=True, null=True)
+    weight = models.DecimalField(max_digits=6, decimal_places=3, blank=True, null=True)
+    ctns = models.DecimalField(max_digits=6, decimal_places=3, blank=True, null=True)
 
     
-    
+
 
     def __str__(self):
         return f'{self.mark}'
+    
+
+    def save(self, *args, **kwargs):
+       
+        super(ShippingQuote, self).save(*args, **kwargs) # Call the real save() method
+        weight = self.products.aggregate(Sum('weight'))['weight__sum']
+        self.weight = weight or 0  
+         
+
+        total_cbms = self.products.aggregate(Sum('cbm'))['cbm__sum']
+        self.cbms = total_cbms or 0  
+
+        total_qty = self.products.aggregate(Sum('qty'))['qty__sum']
+        self.ctns = total_qty or 0  
+
+        super(ShippingQuote, self).save(*args, **kwargs) # Call the real save() method
+
 
 class ProductShippingQuote(models.Model):
-    product = models.ForeignKey(ShippingQuote, on_delete=models.CASCADE)
+    '''creates products that are to be added in the shipping Quote model'''
+    product = models.ForeignKey(ShippingQuote, on_delete=models.CASCADE, related_name='products')
     name = models.CharField(max_length = 150)
     cbm = models.DecimalField(max_digits=6, decimal_places=3)
+    total_cbm = models.DecimalField(max_digits=6, decimal_places=3, blank=True, null=True)
     weight = models.DecimalField(max_digits=6, decimal_places=3)
+    total_weight = models.DecimalField(max_digits=6, decimal_places=3, blank=True, null=True)
     qty = models.IntegerField()
 
-    
+        
     def __str__(self):
         return f'{self.name}'
     
-# TODO making  the
+    def save(self, *args, **kwargs):
+        if not self.total_cbm:
+           self.total_cbm = Decimal(self.cbm * self.qty)
+
+        if not self.total_weight:
+           self.total_weight = Decimal(self.weight * self.qty)
+        
+        super(ProductShippingQuote, self).save(*args, **kwargs) # Call the real save() method
+    
+    
+# TODO add quote status
+# TODO add ref no for quote product that will be linked with the product model when it is sourced
+
+# TODO add gthe tracking system

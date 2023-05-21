@@ -1,8 +1,12 @@
 from allin.forms import (ExpenseForm, FilterForm, FullCargoForm,
                          FullContainerForm, InvoiceForm, LooseCargoForm,
-                         LooseContainerForm, ProductForm)
+                         LooseContainerForm, ProductForm,
+                         ProductQuoteForm,  ShippingQuoteForm, 
+                         ProductShippingQuoteForm, DeliveryForm, DeliveryVehicleForm,)
 from allin.models import (Expense, ExpenseCategory, FullCargo, FullContainer,
-                          Invoice, LooseCargo, LooseContainer, Product)
+                          Invoice, LooseCargo, LooseContainer, Product, 
+                          ProductQuote, ProductQuoteImages, ShippingQuote, 
+                          ProductShippingQuote, Delivery, DeliveryVehicle,)
 from django.db.models import Sum
 from django.db.models.functions import TruncMonth
 from django.shortcuts import render
@@ -10,46 +14,83 @@ from django.utils import timezone
 from django.views.generic import CreateView, DetailView, ListView, TemplateView
 
 
+class DeliveryVehicleListView(ListView):
+    model = DeliveryVehicle
+    template_name = 'allin/quote/vehicles.html' 
+    context_object_name = 'vehicles'
+    paginate_by = 10  
+
+
+class DeliveryListView(ListView):
+    model = Delivery
+    template_name = 'allin/quote/deliveries.html' 
+    context_object_name = 'deliveries'
+    paginate_by = 10  
+
+
+class ProductShippingQuoteListView(ListView):
+    model = ProductShippingQuote
+    template_name = 'allin/quote/product_shipping_quote.html' 
+    context_object_name = 'product_shipping_quote'
+    paginate_by = 10  
+
+
+class ShippingQuoteListView(ListView):
+    model = ShippingQuote
+    template_name = 'allin/quote/shipping_quote.html' 
+    context_object_name = 'shipping_quote'
+    paginate_by = 10  
+
+
+class ProductQuoteListView(ListView):
+    model = ProductQuote
+    template_name = 'allin/quote/products_quote.html' 
+    context_object_name = 'products_quote'
+    paginate_by = 10  
+
+ 
+
+
 class LooseContainerListView(ListView):
     model = LooseContainer
     template_name = 'allin/loose/loosecontainers.html' 
     context_object_name = 'containers'
-    paginate_by = 10  # Set the number of items per page
+    paginate_by = 10  
 
-
+ 
 class LooseCargoListView(ListView):
     model = LooseCargo
     template_name = 'allin/loose/loosecargos.html' 
     context_object_name = 'cargos'
-    paginate_by = 10  # Set the number of items per page
+    paginate_by = 10  
 
 
 class FullContainerListView(ListView):
     model = FullContainer
     template_name = 'allin/full/fullcontainers.html' 
     context_object_name = 'containers'
-    paginate_by = 10  # Set the number of items per page
+    paginate_by = 10  
 
 
 class FullCargoListView(ListView):
     model = FullCargo
     template_name = 'allin/full/fullcargos.html' 
     context_object_name = 'cargos'
-    paginate_by = 10  # Set the number of items per page
+    paginate_by = 10  
 
 
 class InvoiceListView(ListView):
     model = Invoice
     template_name = 'allin/sales/invoices.html' 
     context_object_name = 'invoices'
-    paginate_by = 10  # Set the number of items per page
+    paginate_by = 10  
 
 
 class ExpensesListView(ListView):
     model = Expense
     template_name = 'allin/sales/expenses.html' 
     context_object_name = 'expenses'
-    paginate_by = 10  # Set the number of items per page
+    paginate_by = 10  
 
 class ExpenseFilterView(ListView):
     model = Expense
@@ -92,7 +133,7 @@ class ProductListView(ListView):
     model = Product
     template_name = 'allin/sales/productss.html' 
     context_object_name = 'products'
-    paginate_by = 10  # Set the number of items per page
+    paginate_by = 10  
 
 
 class LooseContainerCreateView(CreateView):
@@ -143,6 +184,44 @@ class ProductCreateView(CreateView):
     form_class = ProductForm
     success_url = '/products/'
    
+
+class DeliveryVehicleCreateView(CreateView):
+    model = DeliveryVehicle
+    template_name = 'allin/quote/vehicles_form.html'
+    form_class = DeliveryVehicleForm
+    success_url = '/vehicle/'  
+
+
+class DeliveryCreateView(CreateView):
+    model = Delivery
+    template_name = 'allin/quote/deliveries_form.html'
+    form_class = DeliveryForm
+    success_url = '/deliveries/'  
+
+
+class ProductShippingQuoteCreateView(CreateView):
+    model = ProductShippingQuote
+    template_name = 'allin/quote/product_shipping_quote_form.html'
+    form_class = ProductShippingQuoteForm
+    success_url = '/product_shipping_quotes/'  
+
+
+class ShippingQuoteCreateView(CreateView):
+    model = ShippingQuote
+    template_name = 'allin/quote/shipping_quote_form.html'
+    form_class = ShippingQuoteForm
+    success_url = '/shipping_Quote/'  
+
+
+class ProductQuoteCreateView(CreateView):
+    model = ProductQuote
+    template_name = 'allin/quote/products_quote_form.html'
+    form_class = ProductQuoteForm
+    success_url = '/products_quotes/'  
+
+ 
+
+
 
 class LooseContainerDetailView(DetailView):
     model = LooseContainer
