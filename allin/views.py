@@ -16,36 +16,36 @@ from django.views.generic import CreateView, DetailView, ListView, TemplateView
 
 class DeliveryVehicleListView(ListView):
     model = DeliveryVehicle
-    template_name = 'allin/quote/vehicles.html' 
+    template_name = 'allin/sales/vehicles.html' 
     context_object_name = 'vehicles'
     paginate_by = 10  
 
 
 class DeliveryListView(ListView):
     model = Delivery
-    template_name = 'allin/quote/deliveries.html' 
+    template_name = 'allin/sales/deliveries.html' 
     context_object_name = 'deliveries'
     paginate_by = 10  
 
 
 class ProductShippingQuoteListView(ListView):
     model = ProductShippingQuote
-    template_name = 'allin/quote/product_shipping_quote.html' 
-    context_object_name = 'product_shipping_quote'
+    template_name = 'allin/quotes/product_shipping_quote.html' 
+    context_object_name = 'products'
     paginate_by = 10  
 
 
 class ShippingQuoteListView(ListView):
     model = ShippingQuote
-    template_name = 'allin/quote/shipping_quote.html' 
+    template_name = 'allin/quotes/shipping_quotes.html' 
     context_object_name = 'shipping_quote'
     paginate_by = 10  
 
-
+    
 class ProductQuoteListView(ListView):
     model = ProductQuote
-    template_name = 'allin/quote/products_quote.html' 
-    context_object_name = 'products_quote'
+    template_name = 'allin/quotes/products_quote.html' 
+    context_object_name = 'products'
     paginate_by = 10  
 
  
@@ -187,35 +187,35 @@ class ProductCreateView(CreateView):
 
 class DeliveryVehicleCreateView(CreateView):
     model = DeliveryVehicle
-    template_name = 'allin/quote/vehicles_form.html'
+    template_name = 'allin/sales/vehicles_form.html'
     form_class = DeliveryVehicleForm
     success_url = '/vehicle/'  
 
 
 class DeliveryCreateView(CreateView):
     model = Delivery
-    template_name = 'allin/quote/deliveries_form.html'
+    template_name = 'allin/sales/deliveries_form.html'
     form_class = DeliveryForm
     success_url = '/deliveries/'  
 
 
 class ProductShippingQuoteCreateView(CreateView):
     model = ProductShippingQuote
-    template_name = 'allin/quote/product_shipping_quote_form.html'
+    template_name = 'allin/quotes/product_shipping_quote_form.html'
     form_class = ProductShippingQuoteForm
     success_url = '/product_shipping_quotes/'  
 
 
 class ShippingQuoteCreateView(CreateView):
     model = ShippingQuote
-    template_name = 'allin/quote/shipping_quote_form.html'
+    template_name = 'allin/quotes/shipping_quote_form.html'
     form_class = ShippingQuoteForm
     success_url = '/shipping_Quote/'  
 
 
 class ProductQuoteCreateView(CreateView):
     model = ProductQuote
-    template_name = 'allin/quote/products_quote_form.html'
+    template_name = 'allin/quotes/products_quote_form.html'
     form_class = ProductQuoteForm
     success_url = '/products_quotes/'  
 
@@ -306,3 +306,14 @@ class ProductDetailView(DetailView):
         #  context['loose_cargos'] = self.object.cargo.all()
         return context
     
+
+class ShippingQuoteDetailView(DetailView):
+    model = ShippingQuote
+    template_name = 'allin/quotes/shipping_quote.html' 
+    context_object_name = 'cargo'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['products'] = self.object.products.all()
+
+        return context
