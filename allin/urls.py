@@ -35,6 +35,7 @@ from allin.views import (
     InvoiceDetailView,
     ExpensesDetailView,
     ProductDetailView,
+    ShippingQuoteDetailView,
 )
 
 app_name = 'allin'
@@ -78,5 +79,6 @@ urlpatterns = [
     path('invoices/<int:pk>/', InvoiceDetailView.as_view(), name='invoice'),
     path('expenses/<int:pk>/', ExpensesDetailView.as_view(), name='expense'),
     path('products/<int:pk>/', ProductDetailView.as_view(), name='product'),
+    path('shippingquote/<int:pk>/', ShippingQuoteDetailView.as_view(), name='shipping_quote'),
     
 ]
