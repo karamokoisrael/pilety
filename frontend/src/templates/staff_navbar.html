@@ -1,0 +1,47 @@
+<div class="main-nav">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">Sidebar</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidebarNav" aria-controls="sidebarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="sidebarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'allin:f_containers' %}"><strong> Full Container</strong></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'allin:l_containers' %}"><strong>Loose Container</strong></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'allin:products' %}"><strong>Products</strong></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'allin:product_quotes' %}"><strong>Product Quotes</strong></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'allin:shipping_quotes' %}"><strong>Shipping Quotes</strong></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'allin:deliveries' %}"><strong>Deliveries</strong></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'allin:vehicles' %}"><strong>Vehicles</strong></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'allin:expenses' %}"><strong>Expenses</strong></a>
+                    </li>
+                    {% if request.user.is_superuser %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'allin:expenses' %}"><strong>Expenses</strong></a>
+                        </li>
+                    {% endif %}
+                    
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+</div>
