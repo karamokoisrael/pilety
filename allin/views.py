@@ -319,6 +319,7 @@ class ProductDetailView(DetailView):
     
 
 class ShippingQuoteDetailView(DetailView):
+
     model = ShippingQuote
     template_name = 'allin/quotes/shipping_quote.html' 
     context_object_name = 'cargo'
@@ -327,4 +328,15 @@ class ShippingQuoteDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['products'] = self.object.products.all()
 
+        return context
+    
+
+class DeliveryDetailView(DetailView):
+    model = Delivery
+    template_name = 'allin/sales/delivery.html' 
+    context_object_name = 'delivery'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['cargos'] = self.object.cargos.all()
         return context

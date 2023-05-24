@@ -12,49 +12,33 @@
 						<li>
 							<a href="#">
 								<!-- <i class="flaticon-truck"></i> -->
-								Products in stock 
+								Deliveries
 							</a>
 						</li>
-						<!-- <li>
-							<a href="#">
-								Request A Quote
-								<i class="flaticon-quote"></i>
-							</a>
-						</li> -->
+						
 					</ul>
 					<div class="tab_content">
 						<div>
                             <table class="table">
                                 <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Packaging</th>
-                                    <th>Price</th>
-                                    <th>Weight</th>
-                                    <th>Cbm/ctn</th>
-                                    <th>Ctn</th>
-                                    <th>Weight</th>
-                                    <th>Cbms</th>
-                                    <th>Stock</th>
-                                    <th>Supplier</th>
-                                    <th></th>
+                                    <th>Date</th>
+                                    <th>Driver</th>
+                                    <th>Vehicle</th>
+                                    <th>Status</th>
+                                    
                                     
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {% for item in loose_containers %}
+                                {% for item in deliveries %}
                                     <tr>
-                                        <td>{{ item.name }}</td>
-                                        <td>{{ item.packaging }}</td>
-                                        <td>{{ item.price }}</td>
-                                        <td>{{ item.weight }}</td>
-                                        <td>{{ item.cbm }}</td>
-                                        <td>{{ item.ctn }}</td>
-                                        <td>{{ item.total_weight }}</td>
-                                        <td>{{ item.total_cbm }}</td>
-                                        <td>{{ item.stock }}</td>
-                                        <td>{{ item.supplier }}</td>
-                                        <td><a href="{% url 'shipping:loose_container_detail' item.id %}">Details</a></td>
+                                        <td>{{ item.date }}</td>
+                                        <td>{{ item.driver }}</td>
+                                        <td>{{ item.vehicle }}</td>
+                                        <td>{{ item.status }}</td>
+                                        
+                                        <td><a href="{% url 'allin:delivery' item.id %}">Details</a></td>
 
                                     </tr>
                                 {% endfor %}
