@@ -9,7 +9,8 @@ from choices import (CURRENCY_CHOICES,
                      DELIVERY_STATUS,
                      EXPENSES_RECURRANCE_CHOICES,
                      CARGO_STATUS_CHOICES,
-                     CARGO_TYPE_CHOICES,)
+                     CARGO_TYPE_CHOICES,
+                     QUOTE_STATUS,)
 from decimal import Decimal
 
 
@@ -33,8 +34,11 @@ class Delivery(models.Model):
     date = models.DateField(auto_now=True, auto_now_add=False)
     status = models.CharField(max_length = 2, choices=DELIVERY_STATUS, default='WH')
     
+    class Meta:
+        verbose_name_plural = 'Deliveries'
     def __str__(self):
         return f'{self.date} delivery by {self.driver}'
+    
 
 
 class BaseContainer(models.Model):
@@ -61,6 +65,11 @@ class LooseContainer(BaseContainer):
 
     def __str__(self):
         return f'{self.name}'
+    
+    def save(self, *args, **kwargs):
+       if not self.name:
+            self.name = self.arrived
+       super(LooseContainer, self).save(*args, **kwargs) # Call the real save() method
 
 
 class FullContainer(BaseContainer):
@@ -259,13 +268,15 @@ class Product(models.Model):
             return self.cbm
         
     def save(self, *args, **kwargs):
+        
         self.calc_cbm()
         super().save(*args, **kwargs)
 
 
 class ProductQuote(models.Model):
+    QUOTE_STATUS = QUOTE_STATUS
     name = models.CharField(verbose_name= 'product name',max_length = 150)
-    status = models.CharField(max_length = 150,blank=True, null=True)
+    status = models.CharField(max_length=2, choices=QUOTE_STATUS, default='S')
     contact = models.CharField(max_length = 150,blank=True, null=True)
     description = models.TextField()
     qty = models.IntegerField()

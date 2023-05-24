@@ -241,8 +241,8 @@ class LooseContainerDetailView(DetailView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['cargos'] = self.object.cargo.all()
-        context['stocks'] = self.object.cargo.product.filter(has_stock=True)
+        context['cargos'] = self.object.cargos.all()
+        # context['stocks'] = self.object.cargos.products.filter(has_stock=True)
         
         return context
     
@@ -267,8 +267,8 @@ class FullContainerDetailView(DetailView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['cargos'] = self.object.cargo.all()
-        context['stocks'] = self.object.cargo.product.filter(has_stock=True)
+        context['cargos'] = self.object.cargos.all()
+        # context['stocks'] = self.object.cargos.products.filter(has_stock=True)
         
         return context
     

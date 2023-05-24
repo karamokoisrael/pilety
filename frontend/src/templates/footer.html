@@ -1,39 +1,71 @@
 {% load static %}
 
-<footer class="bg-light">
+{% block content %}
+
+
+<!-- Start Footer Bottom Area -->
+<footer class="footer-bottom-area footer-bottom-area-four">
     <div class="container">
-      <div class="row">
-        <div class="col-md-6">
-          <h5>About Us</h5>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="single-widget-bottom">
+                    <ul>
+                        <!-- <li>
+                            <a href="terms-conditions.html">Terms & Conditions</a>
+                        </li> -->
+                        <li>
+                            <a href="{% url 'shipping:policy' %}">Privacy &Policy</a>
+                        </li>
+
+                    <ul class="social-link">
+                        <li>
+                            <a href="#">
+                                <i class='bx bxl-twitter'></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class='bx bxl-facebook'></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class='bx bxl-instagram'></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class='bx bxl-linkedin'></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class='bx bxl-youtube'></i>
+                            </a>
+                        </li>
+                    </ul>
+                </ul>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="single-widget-bottom">
+                    <p>
+                        Copyright <i class="bx bx-copyright"></i> 2023 Pilety.
+                    </p>
+                </div>
+            </div>
         </div>
-        <div class="col-md-3">
-          <h5>Links</h5>
-          <ul class="list-unstyled">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Contact Us</a></li>
-          </ul>
-        </div>
-        <div class="col-md-3">
-          <h5>Follow Us</h5>
-          <ul class="list-unstyled">
-            <li><a href="#"><i class="bi bi-facebook"></i> Facebook</a></li>
-            <li><a href="#"><i class="bi bi-twitter"></i> Twitter</a></li>
-            <li><a href="#"><i class="bi bi-linkedin"></i> LinkedIn</a></li>
-            <li><a href="#"><i class="bi bi-instagram"></i> Instagram</a></li>
-          </ul>
-        </div>
-      </div>
-      <hr>
-      <div class="row">
-        <div class="col-md-6">
-          <p>&copy; 2023 All rights reserved.</p>
-        </div>
-        <div class="col-md-6">
-          <p class="float-end">Designed by <a href="#">Your Name</a></p>
-        </div>
-      </div>
     </div>
-  </footer>
-  
+</footer>
+<!-- End Footer Bottom Area -->
+
+<!-- Start Go Top Area -->
+<div class="go-top">
+    <i class='bx bx-chevrons-up bx-fade-up'></i>
+    <i class='bx bx-chevrons-up bx-fade-up'></i>
+</div>
+<!-- End Go Top Area --> 
+
+
+
+{% endblock %}

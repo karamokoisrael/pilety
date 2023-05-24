@@ -74,3 +74,9 @@ DELIVERY_STATUS = (
     ('VH','Loaded in Vehicle'),
     ('RC','Received by Customer'),
 )
+
+QUOTE_STATUS = (
+    ('S', 'Submitted'),
+    ('R', 'Reviewing'),
+    ('Q', 'Quoted'),
+)
