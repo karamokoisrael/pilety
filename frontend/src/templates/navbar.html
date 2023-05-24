@@ -4,14 +4,14 @@
 <div class="prevoz-nav-style ">
     <div class="navbar-area">
         <!-- Menu For Mobile Device -->
-        {% comment %} <div class="mobile-nav">
+        <div class="mobile-nav">
             <a href="/" class="logo">
                 <img src="{% static 'img/logo/logo-one.png' %}" alt="Logo">
             </a>
-        </div> {% endcomment %}
+        </div> 
         <!-- Menu For Desktop Device -->
         <div class="main-nav">
-            <nav class="navbar navbar-expand-md navbar-light">
+            <nav class="navbar navbar-expand-md navbar-dark">
                 <div class="container">
                     <a class="navbar-brand" href="/">
                         <img src="{% static 'img/logo/logo-one.png' %}" alt="Logo">
@@ -52,32 +52,7 @@
                             </li>
 
 
-                            {% if request.user.is_staff %}
                             
-                            <li class="nav-item">
-                                <a href="#" class="nav-link dropdown-toggle">
-                                    shipping
-                                    <i class='bx bx-chevron-down'></i>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li class="nav-item">
-                                        <a href="{% url 'allin:f_containers' %}" class="nav-link">Full Container</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="{% url 'allin:l_containers' %}" class="nav-link">Loose Container</a>
-                                    </li>
-                                    
-                                    {% comment %}
-                                        <!-- <li class="nav-item">
-                                        <a href="{% url 'shipping:' %}"" class="nav-link">Products</a>
-                                    </li> -->
-                                    {% endcomment %}
-                                        
-                                    
-                                </ul>
-                            </li>
-                            
-                            {% endif %}
 
                             
                             {% if request.user.is_authenticated %}
@@ -104,8 +79,8 @@
                             {% else %}
                             <li class="nav-item">
                                 <a href="#" class="nav-link dropdown-toggle">
-                                    Account
-                                    <i class='bx bx-chevron-down'></i>
+                                    
+                                    <i class='bx bxs-user-account'></i>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li class="nav-item">
@@ -119,15 +94,111 @@
                                 </ul>
                             </li>
                             {% endif %}
-                                
+
+                            {% if request.user.is_staff %}
+                            
+                            <li class="nav-item">
+                                <a href="#" class="nav-link dropdown-toggle">
+                                    shipping
+                                    <i class='bx bx-chevron-down'></i>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <div>
+                                        <nav class="navbar navbar-expand-lg navbar-dark">
+                                        <div class="container">
+                                            {% comment %} <a class="navbar-brand" href="#">Sidebar</a>
+                                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidebarNav" aria-controls="sidebarNav" aria-expanded="false" aria-label="Toggle navigation">
+                                                <span class="navbar-toggler-icon"></span>
+                                            </button> {% endcomment %}
+                                    
+                                            <div class="collapse navbar-collapse" id="sidebarNav">
+                                                <ul class="navbar-nav ml-auto">
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="{% url 'allin:f_containers' %}">Full Container</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="{% url 'allin:l_containers' %}">Loose Container</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="{% url 'allin:products' %}">Products</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="{% url 'allin:product_quotes' %}">Product Quotes</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="{% url 'allin:shipping_quotes' %}">Shipping Quotes</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="{% url 'allin:deliveries' %}">Deliveries</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="{% url 'allin:vehicles' %}">Vehicles</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="{% url 'allin:expenses' %}">Expenses</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </nav>
+                                        
+                                    
+                                </ul>
+                            </li>
+                            
+                            {% endif %}
                            
                         </ul>
                        
                     </div>
                 </div>
             </nav>
+
         </div>
+        
     </div>
+    
+    </div>
+    <div class="main-nav">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#">Sidebar</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidebarNav" aria-controls="sidebarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+    
+            <div class="collapse navbar-collapse" id="sidebarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'allin:f_containers' %}">Full Container</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'allin:l_containers' %}">Loose Container</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'allin:products' %}">Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'allin:product_quotes' %}">Product Quotes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'allin:shipping_quotes' %}">Shipping Quotes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'allin:deliveries' %}">Deliveries</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'allin:vehicles' %}">Vehicles</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'allin:expenses' %}">Expenses</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+</div>
 </div>
 <!-- End Pilety Navbar Area -->
 

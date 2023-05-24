@@ -6,7 +6,7 @@ from users.models import Customer, Dispatcher, Supplier, Driver
 from choices import (CURRENCY_CHOICES, 
                      ORDERS_STATUS_CHOICES, 
                      PRODUCTS_TYPE_CHOICES, 
-                     UNIT_PACKAGING_CHOICES,
+                     DELIVERY_STATUS,
                      EXPENSES_RECURRANCE_CHOICES,
                      CARGO_STATUS_CHOICES,
                      CARGO_TYPE_CHOICES,)
@@ -23,14 +23,15 @@ class DeliveryVehicle(models.Model):
     last_checkup = models.DateField(auto_now=True, auto_now_add=False)
     
 
-    def _str__(self):
-        return f'{self.name}'
+    def __str__(self):
+        return f'{self.name} - {self.plate_number}'
 
 class Delivery(models.Model):
+    DELIVERY_STATUS = DELIVERY_STATUS
     driver = models.ForeignKey(Driver, on_delete=models.CASCADE)
     vehicle = models.OneToOneField(DeliveryVehicle, on_delete=models.CASCADE)
     date = models.DateField(auto_now=True, auto_now_add=False)
-    status = models.CharField(max_length = 150)
+    status = models.CharField(max_length = 2, choices=DELIVERY_STATUS, default='WH')
     
     def __str__(self):
         return f'{self.date} delivery by {self.driver}'

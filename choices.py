@@ -68,3 +68,9 @@ CARGO_TYPE_CHOICES = (
     ('F', 'Full Cargo'),
     ('L', 'Loose Cargo'),
 )
+
+DELIVERY_STATUS = (
+    ('WH','In TZ Warehouse'),
+    ('VH','Loaded in Vehicle'),
+    ('RC','Received by Customer'),
+)

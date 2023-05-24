@@ -131,9 +131,20 @@ class ExpensesView(TemplateView):
 
 class ProductListView(ListView):
     model = Product
-    template_name = 'allin/sales/productss.html' 
+    template_name = 'allin/sales/products.html' 
     context_object_name = 'products'
     paginate_by = 10  
+
+    def get_queryset(self):
+        queryset = super(ProductListView, self).get_queryset()
+        queryset = Product.objects.filter(has_stock=True) # TODO
+        return queryset
+    
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context[""] = 
+    #     return context
+    
 
 
 class LooseContainerCreateView(CreateView):
@@ -308,6 +319,7 @@ class ProductDetailView(DetailView):
     
 
 class ShippingQuoteDetailView(DetailView):
+
     model = ShippingQuote
     template_name = 'allin/quotes/shipping_quote.html' 
     context_object_name = 'cargo'
@@ -316,4 +328,15 @@ class ShippingQuoteDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['products'] = self.object.products.all()
 
+        return context
+    
+
+class DeliveryDetailView(DetailView):
+    model = Delivery
+    template_name = 'allin/sales/delivery.html' 
+    context_object_name = 'delivery'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['cargos'] = self.object.cargos.all()
         return context

@@ -1,0 +1,161 @@
+{% load static %}
+
+<!-- Start Pilety Navbar Area -->
+<div class="prevoz-nav-style ">
+    <div class="navbar-area">
+        <!-- Menu For Mobile Device -->
+        <div class="mobile-nav">
+            <a href="/" class="logo">
+                <img src="{% static 'img/logo/logo-one.png' %}" alt="Logo">
+            </a>
+        </div> 
+        <!-- Menu For Desktop Device -->
+
+        
+        {% if request.user.is_authenticated and request.user.is_staff %}
+            
+            {% include 'staff_navbar.html' %}            
+            
+        {% elif request.user.is_authenticated %}
+
+            <div class="main-nav">
+                <nav class="navbar navbar-expand-md navbar-dark">
+                    <div class="container">
+                        <a class="navbar-brand" href="/">
+                            <img src="{% static 'img/logo/logo-one.png' %}" alt="Logo">
+                        </a>
+                        <div class="mean-menu" id="navbarSupportedContent">
+                            <ul class="navbar-nav m-auto">
+                                <li class="nav-item">
+                                    <a href="/" class="nav-link dropdown-toggle active">
+                                        Home
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link dropdown-toggle">
+                                        Pages
+                                        <i class='bx bx-chevron-down'></i>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        
+                                        <li class="nav-item">
+                                            <a href="{% url 'shipping:whyus' %}" class="nav-link">Why Choose Us</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="{% url 'shipping:team' %}" class="nav-link">Team</a>
+                                        </li>
+                                        
+                                    </ul>
+                                </li>
+                                
+                                
+                                <li class="nav-item">
+                                    <a href="{% url 'shipping:services' %}" class="nav-link">Services</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{% url 'shipping:about' %}" class="nav-link">About us</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{% url 'shipping:contact' %}" class="nav-link">Contact</a>
+                                </li>
+
+
+                                
+
+                                
+                                {% if request.user.is_authenticated %}
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link dropdown-toggle">
+                                        {{request.user}}
+                                        <i class='bx bx-chevron-down'></i>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                {% else %}
+                                
+                                {% endif %}
+
+                            </ul>
+                        
+                        </div>
+                    </div>
+                </nav>
+
+            </div>
+        
+
+        {% else %}
+            <div class="main-nav">
+                <nav class="navbar navbar-expand-md navbar-dark">
+                    <div class="container">
+                        <a class="navbar-brand" href="/">
+                            <img src="{% static 'img/logo/logo-one.png' %}" alt="Logo">
+                        </a>
+                        <div class="mean-menu" id="navbarSupportedContent">
+                            <ul class="navbar-nav m-auto">
+                                <li class="nav-item">
+                                    <a href="/" class="nav-link dropdown-toggle active">
+                                        Home
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link dropdown-toggle">
+                                        Pages
+                                        <i class='bx bx-chevron-down'></i>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        
+                                        <li class="nav-item">
+                                            <a href="{% url 'shipping:whyus' %}" class="nav-link">Why Choose Us</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="{% url 'shipping:team' %}" class="nav-link">Team</a>
+                                        </li>
+                                        
+                                    </ul>
+                                </li>
+                                
+                                
+                                <li class="nav-item">
+                                    <a href="{% url 'shipping:services' %}" class="nav-link">Services</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{% url 'shipping:about' %}" class="nav-link">About us</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{% url 'shipping:contact' %}" class="nav-link">Contact</a>
+                                </li>
+                                
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link dropdown-toggle">
+                                        
+                                        <i class='bx bxs-user-account'></i>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a href="{% url 'account_login' %}" class="social-list" >Sign in</a>
+                            
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="{% url 'account_signup' %}" class="social-list" >Sign up</a>
+                                        </li>
+                                        
+                                    </ul>
+                                </li>
+                                
+
+                                
+                            
+                            </ul>
+                        
+                        </div>
+                    </div>
+                </nav>
+
+            </div>
+        {% endif %}
+            
