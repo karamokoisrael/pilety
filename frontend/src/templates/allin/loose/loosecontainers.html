@@ -12,7 +12,7 @@
 						<li>
 							<a href="#">
 								<!-- <i class="flaticon-truck"></i> -->
-								Loose Cargos
+								Loose Container
 							</a>
 						</li>
 						<!-- <li>
@@ -35,22 +35,22 @@
                                     <th>Status</th>
                                     <th>Cartons</th>
                                     <th>Container Number</th>
-                                    <th>Checked By</th>
+                                    
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {% for item in loose_containers %}
+                                {% for item in containers %}
                                     <tr>
                                         <td>{{ item.name }}</td>
-                                        <td>{{ item.delivery }}</td>
+                                        <td>{{ item.arrived }}</td>
                                         <td>{{ item.depature }}</td>
                                         <td>{{ item.weight }}</td>
-                                        <td>{{ item.cbm }}</td>
-                                        <td>{{ item.status }}</td>
+                                        <td>{{ item.cbms }}</td>
+                                        <td>{{ item.get_status_display }}</td>
                                         <td>{{ item.ctns }}</td>
-                                        <td>{{ item.container_number }}</td>
-                                        <td>{{ item.dispature }}</td>
-                                        <td><a href="{% url 'shipping:loose_container_detail' item.id %}">Details</a></td>
+                                        <td>{{ item.number }}</td>
+                                        
+                                        <td><a href="{% url 'allin:l_container' item.id %}">Details</a></td>
 
                                     </tr>
                                 {% endfor %}

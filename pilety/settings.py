@@ -16,7 +16,7 @@ SECRET_KEY = 'django-insecure-v%iw#h*!!ljx#*^_b9r6-mc!lt6k8kc*vr1@%ay51e0x3dm5t(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.248.149.243',  'localhost']
 
 
 # Application definition
@@ -142,7 +142,7 @@ AUTH_USER_MODEL = 'users.User'
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 STATICFILES_DIRS = [BASE_DIR/ 'frontend/src/static']
-STATIC_ROOT = BASE_DIR/ 'staticfiles'
+STATIC_ROOT = BASE_DIR/ 'frontend/src/static/staticfiles'
 
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"

@@ -36,7 +36,7 @@
                                         <td>{{ item.date }}</td>
                                         <td>{{ item.driver }}</td>
                                         <td>{{ item.vehicle }}</td>
-                                        <td>{{ item.status }}</td>
+                                        <td>{{ item.get_status_display }}</td>
                                         
                                         <td><a href="{% url 'allin:delivery' item.id %}">Details</a></td>
 

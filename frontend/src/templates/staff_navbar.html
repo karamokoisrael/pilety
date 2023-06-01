@@ -9,32 +9,41 @@
             <div class="collapse navbar-collapse" id="sidebarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'allin:f_containers' %}"><strong> Full Container</strong></a>
+                        <a class="nav-link" href="{% url 'allin:f_containers' %}"> Full Containers</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'allin:l_containers' %}"><strong>Loose Container</strong></a>
+                        <a class="nav-link" href="{% url 'allin:l_containers' %}">Loose Containers</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'allin:products' %}"><strong>Products</strong></a>
+                        <a class="nav-link" href="{% url 'allin:f_cargos' %}"> Full Cargos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'allin:product_quotes' %}"><strong>Product Quotes</strong></a>
+                        <a class="nav-link" href="{% url 'allin:l_cargos' %}">Loose Cargos</a>
+                    </li>
+                    {% comment %} <li class="nav-item">
+                        <a class="nav-link" href="{% url 'allin:products' %}">Products</a>
+                    </li> {% endcomment %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'allin:product_quotes' %}">Product Quotes</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'allin:shipping_quotes' %}"><strong>Shipping Quotes</strong></a>
+                        <a class="nav-link" href="{% url 'allin:shipping_quotes' %}">Shipping Quotes</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'allin:deliveries' %}"><strong>Deliveries</strong></a>
+                        <a class="nav-link" href="{% url 'allin:deliveries' %}">Deliveries</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'allin:vehicles' %}"><strong>Vehicles</strong></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'allin:expenses' %}"><strong>Expenses</strong></a>
-                    </li>
+                    
+                    
                     {% if request.user.is_superuser %}
+                        
+                        {% comment %} <li class="nav-item">
+                            <a class="nav-link" href="{% url 'allin:expenses' %}">Expenses</a>
+                        </li> {% endcomment %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'allin:expenses' %}"><strong>Expenses</strong></a>
+                            <a class="nav-link" href="{% url 'allin:vehicles' %}">Vehicles</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'admin:index' %}" class="nav-link">Admin</a>
                         </li>
                     {% endif %}
                     
