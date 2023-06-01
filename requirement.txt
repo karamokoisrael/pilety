@@ -9,6 +9,8 @@ pillow
 django-crispy-forms
 crispy-bootstrap4
 
+gunicorn
+
 
 
 python-environ==0.4.54
