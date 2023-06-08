@@ -203,7 +203,7 @@
                         Tanzania. We strive to promote ethical business 
                         practices and work towards building a more sustainable 
                         future for all.</p>
-                    <a class="default-btn" href="about.html">
+                    <a class="default-btn" href="{% url 'allin:about' %}" >
                         About Us
                     </a>
                     <a class="white video-btn popup-youtube" href="https://www.youtube.com/watch?v=cTxCqUwnLg4">
@@ -287,7 +287,7 @@
                 </div>
             </div>
         </div>
-        <a href="why-us-choose.html" class="read-more">
+        <a href="{% url 'allin:whyus' %}" class="read-more">
                             Read More
                             <i class="bx bx-right-arrow-alt"></i>
                         </a>
@@ -296,7 +296,7 @@
 <!-- End Choose Area -->
 
 <!-- Start Track Area -->
-<section class="track-area track-area-six ptb-100">
+{% comment %} <section class="track-area track-area-six ptb-100">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -518,7 +518,7 @@
             </div>
         </div>
     </div>
-</section>
+</section> {% endcomment %}
 <!-- End Track Area -->
 
 <!-- Start What We Offer Area -->
@@ -602,9 +602,9 @@
                         <li>
                             <i class="flaticon-checked"></i>
                             We use innovative technology and tools to deliver our services, ensuring accuracy and efficiency.							</ul>
-                    <a class="default-btn" href="services.html">
+                    {% comment %} <a class="default-btn" href="services.html">
                         All Services
-                    </a>
+                    </a> {% endcomment %}
                 </div>
             </div>
         </div>
@@ -764,8 +764,9 @@
                 <h3><i class="flaticon-planet-earth"></i> Regional Offices</h3>
                 <ul>
                     <li class="color">People's Republic of China</li>
-                    <li>Jinhua, Yiwu <br>  Zhejiang Province</li>
-                    <li>++86-131-5795-9722 <br> 
+                    
+                    <li>Room 301, Building 20 <br>Futian District 4, Yiwu,Jinhua City<br>  Zhejiang Province</li>
+                    <li>+86-131-5795-9722 <br> 
                         <a href="#" class="__cf_email__" data-cfemail="a8c7cecec1cbcde8d8dacddec7d286cbc7c5">pilety@pilety.com</a></li>
                     <li>Mon - Sun: 9:00 - 22:00</li>
                 </ul>

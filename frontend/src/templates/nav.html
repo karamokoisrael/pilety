@@ -4,158 +4,112 @@
 <div class="prevoz-nav-style ">
     <div class="navbar-area">
         <!-- Menu For Mobile Device -->
-        <div class="mobile-nav">
+        {% comment %} <div class="mobile-nav">
             <a href="/" class="logo">
                 <img src="{% static 'img/logo/logo-one.png' %}" alt="Logo">
             </a>
-        </div> 
+        </div>  {% endcomment %}
         <!-- Menu For Desktop Device -->
 
         
         {% if request.user.is_authenticated and request.user.is_staff %}
             
-            {% include 'staff_navbar.html' %}            
+            {% include 'new.html' %}            
             
         {% elif request.user.is_authenticated %}
-
-            <div class="main-nav">
-                <nav class="navbar navbar-expand-md navbar-dark">
-                    <div class="container">
-                        <a class="navbar-brand" href="/">
-                            <img src="{% static 'img/logo/logo-one.png' %}" alt="Logo">
-                        </a>
-                        <div class="mean-menu" id="navbarSupportedContent">
-                            <ul class="navbar-nav m-auto">
-                                <li class="nav-item">
-                                    <a href="/" class="nav-link dropdown-toggle active">
-                                        Home
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link dropdown-toggle">
-                                        Pages
-                                        <i class='bx bx-chevron-down'></i>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        
-                                        <li class="nav-item">
-                                            <a href="{% url 'shipping:whyus' %}" class="nav-link">Why Choose Us</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="{% url 'shipping:team' %}" class="nav-link">Team</a>
-                                        </li>
-                                        
-                                    </ul>
-                                </li>
-                                
-                                
-                                <li class="nav-item">
-                                    <a href="{% url 'shipping:services' %}" class="nav-link">Services</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{% url 'shipping:about' %}" class="nav-link">About us</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{% url 'shipping:contact' %}" class="nav-link">Contact</a>
-                                </li>
-
-
-                                
-
-                                
-                                {% if request.user.is_authenticated %}
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link dropdown-toggle">
-                                        {{request.user}}
-                                        <i class='bx bx-chevron-down'></i>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li class="nav-item">
-                                            <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                {% else %}
-                                
-                                {% endif %}
-
-                            </ul>
-                        
+        <div class="container-fluid position-relative p-0">
+            <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0 bg-dark">
+                <a href="{% url 'allin:' %}" class="navbar-brand p-0">
+                    {% comment %} <h1 class="text-primary m-0"><i class="fa fa-map-marker-alt me-3"></i>Tourist</h1> {% endcomment %}
+                    <img src="{% static 'img/logo/logo1.png' %}" alt="Logo"> 
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="fa fa-bars"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto py-0">
+                        <a href="{% url 'allin:services' %}" class="nav-item nav-link">Services</a>
+                        <a href="{% url 'allin:about' %}" class="nav-item nav-link">About</a>
+                        <a href="{% url 'allin:contact' %}" class="nav-item nav-link">Contact</a>
+                        {% comment %} <a href="{% url 'allin:package' %}" class="nav-item nav-link">Track</a> {% endcomment %}
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                            <div class="dropdown-menu m-0">
+                                <a href="{% url 'allin:whyus' %}" class="dropdown-item">why us</a>
+                                <a href="{% url 'allin:team' %}" class="dropdown-item">team</a>
+                                {% comment %} <a href="{% url 'allin:team' %}" class="dropdown-item">Travel Guides</a>
+                                <a href="{% url 'allin:testimonial' %}" class="dropdown-item">Testimonial</a>
+                                <a href="{% url 'allin:404' %}" class="dropdown-item">404 Page</a> {% endcomment %}
+                            </div>
+                        </div>
+                        <a href="{% url 'allin:contact' %}" class="nav-item nav-link">Contact</a>
+                    </div>
+                    
+                    <div class="nav-item dropdown">
+                        <a href="#" class="btn btn-primary rounded-pill py-2 px-4 nav-link dropdown-toggle" data-bs-toggle="dropdown">{{request.user}}</a>
+                        <div class="dropdown-menu m-0">
+                            
+                          
+                            <a href="{% url 'account_logout' %}" class="dropdown-item" >Logout</a>
+                            
                         </div>
                     </div>
-                </nav>
-
-            </div>
+                    
         
-
+                   
+                </div>
+            </nav>
+        
+            
+        </div>
         {% else %}
-            <div class="main-nav">
-                <nav class="navbar navbar-expand-md navbar-dark">
-                    <div class="container">
-                        <a class="navbar-brand" href="/">
-                            <img src="{% static 'img/logo/logo-one.png' %}" alt="Logo">
-                        </a>
-                        <div class="mean-menu" id="navbarSupportedContent">
-                            <ul class="navbar-nav m-auto">
-                                <li class="nav-item">
-                                    <a href="/" class="nav-link dropdown-toggle active">
-                                        Home
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link dropdown-toggle">
-                                        Pages
-                                        <i class='bx bx-chevron-down'></i>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        
-                                        <li class="nav-item">
-                                            <a href="{% url 'shipping:whyus' %}" class="nav-link">Why Choose Us</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="{% url 'shipping:team' %}" class="nav-link">Team</a>
-                                        </li>
-                                        
-                                    </ul>
-                                </li>
-                                
-                                
-                                <li class="nav-item">
-                                    <a href="{% url 'shipping:services' %}" class="nav-link">Services</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{% url 'shipping:about' %}" class="nav-link">About us</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{% url 'shipping:contact' %}" class="nav-link">Contact</a>
-                                </li>
-                                
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link dropdown-toggle">
-                                        
-                                        <i class='bx bxs-user-account'></i>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li class="nav-item">
-                                            <a href="{% url 'account_login' %}" class="social-list" >Sign in</a>
+        <div class="container-fluid position-relative p-0">
+            <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0 bg-dark">
+                {% comment %} <a href="{% url 'allin:' %}" class="navbar-brand p-0"> {% endcomment %}
+                    {% comment %} <h1 class="text-primary m-0"><i class="fa fa-map-marker-alt me-3"></i>Tourist</h1> {% endcomment %}
+                    <img src="{% static 'img/logo/logo1.png' %}" alt="Logo"> 
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="fa fa-bars"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto py-0">
+                        <a href="{% url 'allin:services' %}" class="nav-item nav-link">Services</a>
+                        <a href="{% url 'allin:about' %}" class="nav-item nav-link">About</a>
+                        <a href="{% url 'allin:contact' %}" class="nav-item nav-link">Contact</a>
+                        {% comment %} <a href="{% url 'allin:package' %}" class="nav-item nav-link">Track</a> {% endcomment %}
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                            <div class="dropdown-menu m-0">
+                                <a href="{% url 'allin:whyus' %}" class="dropdown-item">why us</a>
+                                <a href="{% url 'allin:team' %}" class="dropdown-item">team</a>
+                                {% comment %} <a href="{% url 'allin:team' %}" class="dropdown-item">Travel Guides</a>
+                                <a href="{% url 'allin:testimonial' %}" class="dropdown-item">Testimonial</a>
+                                <a href="{% url 'allin:404' %}" class="dropdown-item">404 Page</a> {% endcomment %}
+                            </div>
+                        </div>
+                        <a href="{% url 'allin:contact' %}" class="nav-item nav-link">Contact</a>
+                    </div>
+                    
+                    <div class="nav-item dropdown">
+                        <a href="#" class="btn btn-primary rounded-pill py-2 px-4 nav-link dropdown-toggle" data-bs-toggle="dropdown">Login/Sign up</a>
+                        <div class="dropdown-menu m-0">
                             
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="{% url 'account_signup' %}" class="social-list" >Sign up</a>
-                                        </li>
-                                        
-                                    </ul>
-                                </li>
-                                
-
-                                
+                          
+                            <a href="{% url 'account_login' %}" class="dropdown-item" >Login</a>
+                            <a href="{% url 'account_signup' %}" class="dropdown-item" >Sign up</a>
                             
-                            </ul>
-                        
                         </div>
                     </div>
-                </nav>
-
-            </div>
+                    
+        
+                   
+                </div>
+            </nav>
+        
+            
+        </div>
         {% endif %}
+    </div>
+</div>
             
