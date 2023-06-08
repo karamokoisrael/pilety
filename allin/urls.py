@@ -39,9 +39,32 @@ from allin.views import (
     ShippingQuoteDetailView,
 )
 
+from allin.other_views import (Homepage,
+                          AboutPage,
+                          ContactPage,
+                          PolicyPage,
+                        #   RequestPage,
+                          ServicesPage,
+                          TeamPage,
+                          TermsPage,
+                          WhyUsPage
+                          )
+
 app_name = 'allin'
 
 urlpatterns = [
+    path('', Homepage.as_view(), name='homepage'),
+    path('about/', AboutPage.as_view(), name='about'),
+    path('contact', ContactPage.as_view(), name='contact'),
+    path('policy', PolicyPage.as_view(), name='policy'),
+    path('services', ServicesPage.as_view(), name='services'),
+    path('team', TeamPage.as_view(), name='team'),
+    path('terms', TermsPage.as_view(), name='terms'),
+    path('why-choose-us', WhyUsPage.as_view(), name='whyus'),
+    # path('', Homepage.as_view(), name='homepage'),
+    # path('', Homepage.as_view(), name='homepage'),
+    
+
     path('l_containers/', LooseContainerListView.as_view(), name='l_containers'),
     path('l_cargos/', LooseCargoListView.as_view(), name='l_cargos'),
     path('f_containers/', FullContainerListView.as_view(), name='f_containers'),

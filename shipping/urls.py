@@ -26,30 +26,12 @@ from .views import (
     FullCargoInvoiceDetailView,
     FullCargoInvoiceCreateView,
 )
-from .other_views import (Homepage,
-                          AboutPage,
-                          ContactPage,
-                          PolicyPage,
-                        #   RequestPage,
-                          ServicesPage,
-                          TeamPage,
-                          TermsPage,
-                          WhyUsPage
-                          )
+
 
 app_name = 'shipping'
 
 urlpatterns = [
-    path('', Homepage.as_view(), name='homepage'),
-    path('about/', AboutPage.as_view(), name='about'),
-    path('contact', ContactPage.as_view(), name='contact'),
-    path('policy', PolicyPage.as_view(), name='policy'),
-    path('services', ServicesPage.as_view(), name='services'),
-    path('team', TeamPage.as_view(), name='team'),
-    path('terms', TermsPage.as_view(), name='terms'),
-    path('why-choose-us', WhyUsPage.as_view(), name='whyus'),
-    # path('', Homepage.as_view(), name='homepage'),
-    # path('', Homepage.as_view(), name='homepage'),
+    
 
     path('loose-containers/', LooseContainerListView.as_view(), 
                                     name='loose_container_list'),
