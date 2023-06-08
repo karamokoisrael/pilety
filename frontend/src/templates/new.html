@@ -1,0 +1,80 @@
+{% load static %}
+{% comment %} <div class="container-fluid bg-primary  px-5 d-none d-lg-block">
+    <div class="row gx-0">
+        <div class="col-lg-8 text-center text-lg-start mb-2 mb-lg-0">
+            <div class="d-inline-flex align-items-center" style="height: 45px;">
+                <small class="me-3 text-light"><i class="fa fa-map-marker-alt me-2"></i>123 Street, New York, USA</small>
+                <small class="me-3 text-light"><i class="fa fa-phone-alt me-2"></i>+012 345 6789</small>
+                <small class="text-light"><i class="fa fa-envelope-open me-2"></i>info@example.com</small>
+            </div>
+        </div>
+        <div class="col-lg-4 text-center text-lg-end">
+            <div class="d-inline-flex align-items-center" style="height: 45px;">
+                <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-twitter fw-normal"></i></a>
+                <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-facebook-f fw-normal"></i></a>
+                <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-linkedin-in fw-normal"></i></a>
+                <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-instagram fw-normal"></i></a>
+                <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle" href=""><i class="fab fa-youtube fw-normal"></i></a>
+            </div>
+        </div>
+    </div>
+</div> {% endcomment %}
+
+<div class="container-fluid position-relative p-0">
+    <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0 bg-dark">
+        <a href="/" class="navbar-brand p-0">
+            {% comment %} <h1 class="text-primary m-0"><i class="fa fa-map-marker-alt me-3"></i>Tourist</h1> {% endcomment %}
+            <<img src="{% static 'img/logo/logo-two.png' %}" alt="Logo"> 
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="fa fa-bars"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto py-0">
+                <a href="{% url 'allin:f_containers' %}" class="nav-item nav-link" > Full Containers</a>
+                <a href="{% url 'allin:l_containers' %}" class="nav-item nav-link" >Loose Containers</a>
+                <a href="{% url 'allin:f_cargos' %}" class="nav-item nav-link" > Full Cargos</a>
+                <a href="{% url 'allin:l_cargos' %}" class="nav-item nav-link">Loose Cargos</a>
+                {% comment %} <a href="{% url 'allin:products' %}" class="nav-item nav-link">Products</a> {% endcomment %}
+                <a href="{% url 'allin:product_quotes' %}" class="nav-item nav-link" >Product Quotes</a>
+                <a href="{% url 'allin:shipping_quotes' %}" class="nav-item nav-link" >Shipping Quotes</a>
+                <a href="{% url 'allin:deliveries' %}" class="nav-item nav-link" >Deliveries</a>
+                
+                {% if request.user.is_superuser %}
+
+                    <a href="{% url 'allin:vehicles' %}" class="nav-item nav-link" >Vehicles</a>
+                 {% endif %}
+            </div>
+            {% if request.user.is_superuser %}
+
+                    {% comment %} <a href="{% url 'allin:vehicles' %}" class="nav-item nav-link" >Vehicles</a> {% endcomment %}
+                    
+                    <div class="nav-item dropdown">
+                        <a href="#" class="btn btn-danger rounded-pill py-2 px-4 nav-link dropdown-toggle" data-bs-toggle="dropdown">{{request.user}}</a>
+                        <div class="dropdown-menu m-0">
+                            
+                            <a href="{% url 'admin:index' %}" class="dropdown-item">Admin</a>
+                            <a href="{% url 'account_logout' %}" class="dropdown-item" >Logout</a>
+                            
+                        </div>
+                    </div>
+                {% else %}
+
+                        
+                    <div class="nav-item dropdown">
+                        <a href="#" class="btn btn-danger rounded-pill py-2 px-4 nav-link dropdown-toggle" data-bs-toggle="dropdown">{{request.user}}</a>
+                        <div class="dropdown-menu m-0">
+                            
+                            <a href="{% url 'admin:index' %}" class="nav-item nav-link">Admin</a>
+                            <a href="{% url 'account_logout' %}" class="dropdown-item" >Logout</a>
+                            
+                        </div>
+                    </div>
+                    
+                    {% endif %}
+            
+           
+        </div>
+    </nav>
+
+</div>
