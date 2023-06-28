@@ -35,9 +35,9 @@ DRIVER_STATUS_CHOICES = (
 
 UNIT_PACKAGING_CHOICES = (
     ('PCS', 'Pieces'),
-    ('ROLLS', 'Rolls'),
-    ('DOZENS', 'Dozens'),
-    ('BAGS', 'Bags'),
+    ('RLS', 'Rolls'),
+    ('DZN', 'Dozens'),
+    ('BGS', 'Bags'),
 )
 
 CONTAINER_STATUS_CHOICES = (
@@ -62,7 +62,7 @@ CARGO_STATUS_CHOICES = (
     ('RW', 'Recieved in China Warehouse'),
     ('DC', 'Departed China '),
     ('AT', 'Arrived in Tanzania'),
-    ('RC', 'Recieved by Client'),
+    ('RC', 'Recieved by Customer'),
 )
 CARGO_TYPE_CHOICES = (
     ('F', 'Full Cargo'),

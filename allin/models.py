@@ -10,7 +10,8 @@ from choices import (CURRENCY_CHOICES,
                      EXPENSES_RECURRANCE_CHOICES,
                      CARGO_STATUS_CHOICES,
                      CARGO_TYPE_CHOICES,
-                     QUOTE_STATUS,)
+                     QUOTE_STATUS,
+                     UNIT_PACKAGING_CHOICES,)
 from decimal import Decimal
 
 
@@ -23,7 +24,9 @@ class DeliveryVehicle(models.Model):
     mileage = models.DecimalField(max_digits=6, decimal_places=3)
     last_checkup = models.DateField(auto_now=True, auto_now_add=False)
     
-
+    class Meta:
+        verbose_name_plural = 'Delivery Vehicles'
+        
     def __str__(self):
         return f'{self.name} - {self.plate_number}'
 
@@ -36,6 +39,7 @@ class Delivery(models.Model):
     
     class Meta:
         verbose_name_plural = 'Deliveries'
+
     def __str__(self):
         return f'{self.date} delivery by {self.driver}'
     
@@ -205,24 +209,35 @@ class Expense(models.Model):
 class Product(models.Model):
     TYPE_CHOICES = PRODUCTS_TYPE_CHOICES
     CARGO_TYPE_CHOICES = CARGO_TYPE_CHOICES
+    UNIT_PACKAGING_CHOICES = UNIT_PACKAGING_CHOICES
     name = models.CharField(max_length = 150)
+    chinese = models.CharField(verbose_name='chinese desc', 
+                               max_length = 150, blank=True, null=True)
     item_number = models.CharField(max_length=50, blank=True, null=True)
-    # types = models.CharField(max_length = 150, default='', 
-    #                          choices=TYPE_CHOICES, blank=True, null=True)
     cargo_types = models.CharField(max_length = 150, default='L', 
                              choices=CARGO_TYPE_CHOICES, blank=True, null=True)
-    qty = models.IntegerField(verbose_name='qty in ctn',blank=True, null=True)
-    packaging = models.IntegerField(blank=True, null=True)
-    cbms = models.DecimalField(verbose_name='Total CBM',
-                              max_digits=10, decimal_places=3,
-                              blank=True, null=True)
-    cbm = models.DecimalField(verbose_name='CBM per cartons',
-                              max_digits=10, decimal_places=3,
-                              blank=True, null=True)
-    price = models.DecimalField(max_digits=10, decimal_places=3,
-                              blank=True, null=True)
-    weight = models.DecimalField(max_digits=10, decimal_places=3,
+    qty = models.IntegerField(verbose_name='qty in a ctn',blank=True, null=True)
+    packaging = models.IntegerField(verbose_name='units/ctn', 
                                     blank=True, null=True)
+    units = models.CharField(max_length = 4, default='PCS', 
+                             choices=UNIT_PACKAGING_CHOICES, blank=True, null=True)
+    price = models.DecimalField(verbose_name='Unit Price',
+                                max_digits=10, decimal_places=3,
+                                blank=True, null=True)
+    ttprice = models.DecimalField(verbose_name='T.T.Price',
+                                max_digits=10, decimal_places=3,
+                                blank=True, null=True)
+    cbm = models.DecimalField(verbose_name='CBM/ctns',
+                              max_digits=10, decimal_places=7,
+                              blank=True, null=True)
+    cbms = models.DecimalField(verbose_name='Total CBM',
+                              max_digits=10, decimal_places=7,
+                              blank=True, null=True)
+    weight = models.DecimalField(verbose_name='total weight', 
+                                max_digits=10, decimal_places=3,
+                                blank=True, null=True)
+    wght = models.DecimalField(verbose_name='weight/ctn', 
+                               max_digits=10, decimal_places=3, null=True)
     height = models.DecimalField(max_digits=10, decimal_places=3,
                                     blank=True, null=True)
     length = models.DecimalField(max_digits=10, decimal_places=3,
@@ -257,19 +272,34 @@ class Product(models.Model):
     def update_stock(self):
         pass
 
-    def calc_cbm(self):
+    def check_required_field(self):
+        pass
+
+    def calculate(self):
         if not self.cbm:
             if not (self.height and self.width and self.length):
                 raise ValueError("Either 'cbm' must be provided or 'height', 'width', and 'length' must all be provided.")
             self.cbm = Decimal(self.height * self.width * self.length) / Decimal(1000000)
             self.cbms = Decimal(self.cbm * self.qty)
-            return f'{self.cbm}'
+        
+        if not self.wght:
+            if self.weight:
+                self.wght = Decimal(self.weight/self.qty)
+
+            else:
+
+                raise ValueError("Please input the weight of one carton in kilograms")
         else:
-            return self.cbm
+            self.weight = Decimal(self.wght * self.qty)
+
+        if self.price:
+            self.ttprice = Decimal(self.price * self.qty)
+
+    
         
     def save(self, *args, **kwargs):
         
-        self.calc_cbm()
+        self.calculate()
         super().save(*args, **kwargs)
 
 
