@@ -12,7 +12,7 @@
 						<li>
 							<a href="#">
 								<!-- <i class="flaticon-truck"></i> -->
-								Full Cargos List
+								Loose Cargos List
 							</a>
 						</li>
 						<!-- <li>
@@ -27,6 +27,7 @@
                             <table class="table">
                                 <thead>
                                 <tr>
+                                    {% comment %} <th>Receiver</th> {% endcomment %}
                                     <th>Mark</th>
                                     <th>Ctns</th>
                                     <th>Weight</th>
@@ -42,6 +43,7 @@
                                 <tbody>
                                 {% for item in cargos %}
                                     <tr>
+                                        {% comment %} <td>{{ item.reciever }}</td> {% endcomment %}
                                         <td>{{ item.mark }}</td>
                                         <td>{{ item.ctns }}</td>
                                         <td>{{ item.weight }}</td>

@@ -91,7 +91,7 @@ class LooseContainer(BaseContainer):
 class FullContainer(BaseContainer):
     name = models.CharField(max_length = 150, blank=True, null=True)
     invoice = models.FileField(blank=True, null=True)
-    reciever = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    reciever = models.ForeignKey(Customer, on_delete=models.CASCADE, blank=True, null=True)
     
 
 
@@ -191,6 +191,22 @@ class FullCargo(BaseCargo):
 
     def __str__(self):
         return f'{self.mark}'
+      
+    def save(self, *args, **kwargs):
+        
+        super(FullCargo, self).save(*args, **kwargs)
+        weight = self.products.aggregate(Sum('weight'))['weight__sum']
+        self.weight = weight or 0  
+         
+
+        total_cbms = self.products.aggregate(Sum('cbms'))['cbms__sum']
+        self.cbms = total_cbms or 0  
+
+        total_qty = self.products.aggregate(Sum('qty'))['qty__sum']
+        self.ctns = total_qty or 0  
+
+
+        super(FullCargo, self).save(*args, **kwargs) # Call the real save() method
 
 
 class Invoice(models.Model):
