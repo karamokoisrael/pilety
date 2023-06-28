@@ -68,10 +68,24 @@ class LooseContainer(BaseContainer):
     def __str__(self):
         return f'{self.name}'
     
+    
+ 
     def save(self, *args, **kwargs):
-       if not self.name:
+        if not self.name:
             self.name = self.arrived
-       super(LooseContainer, self).save(*args, **kwargs) # Call the real save() method
+        super(LooseContainer, self).save(*args, **kwargs) # Call the real save() method
+        weight = self.cargos.aggregate(Sum('weight'))['weight__sum']
+        self.weight = weight or 0  
+         
+
+        total_cbms = self.cargos.aggregate(Sum('cbms'))['cbms__sum']
+        self.cbms = total_cbms or 0  
+
+        total_qty = self.cargos.aggregate(Sum('ctns'))['ctns__sum']
+        self.ctns = total_qty or 0  
+
+
+        super(LooseContainer, self).save(*args, **kwargs) # Call the real save() method
 
 
 class FullContainer(BaseContainer):
@@ -83,6 +97,21 @@ class FullContainer(BaseContainer):
 
     def __str__(self):
         return f'{self.name}'
+
+    def save(self, *args, **kwargs):
+        if not self.name:
+            self.name = self.arrived
+        super(FullContainer, self).save(*args, **kwargs) # Call the real save() method
+        weight = self.cargos.aggregate(Sum('weight'))['weight__sum']
+        self.weight = weight or 0  
+         
+
+        total_cbms = self.cargos.aggregate(Sum('cbms'))['cbms__sum']
+        self.cbms = total_cbms or 0  
+
+        total_qty = self.cargos.aggregate(Sum('ctns'))['ctns__sum']
+        self.ctns = total_qty or 0  
+        super(FullContainer, self).save(*args, **kwargs) # Call the real save() method
 
 
 class BaseCargo(models.Model):

@@ -27,14 +27,14 @@
                             <table class="table">
                                 <thead>
                                 <tr>
-                                    <th>Item Name</th>
-                                    <th>Delivery Date</th>
-                                    <th>Departure</th>
-                                    <th>Weight</th>
-                                    <th> CBM</th>
-                                    <th>Status</th>
-                                    <th>Cartons</th>
+                                    <th>Name</th>
                                     <th>Container Number</th>
+                                    <th>Departure Date</th>
+                                    <th>Total Weight</th>
+                                    <th>Total Cartons</th>
+                                    <th>Total CBM</th>
+                                    <th>Dispature</th>
+                                    <th>Status</th>
                                     
                                 </tr>
                                 </thead>
@@ -42,13 +42,12 @@
                                 {% for item in containers %}
                                     <tr>
                                         <td>{{ item.name }}</td>
-                                        <td>{{ item.arrived }}</td>
+                                        <td>{{ item.number }}</td>
                                         <td>{{ item.depature }}</td>
                                         <td>{{ item.weight }}</td>
+                                        <td>{{ item.ctns }}</td>
                                         <td>{{ item.cbms }}</td>
                                         <td>{{ item.get_status_display }}</td>
-                                        <td>{{ item.ctns }}</td>
-                                        <td>{{ item.number }}</td>
                                         
                                         <td><a href="{% url 'allin:l_container' item.id %}">Details</a></td>
 

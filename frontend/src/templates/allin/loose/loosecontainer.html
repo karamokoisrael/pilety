@@ -69,29 +69,28 @@
                                         <thead>
                                         <tr>
                                             
-                                            <th>Item Mark</th>
-                                            <th>Qty</th>
-                                            <th>Total Weight</th>
-                                            <th>CBM</th>
-                                            <th>status</th>
-                                            <th>Loose Container</th>
+                                            <th>Name</th>
                                             <th>Container Number</th>
+                                            <th>Cartons</th>
+                                            <th>CBM</th>
+                                            <th>Weight</th>
+                                            <th>Departure</th>
                                             <th>Checked By</th>
+                                            <th>status</th>
                                             
                                         </tr>
                                         </thead>
                                         <tbody>
                                         {% for item in cargos %}
                                             <tr>
-                                                <td>{{ item.item_mark }}</td>
-                                                <td>{{ item.ctns }}</td>
-                                                <td>{{ item.weight }}</td>
-                                                <td>{{ item.cbms }}</td>
-                                                <td>{{ item.get_status_display }}</td>
-                                                
-                                                <td>{{ item.receiver }}</td>
+                                                <td>{{ item.name }}</td>
                                                 <td>{{ item.number }}</td>
+                                                <td>{{ item.ctns }}</td>
+                                                <td>{{ item.cbms }}</td>
+                                                <td>{{ item.weight }}</td>
+                                                <td>{{ item.depature }}</td>
                                                 <td>{{ item.dispature }}</td>
+                                                <td>{{ item.get_status_display }}</td>
                                                 
                                                 <td><a href="{% url 'allin:l_cargo' item.id %}">Details</a></td>
         
