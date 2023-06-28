@@ -130,7 +130,7 @@
                                             <td>{{ item.wght }}</td>
                                             <td>{{ item.weight }}</td>
                                             <td>{{ item.buyer }}</td>
-                                            <td><a href="{% url 'allin:product' item.id %}">Details</a></td>
+                                            {% comment %} <td><a href="{% url 'allin:product' item.id %}">Details</a></td> {% endcomment %}
     
                                         </tr>
                                     {% endfor %}
@@ -173,7 +173,7 @@
                                             <td>{{ item.wght }}</td>
                                             <td>{{ item.weight }}</td>
                                             <td>{{ item.buyer }}</td>
-                                            <td><a href="{% url 'allin:product' item.id %}">Details</a></td>
+                                            {% comment %} <td><a href="{% url 'allin:product' item.id %}">Details</a></td> {% endcomment %}
                                     {% empty %}
                                         There is no available stock in this cargo
                                         </tr>
