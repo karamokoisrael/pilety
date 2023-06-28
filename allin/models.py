@@ -44,7 +44,6 @@ class Delivery(models.Model):
         return f'{self.date} delivery by {self.driver}'
     
 
-
 class BaseContainer(models.Model):
     STATUS_CHOICES = CARGO_STATUS_CHOICES 
     number = models.CharField(max_length = 150, blank=True, null=True)
@@ -53,12 +52,11 @@ class BaseContainer(models.Model):
                                 blank=True, null=True)
     arrived = models.DateField(auto_now=False, auto_now_add=False,
                                 blank=True, null=True)
-    weight = models.DecimalField(max_digits=10, decimal_places=3,
+    weight = models.DecimalField(max_digits=15, decimal_places=7,
                                 blank=True, null=True)
-    cbms = models.DecimalField(max_digits=10, decimal_places=3,
+    cbms = models.DecimalField(max_digits=10, decimal_places=7,
                                 blank=True, null=True)
-    ctns = models.DecimalField(max_digits=10, decimal_places=3,
-                                blank=True, null=True)
+    ctns = models.IntegerField(blank=True, null=True)
     # status = models.CharField( max_length=3, choices=, default='',
     #                           blank=True, null=True)
     status = models.CharField( max_length=3, choices=STATUS_CHOICES, 
@@ -96,12 +94,11 @@ class BaseCargo(models.Model):
                                         blank=True, null=True)
     arrived = models.DateField(auto_now=False, auto_now_add=False,
                                         blank=True, null=True)
-    weight = models.DecimalField(max_digits=10, decimal_places=3,
+    weight = models.DecimalField(max_digits=10, decimal_places=5,
                                         blank=True, null=True)
-    cbms = models.DecimalField(max_digits=10, decimal_places=3,
+    cbms = models.DecimalField(max_digits=10, decimal_places=7,
                                         blank=True, null=True)
-    ctns = models.DecimalField(max_digits=10, decimal_places=3,
-                                        blank=True, null=True)
+    ctns = models.IntegerField(blank=True, null=True)
        
     class Meta:
         abstract = True
@@ -214,9 +211,7 @@ class Product(models.Model):
     chinese = models.CharField(verbose_name='chinese desc', 
                                max_length = 150, blank=True, null=True)
     item_number = models.CharField(max_length=50, blank=True, null=True)
-    cargo_types = models.CharField(max_length = 150, default='L', 
-                             choices=CARGO_TYPE_CHOICES, blank=True, null=True)
-    qty = models.IntegerField(verbose_name='qty in a ctn',blank=True, null=True)
+    qty = models.IntegerField(verbose_name='qty (ctn)',blank=True, null=True)
     packaging = models.IntegerField(verbose_name='units/ctn', 
                                     blank=True, null=True)
     units = models.CharField(max_length = 4, default='PCS', 
@@ -233,17 +228,21 @@ class Product(models.Model):
     cbms = models.DecimalField(verbose_name='Total CBM',
                               max_digits=10, decimal_places=7,
                               blank=True, null=True)
+    wght = models.DecimalField(verbose_name='weight/ctn', 
+                               max_digits=10, decimal_places=3, null=True)
     weight = models.DecimalField(verbose_name='total weight', 
                                 max_digits=10, decimal_places=3,
                                 blank=True, null=True)
-    wght = models.DecimalField(verbose_name='weight/ctn', 
-                               max_digits=10, decimal_places=3, null=True)
     height = models.DecimalField(max_digits=10, decimal_places=3,
                                     blank=True, null=True)
     length = models.DecimalField(max_digits=10, decimal_places=3,
                                     blank=True, null=True)
     width = models.DecimalField(max_digits=10, decimal_places=3,
                                     blank=True, null=True)
+    cargo_types = models.CharField(max_length = 150, default='L', 
+                             choices=CARGO_TYPE_CHOICES, blank=True, null=True)
+    stock = models.IntegerField(default=0,blank=True, null=True)
+    has_stock = models.BooleanField(default=False)
     owner = models.ForeignKey(Customer, related_name='products', 
                                     on_delete=models.CASCADE,
                                     blank=True, null=True)
@@ -253,15 +252,9 @@ class Product(models.Model):
     supplier = models.ForeignKey(Supplier, related_name='product', 
                                     on_delete=models.CASCADE,
                                     blank=True, null=True)
-    stock = models.IntegerField(default=0,blank=True, null=True)
-    
-    has_stock = models.BooleanField(default=False)
-    
-    
     l_cargo = models.ForeignKey(LooseCargo, related_name='products',
                                 on_delete=models.CASCADE,
                                 blank=True, null=True)
-
     f_cargo = models.ForeignKey(FullCargo, related_name='products',
                                 on_delete=models.CASCADE,
                                    blank=True, null=True)
@@ -281,13 +274,13 @@ class Product(models.Model):
                 raise ValueError("Either 'cbm' must be provided or 'height', 'width', and 'length' must all be provided.")
             self.cbm = Decimal(self.height * self.width * self.length) / Decimal(1000000)
             self.cbms = Decimal(self.cbm * self.qty)
-        
+        else:
+            self.cbms = Decimal(self.cbm * self.qty)
+
         if not self.wght:
             if self.weight:
                 self.wght = Decimal(self.weight/self.qty)
-
             else:
-
                 raise ValueError("Please input the weight of one carton in kilograms")
         else:
             self.weight = Decimal(self.wght * self.qty)

@@ -1,5 +1,7 @@
 *media*
 *staticf*
+*/admin/
+*static/rest_fr*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

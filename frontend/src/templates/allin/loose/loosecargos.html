@@ -27,7 +27,7 @@
                             <table class="table">
                                 <thead>
                                 <tr>
-                                    <th>Receiver</th>
+                                    {% comment %} <th>Receiver</th> {% endcomment %}
                                     <th>Mark</th>
                                     <th>Ctns</th>
                                     <th>Weight</th>
@@ -43,7 +43,7 @@
                                 <tbody>
                                 {% for item in cargos %}
                                     <tr>
-                                        <td>{{ item.reciever }}</td>
+                                        {% comment %} <td>{{ item.reciever }}</td> {% endcomment %}
                                         <td>{{ item.mark }}</td>
                                         <td>{{ item.ctns }}</td>
                                         <td>{{ item.weight }}</td>
