@@ -38,6 +38,7 @@ UNIT_PACKAGING_CHOICES = (
     ('RLS', 'Rolls'),
     ('DZN', 'Dozens'),
     ('BGS', 'Bags'),
+    ('SET', 'Set'),
 )
 
 CONTAINER_STATUS_CHOICES = (
