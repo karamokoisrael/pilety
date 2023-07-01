@@ -69,12 +69,11 @@
                                         <thead>
                                         <tr>
                                             
-                                            <th>Name</th>
-                                            <th>Container Number</th>
+                                            <th>Mark</th>
                                             <th>Cartons</th>
                                             <th>CBM</th>
                                             <th>Weight</th>
-                                            <th>Departure</th>
+                                            <th>Loading Date</th>
                                             <th>Checked By</th>
                                             <th>status</th>
                                             
@@ -83,8 +82,7 @@
                                         <tbody>
                                         {% for item in cargos %}
                                             <tr>
-                                                <td>{{ item.name }}</td>
-                                                <td>{{ item.number }}</td>
+                                                <td>{{ item.mark }}</td>
                                                 <td>{{ item.ctns }}</td>
                                                 <td>{{ item.cbms }}</td>
                                                 <td>{{ item.weight }}</td>

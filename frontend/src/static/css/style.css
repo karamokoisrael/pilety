@@ -2520,7 +2520,9 @@ Footer Top Area Style
 Footer Bottom Area Style
 ======================================================*/
 .footer-bottom-area {
-  padding: 30px 0;
+  padding: 10px;
+  margin-top: auto;
+  /* position: fixed; */
   
 }
 
@@ -4385,7 +4387,7 @@ Footer Bottom Area Four Style
 }
 
 .footer-bottom-area-four .single-widget-bottom p {
-  float: right;
+  /* float: right; */
   color: #d7d7d7;
 }
 

@@ -1,5 +1,5 @@
+import random
 from django.db import models
-
 from django.db.models import Sum
 from users.models import Customer, Dispatcher, Supplier, Driver
 # from shipping.models import LooseCargo, FullCargo
@@ -48,7 +48,7 @@ class BaseContainer(models.Model):
     STATUS_CHOICES = CARGO_STATUS_CHOICES 
     number = models.CharField(max_length = 150, blank=True, null=True)
     
-    depature = models.DateField(auto_now=False, auto_now_add=False,
+    depature = models.DateField(verbose_name='Loaded', auto_now=False, auto_now_add=False,
                                 blank=True, null=True)
     arrived = models.DateField(auto_now=False, auto_now_add=False,
                                 blank=True, null=True)
@@ -131,7 +131,8 @@ class BaseCargo(models.Model):
        
     class Meta:
         abstract = True
-  
+
+
     
 class LooseCargo(BaseCargo):
     STATUS_CHOICES = CARGO_STATUS_CHOICES 
@@ -139,6 +140,8 @@ class LooseCargo(BaseCargo):
     
     status = models.CharField( max_length=3, choices=STATUS_CHOICES, 
                               default='RW')
+    invoice_number = models.CharField(max_length=8, unique=True, blank=True, null=True)
+
     reciever = models.ForeignKey(Customer, 
                                 related_name='loose_cargos_dispatched',
                                 on_delete=models.CASCADE,
@@ -157,6 +160,13 @@ class LooseCargo(BaseCargo):
                                   blank=True, null=True) 
     def __str__(self):
         return f'{self.mark}'
+
+    def generate_invoice_number(self):
+        while True:
+            invoice_number = str(random.randint(10000000, 99999999))
+            if not LooseCargo.objects.filter(invoice_number=invoice_number).exists():
+                return invoice_number
+  
     
     def save(self, *args, **kwargs):
         
@@ -170,6 +180,9 @@ class LooseCargo(BaseCargo):
 
         total_qty = self.products.aggregate(Sum('qty'))['qty__sum']
         self.ctns = total_qty or 0  
+
+        if not self.invoice_number:
+            self.invoice_number = self.generate_invoice_number()
 
 
         super(LooseCargo, self).save(*args, **kwargs) # Call the real save() method
@@ -252,10 +265,11 @@ class Product(models.Model):
     TYPE_CHOICES = PRODUCTS_TYPE_CHOICES
     CARGO_TYPE_CHOICES = CARGO_TYPE_CHOICES
     UNIT_PACKAGING_CHOICES = UNIT_PACKAGING_CHOICES
-    name = models.CharField(max_length = 150)
+    recieved = models.DateField(verbose_name='(Warehouse)recieved on',
+                                blank=True, null=True,auto_now_add=True)
+    name = models.CharField(max_length = 150,blank=True, null=True)
     chinese = models.CharField(verbose_name='chinese desc', 
                                max_length = 150, blank=True, null=True)
-    item_number = models.CharField(max_length=50, blank=True, null=True)
     qty = models.IntegerField(verbose_name='qty (ctn)',blank=True, null=True)
     packaging = models.IntegerField(verbose_name='units/ctn', 
                                     blank=True, null=True)
@@ -284,6 +298,7 @@ class Product(models.Model):
                                     blank=True, null=True)
     width = models.DecimalField(max_digits=10, decimal_places=3,
                                     blank=True, null=True)
+    item_number = models.CharField(max_length=50, blank=True, null=True)
     cargo_types = models.CharField(max_length = 150, default='L', 
                              choices=CARGO_TYPE_CHOICES, blank=True, null=True)
     stock = models.IntegerField(default=0,blank=True, null=True)

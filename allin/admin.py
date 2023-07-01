@@ -36,8 +36,9 @@ class LooseCargoStack(admin.TabularInline):
 
 
 class LooseCargoAdmin(admin.ModelAdmin):
-    list_display = ('mark', 'recieved', 'depature', 'arrived', 'weight', 'cbms', 'ctns', 'status', 'reciever', 'dispature')
-    search_fields = ('mark', 'status', 'reciever__name', 'dispature__name')
+    list_display = ('mark', 'recieved', 'depature', 'container', 'weight', 'cbms', 'ctns', 'status', 'reciever', 'dispature')
+    # search_fields = ('mark', 'status', 'container')
+    list_filter = ('container', 'status', 'reciever', 'mark', 'dispature')
     inlines = [
         ProductStack,
     ]
@@ -55,7 +56,7 @@ class FullCargoAdmin(admin.ModelAdmin):
 
 
 class LooseContainerAdmin(admin.ModelAdmin):
-    list_display = ('name', 'depature', 'arrived', 'weight', 'cbms', 'ctns', 'status')
+    list_display = ('name', 'depature', 'arrived', 'weight', 'cbms', 'ctns',  'status')
     search_fields = ('name', 'status')
     inlines = [
         LooseCargoStack,
