@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<section class="track-area ptb-100">
+	<div class="container">
+		<div class="row">
+            <div class="col-lg-12">
+				<div class="tab quote-list-tab">
+					<ul class="tabs">
+						<li>
+							<a href="#">
+								 <i class="flaticon-truck"></i> 
+								Loose Cargos
+							</a>
+						</li>
+                    </ul>
+					<div class="tab_content">
+                        <div class="tabs_item">
+                            <form method="POST" action="{% url 'allin:create_delivery' cargo_ids=cargo_ids %}">
+                                {% csrf_token %}
+                                <select name="delivery_id">
+                                    <option value="">Create New Delivery</option>
+                                    {% for delivery in deliveries %}
+                                        <option value="{{ delivery.id }}">Delivery {{ delivery.id }}</option>
+                                    {% endfor %}
+                                </select>
+                                <button type="submit">Add Selected Goods</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock content %}

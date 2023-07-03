@@ -1110,9 +1110,9 @@ Prevoz Nav Area Style
   font-size: 25px;
   line-height: 0;
   position: relative;
-  top: 6px;
+  /* top: 6px;
   -webkit-transition: all 0.5s;
-  transition: all 0.5s;
+  transition: all 0.5s; */
 }
 
 .prevoz-nav-style .navbar-area .main-nav nav .navbar-nav .nav-item a.active {

@@ -28,34 +28,30 @@
                                 <thead>
                                 <tr>
                                     <th>Name</th>
-                                    <th>Packaging</th>
-                                    <th>Price</th>
-                                    <th>Weight</th>
+                                    <th>Units/Ctn</th>
+                                    <th>unit Price</th>
+                                    <th>Weight/ctn</th>
                                     <th>Cbm/ctn</th>
-                                    <th>Ctn</th>
-                                    <th>Weight</th>
-                                    <th>Cbms</th>
-                                    <th>Stock</th>
-                                    <th>Supplier</th>
-                                    <th></th>
+                                    <th>Stock Qty(ctn)</th>
+                                    
                                     
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {% for item in loose_containers %}
+                                {% for item in products %}
                                     <tr>
                                         <td>{{ item.name }}</td>
                                         <td>{{ item.packaging }}</td>
                                         <td>{{ item.price }}</td>
-                                        <td>{{ item.weight }}</td>
+                                        <td>{{ item.wght }}</td>
                                         <td>{{ item.cbm }}</td>
-                                        <td>{{ item.ctn }}</td>
-                                        <td>{{ item.total_weight }}</td>
-                                        <td>{{ item.total_cbm }}</td>
                                         <td>{{ item.stock }}</td>
-                                        <td>{{ item.supplier }}</td>
-                                        <td><a href="{% url 'shipping:loose_container_detail' item.id %}">Details</a></td>
+                                        {% comment %} <td><a href="{% url 'allin:loose_container_detail' item.id %}">Details</a></td> {% endcomment %}
 
+                                    </tr>
+                                {% empty %}
+                                    <tr>
+                                        No Stocks Available !
                                     </tr>
                                 {% endfor %}
                                 </tbody>

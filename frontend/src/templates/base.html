@@ -53,7 +53,7 @@
 
         {% endblock content %}
 
-        {% include 'footer.html' %}
+        {% comment %} {% include 'footer.html' %} {% endcomment %}
         
         <!-- Start Go Top Area -->
         <div class="go-top">
@@ -91,10 +91,32 @@
         <script src="{% static 'js/contact-form-script.js' %}"></script>
         <!-- Custom JS -->
         <script src="{% static 'js/custom.js' %}"></script>
+        {% comment %} <script src="{% static 'js/index.js' %}"></script> {% endcomment %}
 
         <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            // Check if at least one checkbox is selected and enable/disable the Deliver button accordingly
+            var checkboxes = document.querySelectorAll('input[name="selected_goods"]');
+            var deliverButton = document.getElementById('deliver-button');
+        
+            function toggleDeliverButton() {
+                var anySelected = Array.from(checkboxes).some(function (checkbox) {
+                    return checkbox.checked;
+                });
+        
+                if (anySelected) {
+                    deliverButton.classList.remove('disabled-button');
+                } else {
+                    deliverButton.classList.add('disabled-button');
+                }
+            }
+        
+            checkboxes.forEach(function (checkbox) {
+                checkbox.addEventListener('change', toggleDeliverButton);
+            });
+        </script>
         <script>
             $(document).ready(function() {
                 $('.navbar-toggler').on('click', function() {

@@ -3,13 +3,7 @@
 <!-- Start Pilety Navbar Area -->
 <div class="prevoz-nav-style ">
     <div class="navbar-area">
-        <!-- Menu For Mobile Device -->
-        {% comment %} <div class="mobile-nav">
-            <a href="/" class="logo">
-                <img src="{% static 'img/logo/logo-one.png' %}" alt="Logo">
-            </a>
-        </div>  {% endcomment %}
-        <!-- Menu For Desktop Device -->
+        
 
         
         {% if request.user.is_authenticated and request.user.is_staff %}
@@ -19,9 +13,9 @@
         {% elif request.user.is_authenticated %}
         <div class="container-fluid position-relative p-0">
             <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0 bg-dark">
-                <a href="{% url 'allin:' %}" class="navbar-brand p-0">
+                <a href="{% url 'allin:homepage' %}" class="navbar-brand p-0">
                     {% comment %} <h1 class="text-primary m-0"><i class="fa fa-map-marker-alt me-3"></i>Tourist</h1> {% endcomment %}
-                    <img src="{% static 'img/logo/logo1.png' %}" alt="Logo"> 
+                    {% comment %} <img src="{% static 'img/logo/logo1.png' %}" alt="Logo">  {% endcomment %}
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                     <span class="fa fa-bars"></span>
