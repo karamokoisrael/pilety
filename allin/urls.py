@@ -37,6 +37,9 @@ from allin.views import (
     ProductDetailView,
     DeliveryDetailView,
     ShippingQuoteDetailView,
+
+    create_delivery,
+    deliver_cargo,
 )
 
 from allin.other_views import (Homepage,
@@ -93,6 +96,7 @@ urlpatterns = [
     path('product_quotes_form/', ProductQuoteCreateView.as_view(), name='create_product_quotes'),
     path('shipping_quotes_form/', ShippingQuoteCreateView.as_view(), name='create_shipping_quotes'),
     path('products_shipping_quotes_form/', ProductShippingQuoteCreateView.as_view(), name='create_products_shipping_quotes'),
+    path('create_delivery/<str:cargo_ids>/', create_delivery, name='create_delivery'),
     
 
 
@@ -105,5 +109,11 @@ urlpatterns = [
     path('products/<int:pk>/', ProductDetailView.as_view(), name='product'),
     path('delivery/<int:pk>/', DeliveryDetailView.as_view(), name='delivery'),
     path('shippingquote/<int:pk>/', ShippingQuoteDetailView.as_view(), name='shipping_quote'),
+
+
+
+    # utility
+    path('deliver_cargo/', deliver_cargo, name='deliver_cargo'),
+
     
 ]

@@ -32,8 +32,8 @@ class DeliveryVehicle(models.Model):
 
 class Delivery(models.Model):
     DELIVERY_STATUS = DELIVERY_STATUS
-    driver = models.ForeignKey(Driver, on_delete=models.CASCADE)
-    vehicle = models.OneToOneField(DeliveryVehicle, on_delete=models.CASCADE)
+    driver = models.ForeignKey(Driver, on_delete=models.CASCADE, blank=True, null=True)
+    vehicle = models.OneToOneField(DeliveryVehicle, on_delete=models.CASCADE, blank=True, null=True)
     date = models.DateField(auto_now=True, auto_now_add=False)
     status = models.CharField(max_length = 2, choices=DELIVERY_STATUS, default='WH')
     
@@ -323,7 +323,8 @@ class Product(models.Model):
         return f'{self.name}'
 
     def update_stock(self):
-        pass
+        if self.stock:
+            self.has_stock = True
 
     def check_required_field(self):
         pass

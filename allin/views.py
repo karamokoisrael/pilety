@@ -9,7 +9,7 @@ from allin.models import (Expense, ExpenseCategory, FullCargo, FullContainer,
                           ProductShippingQuote, Delivery, DeliveryVehicle,)
 from django.db.models import Sum
 from django.db.models.functions import TruncMonth
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.views.generic import CreateView, DetailView, ListView, TemplateView
 
@@ -26,6 +26,32 @@ class DeliveryListView(ListView):
     template_name = 'allin/sales/deliveries.html' 
     context_object_name = 'deliveries'
     paginate_by = 10  
+
+
+
+def deliver_cargo(request):
+    if request.method == 'POST':
+        selected_goods_to_deliver = request.POST.getlist('selected_goods')
+        return redirect('allin:create_delivery', cargo_ids=','.join(selected_goods_to_deliver))
+    
+    cargos = LooseCargo.objects.all()
+    return render(request, 'allin/loose/loosecargos.html', {'cargos': cargos})
+    
+def create_delivery(request, cargo_ids):
+    cargo_ids = cargo_ids.strip("[]").replace("'", "").split(", ")
+    if request.method == 'POST':
+        delivery_id = request.POST.get('delivery_id')
+        if delivery_id:
+            delivery = Delivery.objects.get(id=delivery_id)
+        else:
+            delivery = Delivery.objects.create()
+        cargos = LooseCargo.objects.filter(id__in=cargo_ids)
+        delivery.cargos.add(*cargos)
+        return redirect('allin:deliveries')
+    
+    deliveries = Delivery.objects.all()
+    return render(request, 'allin/sales/deliveries_form.html', {'deliveries': deliveries, 'cargo_ids': cargo_ids})
+
 
 
 class ProductShippingQuoteListView(ListView):
