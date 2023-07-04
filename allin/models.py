@@ -32,16 +32,29 @@ class DeliveryVehicle(models.Model):
 
 class Delivery(models.Model):
     DELIVERY_STATUS = DELIVERY_STATUS
-    driver = models.ForeignKey(Driver, on_delete=models.CASCADE, blank=True, null=True)
-    vehicle = models.OneToOneField(DeliveryVehicle, on_delete=models.CASCADE, blank=True, null=True)
+    driver = models.ForeignKey(Driver, on_delete=models.SET_NULL, blank=True, null=True)
+    vehicle = models.OneToOneField(DeliveryVehicle, on_delete=models.SET_NULL, blank=True, null=True)
     date = models.DateField(auto_now=True, auto_now_add=False)
     status = models.CharField(max_length = 2, choices=DELIVERY_STATUS, default='WH')
-    
+    delivery_number = models.CharField(max_length=8, unique=True, blank=True, null=True)
     class Meta:
         verbose_name_plural = 'Deliveries'
 
     def __str__(self):
-        return f'{self.date} delivery by {self.driver}'
+        return f'{self.date}\'s Delivery #  {self.delivery_number}'
+    
+    def generate_delivery_number(self):
+        while True:
+            delivery_number = str(random.randint(10000000, 99999999))
+            if not LooseCargo.objects.filter(delivery_number=delivery_number).exists():
+                return delivery_number
+    
+    def save(self, *args, **kwargs):
+        if not self.delivery_number:
+            self.delivery_number = self.generate_delivery_number()
+
+
+        super(Delivery, self).save(*args, **kwargs) # Call the real save() method
     
 
 class BaseContainer(models.Model):
@@ -91,7 +104,7 @@ class LooseContainer(BaseContainer):
 class FullContainer(BaseContainer):
     name = models.CharField(max_length = 150, blank=True, null=True)
     invoice = models.FileField(blank=True, null=True)
-    reciever = models.ForeignKey(Customer, on_delete=models.CASCADE, blank=True, null=True)
+    reciever = models.ForeignKey(Customer, on_delete=models.SET_NULL, blank=True, null=True)
     
 
 
@@ -144,18 +157,18 @@ class LooseCargo(BaseCargo):
 
     reciever = models.ForeignKey(Customer, 
                                 related_name='loose_cargos_dispatched',
-                                on_delete=models.CASCADE,
+                                on_delete=models.SET_NULL,
                                 blank=True, null=True)    
     dispature = models.ForeignKey(Dispatcher, 
                                 related_name='loose_cargos_dispatched',
-                                on_delete=models.CASCADE,
+                                on_delete=models.SET_NULL,
                                 blank=True, null=True)
     container = models.ForeignKey(LooseContainer, 
-                                  on_delete=models.CASCADE,
+                                  on_delete=models.SET_NULL,
                                   related_name='cargos',
                                   blank=True, null=True) 
     delivery = models.ForeignKey(Delivery, 
-                                  on_delete=models.CASCADE,
+                                  on_delete=models.SET_NULL,
                                   related_name='cargos',
                                   blank=True, null=True) 
     def __str__(self):
@@ -194,10 +207,10 @@ class FullCargo(BaseCargo):
                               default='RW')
     dispature = models.ForeignKey(Dispatcher, 
                                 related_name='full_cargos_dispatched',
-                                on_delete=models.CASCADE,
+                                on_delete=models.SET_NULL,
                                 blank=True, null=True)   
     container = models.ForeignKey(FullContainer, 
-                                  on_delete=models.CASCADE,
+                                  on_delete=models.SET_NULL,
                                   related_name='cargos',
                                   blank=True, null=True)
     # TODO when saving get the total cbm,weight and cartons and status change when saving
@@ -223,7 +236,7 @@ class FullCargo(BaseCargo):
 
 
 class Invoice(models.Model):
-    cargo = models.OneToOneField(LooseCargo, related_name='invoices', on_delete=models.CASCADE)
+    cargo = models.OneToOneField(LooseCargo, related_name='invoices', on_delete=models.SET_NULL, blank=True, null=True)
     invoice_no = models.CharField(verbose_name='Invoice number ', max_length=150, blank=True, null=True)
     
      # TODO add the file when saving
@@ -241,13 +254,13 @@ class ExpenseCategory(models.Model):
 class Expense(models.Model):
     RECURRANCE_CHOICES = EXPENSES_RECURRANCE_CHOICES
     name = models.ForeignKey(ExpenseCategory, 
-                                 on_delete=models.CASCADE,
+                                 on_delete=models.SET_NULL,
                                  verbose_name='Name of the expense',
                                  blank=True, null=True
                                  )
 
     dispature = models.ForeignKey(Dispatcher, related_name='expenses',
-                                  on_delete=models.CASCADE, 
+                                  on_delete=models.SET_NULL, 
                                   blank=True, null=True)
     # name = models.CharField(,max_length = 150)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
@@ -304,19 +317,19 @@ class Product(models.Model):
     stock = models.IntegerField(default=0,blank=True, null=True)
     has_stock = models.BooleanField(default=False)
     owner = models.ForeignKey(Customer, related_name='products', 
-                                    on_delete=models.CASCADE,
+                                    on_delete=models.SET_NULL,
                                     blank=True, null=True)
     buyer = models.ForeignKey(Customer, related_name='products_bought', 
-                                    on_delete=models.CASCADE,
+                                    on_delete=models.SET_NULL,
                                     blank=True, null=True)
     supplier = models.ForeignKey(Supplier, related_name='product', 
-                                    on_delete=models.CASCADE,
+                                    on_delete=models.SET_NULL,
                                     blank=True, null=True)
     l_cargo = models.ForeignKey(LooseCargo, related_name='products',
-                                on_delete=models.CASCADE,
+                                on_delete=models.SET_NULL,
                                 blank=True, null=True)
     f_cargo = models.ForeignKey(FullCargo, related_name='products',
-                                on_delete=models.CASCADE,
+                                on_delete=models.SET_NULL,
                                    blank=True, null=True)
 
     def __str__(self):
@@ -372,7 +385,7 @@ class ProductQuote(models.Model):
 
 
 class ProductQuoteImages(models.Model):
-    product = models.ForeignKey(ProductQuote, on_delete=models.CASCADE)
+    product = models.ForeignKey(ProductQuote, on_delete=models.SET_NULL, blank=True, null=True)
     image = models.ImageField(upload_to='frontend/src/media/', height_field=None, width_field=None, max_length=100)
     
     
