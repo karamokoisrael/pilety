@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<section class="track-area ptb-100">
+	<div class="container">
+		<div class="row">
+            <div class="col-lg-12">
+				<div class="tab quote-list-tab">
+					<ul class="tabs">
+						{% comment %} <li>
+							<a href="#">
+								 <i class="flaticon-truck"></i> 
+								Delivery
+							</a>
+						</li> {% endcomment %}
+                        <li>
+							<a href="#">
+								<i class="flaticon-truck"></i>
+								Vehicles
+							</a>
+						</li>
+                        
+                        
+					</ul>
+					<div class="tab_content">
+                        {% comment %} <div class="tabs_item">
+                            <table class="table table-bordered">
+                                <tbody>
+                                  <tr>
+                                    <th scope="row" style="width: 30%">Date:</th>
+                                    <td>{{ delivery.date }}</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">Driver:</th>
+                                    <td>{{ delivery.driver }}</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">Vehicle:</th>
+                                    <td>{{ delivery.vehicle }}</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">Status:</th>
+                                    <td>{{ delivery.get_status_display }}</td>
+                                  </tr>
+                                  
+                                                                   
+                                </tbody>
+                            </table>
+
+
+                            
+                        </div> {% endcomment %}
+                        
+                        
+                        <div class="tabs_item">
+                            <h2>Delivery Vehicles</h2>
+                            <div>
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Car Model</th>
+                                        <th>Color</th>
+                                        <th>Plate Number</th>
+                                        <th>Mileage</th>
+                                        <th>Last checkup</th>
+                                        
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for item in vehicles %}
+                                        <tr>
+                                            <td>{{ item.name }}</td>
+                                            <td>{{ item.car_model }}</td>
+                                            <td>{{ item.plate_number }}</td>
+                                            <td>{{ item.mileage }}</td>
+                                            <td>{{ item.last_checkup }}</td>
+                                            {% comment %} <td><a href="{% url 'allin:vehicles' item.id %}">More </a></td> {% endcomment %}
+                                            <td>{% empty %}There is No Vehicle added Yet!!</td>
+                                            
+                                        </tr>
+                                    
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                   
+                    
+                      
+                    </div>
+                
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+            
+
+
+{% endblock %}

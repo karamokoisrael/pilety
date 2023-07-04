@@ -18,7 +18,7 @@
                         <li>
 							<a href="#">
 								<i class="flaticon-package"></i>
-								Products
+								Cargos
 							</a>
 						</li>
                         
@@ -74,7 +74,7 @@
                                             <td>{{ item.receiver }}</td>
                                             <td>{{ item.contact }}</td>
                                             <td>{{ item.get_status_display }}</td>
-                                            {% comment %} <td><a href="{% url 'allin:product' item.id %}">Details</a></td> {% endcomment %}
+                                            <td><a href="{% url 'allin:l_cargo' item.id %}">Details</a></td>
                                             
                                             
                                         </tr>
