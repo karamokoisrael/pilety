@@ -120,7 +120,7 @@ class DeliveryAdmin(admin.ModelAdmin):
     list_display = ['driver', 'vehicle', 'date', 'status']
     list_filter = ['status']
     search_fields = ['driver__name', 'vehicle__name']
-    # inlines = [ProductShippingQuoteInline]
+    inlines = [LooseCargoStack]
 
 @admin.register(ProductQuote)
 class ProductQuoteAdmin(admin.ModelAdmin):

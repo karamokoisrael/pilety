@@ -12,7 +12,7 @@
 						<li>
 							<a href="#">
 								 <i class="flaticon-truck"></i> 
-								Mark
+								Delivery
 							</a>
 						</li>
                         <li>
@@ -42,7 +42,7 @@
                                   </tr>
                                   <tr>
                                     <th scope="row">Status:</th>
-                                    <td>{{ delivery.status }}</td>
+                                    <td>{{ delivery.get_status_display }}</td>
                                   </tr>
                                   
                                                                    
@@ -73,7 +73,7 @@
                                             <td>{{ item.mark }}</td>
                                             <td>{{ item.receiver }}</td>
                                             <td>{{ item.contact }}</td>
-                                            <td>{{ item.status }}</td>
+                                            <td>{{ item.get_status_display }}</td>
                                             {% comment %} <td><a href="{% url 'allin:product' item.id %}">Details</a></td> {% endcomment %}
                                             
                                             

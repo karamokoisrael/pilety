@@ -14,6 +14,9 @@ from django.utils import timezone
 from django.views.generic import CreateView, DetailView, ListView, TemplateView
 
 
+def error_handler(request, *args, **kwargs):
+    return render(request, 'pilety/404.html', {'error_message': 'An internal server error occurred.'}, status=500)
+
 class DeliveryVehicleListView(ListView):
     model = DeliveryVehicle
     template_name = 'allin/sales/vehicles.html' 
@@ -38,7 +41,8 @@ def deliver_cargo(request):
     return render(request, 'allin/loose/loosecargos.html', {'cargos': cargos})
     
 def create_delivery(request, cargo_ids):
-    cargo_ids = cargo_ids.strip("[]").replace("'", "").split(", ")
+    # cargo_ids = cargo_ids.strip("[]").replace("'", "").split(", ")
+    cargo_ids = [int(cargo_id) for cargo_id in cargo_ids.strip("[]").replace("'", "").split(',')]
     if request.method == 'POST':
         delivery_id = request.POST.get('delivery_id')
         if delivery_id:
@@ -47,7 +51,7 @@ def create_delivery(request, cargo_ids):
             delivery = Delivery.objects.create()
         cargos = LooseCargo.objects.filter(id__in=cargo_ids)
         delivery.cargos.add(*cargos)
-        return redirect('allin:deliveries')
+        return redirect('allin:delivery', delivery.id)
     
     deliveries = Delivery.objects.all()
     return render(request, 'allin/sales/deliveries_form.html', {'deliveries': deliveries, 'cargo_ids': cargo_ids})

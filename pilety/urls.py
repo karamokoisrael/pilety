@@ -2,12 +2,18 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls import handler500, handler400, handler403, handler404
 # from wholesale.views import ProductApi
 
 
 admin.site.site_header = "Pilety Admin"
 admin.site.site_title = "Pilety Admin Portal"
 admin.site.index_title = "Pilety, Logistics and Transport Solution"
+
+handler500 = 'allin.views.error_handler'
+handler404 = 'allin.views.error_handler'
+handler403 = 'allin.views.error_handler'
+handler400 = 'allin.views.error_handler'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -20,6 +26,11 @@ urlpatterns = [
     # path('3', ProductApi.as_view()),
 
 ]
+# if not settings.DEBUG:
+#     handler500 = 'allin.views.error_handler'
+#     handler404 = 'allin.views.error_handler'
+#     handler403 = 'allin.views.error_handler'
+#     handler400 = 'allin.views.error_handler'
 
 if settings.DEBUG:
     # import debug_toolbar
