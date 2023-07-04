@@ -46,7 +46,7 @@ class Delivery(models.Model):
     def generate_delivery_number(self):
         while True:
             delivery_number = str(random.randint(10000000, 99999999))
-            if not LooseCargo.objects.filter(delivery_number=delivery_number).exists():
+            if not Delivery.objects.filter(delivery_number=delivery_number).exists():
                 return delivery_number
     
     def save(self, *args, **kwargs):
