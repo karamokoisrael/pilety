@@ -1,7 +1,7 @@
 import random
 from django.db import models
 from django.db.models import Sum
-from users.models import Customer, Dispatcher, Supplier, Driver
+from users.models import User
 # from shipping.models import LooseCargo, FullCargo
 from choices import (CURRENCY_CHOICES, 
                      ORDERS_STATUS_CHOICES, 
@@ -32,7 +32,7 @@ class DeliveryVehicle(models.Model):
 
 class Delivery(models.Model):
     DELIVERY_STATUS = DELIVERY_STATUS
-    driver = models.ForeignKey(Driver, on_delete=models.SET_NULL, blank=True, null=True)
+    driver = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
     vehicle = models.OneToOneField(DeliveryVehicle, on_delete=models.SET_NULL, blank=True, null=True)
     date = models.DateField(auto_now=True, auto_now_add=False)
     status = models.CharField(max_length = 2, choices=DELIVERY_STATUS, default='WH')
@@ -104,7 +104,8 @@ class LooseContainer(BaseContainer):
 class FullContainer(BaseContainer):
     name = models.CharField(max_length = 150, blank=True, null=True)
     invoice = models.FileField(blank=True, null=True)
-    reciever = models.ForeignKey(Customer, on_delete=models.SET_NULL, blank=True, null=True)
+    reciever = models.ForeignKey(User, related_name='fullcontainers', 
+                                 on_delete=models.SET_NULL, blank=True, null=True)
     
 
 
@@ -155,11 +156,11 @@ class LooseCargo(BaseCargo):
                               default='RW')
     invoice_number = models.CharField(max_length=8, unique=True, blank=True, null=True)
 
-    reciever = models.ForeignKey(Customer, 
-                                related_name='loose_cargos_dispatched',
+    reciever = models.ForeignKey(User, 
+                                related_name='loose_cargos_recieved',
                                 on_delete=models.SET_NULL,
                                 blank=True, null=True)    
-    dispature = models.ForeignKey(Dispatcher, 
+    dispature = models.ForeignKey(User, 
                                 related_name='loose_cargos_dispatched',
                                 on_delete=models.SET_NULL,
                                 blank=True, null=True)
@@ -205,7 +206,7 @@ class FullCargo(BaseCargo):
     STATUS_CHOICES = CARGO_STATUS_CHOICES 
     status = models.CharField( max_length=3, choices=STATUS_CHOICES, 
                               default='RW')
-    dispature = models.ForeignKey(Dispatcher, 
+    dispature = models.ForeignKey(User, 
                                 related_name='full_cargos_dispatched',
                                 on_delete=models.SET_NULL,
                                 blank=True, null=True)   
@@ -259,7 +260,7 @@ class Expense(models.Model):
                                  blank=True, null=True
                                  )
 
-    dispature = models.ForeignKey(Dispatcher, related_name='expenses',
+    dispature = models.ForeignKey(User, related_name='expenses',
                                   on_delete=models.SET_NULL, 
                                   blank=True, null=True)
     # name = models.CharField(,max_length = 150)
@@ -316,13 +317,8 @@ class Product(models.Model):
                              choices=CARGO_TYPE_CHOICES, blank=True, null=True)
     stock = models.IntegerField(default=0,blank=True, null=True)
     has_stock = models.BooleanField(default=False)
-    owner = models.ForeignKey(Customer, related_name='products', 
-                                    on_delete=models.SET_NULL,
-                                    blank=True, null=True)
-    buyer = models.ForeignKey(Customer, related_name='products_bought', 
-                                    on_delete=models.SET_NULL,
-                                    blank=True, null=True)
-    supplier = models.ForeignKey(Supplier, related_name='product', 
+    
+    supplier = models.ForeignKey(User, related_name='product_supplied', 
                                     on_delete=models.SET_NULL,
                                     blank=True, null=True)
     l_cargo = models.ForeignKey(LooseCargo, related_name='products',

@@ -1,8 +1,6 @@
 from rest_framework import serializers
 from finance.models import (Company, CompanyAddress,
-                            Account, Deposit,
-                            Expenses, Transfer, 
-                            Product, Invoice
+                            Account, 
                             ) 
 
 # class CustomerAddressSerializer(serializers.ModelSerializer):
@@ -54,29 +52,29 @@ class AccountSerializer(serializers.ModelSerializer):
         model = Account
         fields = '__all__'
 
-class DepositSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Deposit
-        fields = '__all__'
+# class DepositSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Deposit
+#         fields = '__all__'
 
-class ExpensesSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Expenses
-        fields = '__all__'
+# class ExpensesSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Expenses
+#         fields = '__all__'
 
-class TransferSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Transfer
-        fields = '__all__'
+# class TransferSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Transfer
+#         fields = '__all__'
 
 
-class ProductSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Product
-        fields = '__all__'
+# class ProductSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Product
+#         fields = '__all__'
 
-class InvoiceSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Invoice
-        fields = '__all__'
+# class InvoiceSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Invoice
+#         fields = '__all__'
 

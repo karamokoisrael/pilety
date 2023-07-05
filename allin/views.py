@@ -284,10 +284,15 @@ class LooseCargoDetailView(DetailView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['products'] = self.object.products.all()
-        context['stocks'] = self.object.products.filter(has_stock=True)
-        # context['invoices'] = self.object.invoices.all()
-        return context
+        if self.request.user.is_staff:
+            context['products'] = self.object.products.all()
+            context['stocks'] = self.object.products.filter(has_stock=True)
+            # context['invoices'] = self.object.invoices.all()
+            return context
+        elif self.request.user.is_authenticated:
+            context['products'] = self.object.products.filter()
+            context['stocks'] = self.object.products.filter()
+            return context
     
 
 class FullContainerDetailView(DetailView):

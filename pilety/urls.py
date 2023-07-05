@@ -19,9 +19,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
     path('ac/api/', include('users.api_urls', namespace='users_api')),
-    path('fn/api/', include('finance.api_urls', namespace='finance_api')),
-    path('sh/api/', include('shipping.api_urls', namespace='shipping_api')),
-    path('', include('shipping.urls', namespace='shipping')),
+    # path('fn/api/', include('finance.api_urls', namespace='finance_api')),
+    # path('sh/api/', include('shipping.api_urls', namespace='shipping_api')),
+    # path('', include('shipping.urls', namespace='shipping')),
     path('', include('allin.urls', namespace='allin')),
     # path('3', ProductApi.as_view()),
 
