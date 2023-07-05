@@ -172,6 +172,7 @@ class LooseCargo(BaseCargo):
                                   on_delete=models.SET_NULL,
                                   related_name='cargos',
                                   blank=True, null=True) 
+                                  
     def __str__(self):
         return f'{self.mark}'
 

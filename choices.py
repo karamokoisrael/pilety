@@ -63,6 +63,7 @@ CARGO_STATUS_CHOICES = (
     ('RW', 'Recieved in China Warehouse'),
     ('DC', 'Departed China '),
     ('AT', 'Arrived in Tanzania'),
+    ('DV', ' Delivering'),
     ('RC', 'Recieved by Customer'),
 )
 CARGO_TYPE_CHOICES = (

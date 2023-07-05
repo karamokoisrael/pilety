@@ -92,7 +92,18 @@ class LooseCargoListView(ListView):
     model = LooseCargo
     template_name = 'allin/loose/loosecargos.html' 
     context_object_name = 'cargos'
-    paginate_by = 10  
+    paginate_by = 10
+
+    # def get_queryset(self):
+    #     queryset = super(LooseCargoListView, self).get_queryset()
+    #     queryset = LooseCargo.objects.filter(status='True') # TODO
+    #     return queryset
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["delivered"] = LooseCargo.objects.exclude(status__in=['DC', 'AT', 'RW'])
+        context["undelivered"] = LooseCargo.objects.exclude(status__in=['DV', 'RC'])
+        return context  
 
 
 class FullContainerListView(ListView):
@@ -275,6 +286,7 @@ class LooseContainerDetailView(DetailView):
         # context['stocks'] = self.object.cargos.products.filter(has_stock=True)
         
         return context
+    
     
 
 class LooseCargoDetailView(DetailView):
