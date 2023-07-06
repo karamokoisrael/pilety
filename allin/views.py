@@ -51,6 +51,7 @@ def create_delivery(request, cargo_ids):
             delivery = Delivery.objects.create()
         cargos = LooseCargo.objects.filter(id__in=cargo_ids)
         delivery.cargos.add(*cargos)
+        cargos.update(status="DV")
         return redirect('allin:delivery', delivery.id)
     
     deliveries = Delivery.objects.all()

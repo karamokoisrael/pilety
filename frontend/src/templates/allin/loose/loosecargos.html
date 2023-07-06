@@ -24,7 +24,7 @@
 						<li>
 							<a href="#">
 								<!-- <i class="flaticon-truck"></i> -->
-								Delivered / On route
+								On delivery
 							</a>
 						</li>
 						
@@ -39,11 +39,11 @@
                                     <th>Ctns</th>
                                     <th>Weight</th>
                                     <th>CBM</th>
-                                    <th>Container No.</th>
+                                    <th>Container</th>
                                     <th>Recieved</th>
                                     <th>Departure</th>
                                     <th>Arrived</th>
-                                    <th>Checked By</th>
+                                    <th>Dispature</th>
                                     <th>Status</th>
                                 </tr>
                                 </thead>
@@ -62,13 +62,13 @@
                                         <td>{{ item.dispature }}</td>
                                         <td>{{ item.get_status_display }}</td>
                                         <td><a href="{% url 'allin:l_cargo' item.id %}">Details</a></td>
-                                        <td><input type="checkbox" name="selected_goods" value="{{ item.id }}"></td>
+                                        {% comment %} <td><input type="checkbox" name="selected_goods" value="{{ item.id }}"></td> {% endcomment %}
                                     </tr>
                                 {% endfor %}
                                 </tbody>
                             </table>
 
-                        <div>
+                        </div>
 
 						<div class='tabs_item'>
                             <form method="POST" action="{% url 'allin:deliver_cargo' %}">
@@ -81,11 +81,11 @@
                                         <th>Ctns</th>
                                         <th>Weight</th>
                                         <th>CBM</th>
-                                        <th>Container No.</th>
+                                        <th>Container</th>
                                         <th>Recieved</th>
                                         <th>Departure</th>
                                         <th>Arrived</th>
-                                        <th>Checked By</th>
+                                        <th>Dispature</th>
                                         <th>Status</th>
                                     </tr>
                                     </thead>
@@ -124,11 +124,11 @@
                                     <th>Ctns</th>
                                     <th>Weight</th>
                                     <th>CBM</th>
-                                    <th>Container No.</th>
+                                    <th>Container </th>
                                     <th>Recieved</th>
                                     <th>Departure</th>
-                                    <th>Arrived</th>
-                                    <th>Checked By</th>
+                                    {% comment %} <th>Arrived</th> {% endcomment %}
+                                    <th>Dispature </th>
                                     <th>Status</th>
                                 </tr>
                                 </thead>
@@ -143,12 +143,15 @@
                                         <td>{{ item.container }}</td>
                                         <td>{{ item.recieved }}</td>
                                         <td>{{ item.depature }}</td>
-                                        <td>{{ item.arrived }}</td>
+                                        {% comment %} <td>{{ item.arrived }}</td> {% endcomment %}
                                         <td>{{ item.dispature }}</td>
                                         <td>{{ item.get_status_display }}</td>
                                         <td><a href="{% url 'allin:l_cargo' item.id %}">Details</a></td>
                                         <td><input type="checkbox" name="selected_goods" value="{{ item.id }}"></td>
                                     </tr>
+                                {% empty %}
+                                <p>Nothing is enrouted or delivered just Yet. Please Wait a bit longer</p>
+
                                 {% endfor %}
                                 </tbody>
                             </table>
