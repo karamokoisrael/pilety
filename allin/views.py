@@ -12,6 +12,7 @@ from django.db.models.functions import TruncMonth
 from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.views.generic import CreateView, DetailView, ListView, TemplateView
+from django.contrib import messages
 
 
 def error_handler(request, *args, **kwargs):
@@ -21,14 +22,14 @@ class DeliveryVehicleListView(ListView):
     model = DeliveryVehicle
     template_name = 'allin/sales/vehicles.html' 
     context_object_name = 'vehicles'
-    paginate_by = 10  
+    # paginate_by = 10  
 
 
 class DeliveryListView(ListView):
     model = Delivery
     template_name = 'allin/sales/deliveries.html' 
     context_object_name = 'deliveries'
-    paginate_by = 10  
+    # paginate_by = 10  
 
 
 
@@ -45,14 +46,21 @@ def create_delivery(request, cargo_ids):
     cargo_ids = [int(cargo_id) for cargo_id in cargo_ids.strip("[]").replace("'", "").split(',')]
     if request.method == 'POST':
         delivery_id = request.POST.get('delivery_id')
-        if delivery_id:
-            delivery = Delivery.objects.get(id=delivery_id)
+        cargos = LooseCargo.objects.filter(id__in=cargo_ids, container__status="AT")
+        if cargos.exists():
+            if delivery_id:
+                delivery = Delivery.objects.get(id=delivery_id)
+            else:
+                delivery = Delivery.objects.create()
+
+            delivery.cargos.add(*cargos)
+            cargos.update(status="DV")
+            messages.warning(request, "Only The arrived cargos have been added to the container")
+
+            return redirect('allin:delivery', delivery.id)
         else:
-            delivery = Delivery.objects.create()
-        cargos = LooseCargo.objects.filter(id__in=cargo_ids)
-        delivery.cargos.add(*cargos)
-        cargos.update(status="DV")
-        return redirect('allin:delivery', delivery.id)
+            messages.warning(request, "None of the selected cargo has arrived yet")
+            return redirect('allin:l_cargos')
     
     deliveries = Delivery.objects.all()
     return render(request, 'allin/sales/deliveries_form.html', {'deliveries': deliveries, 'cargo_ids': cargo_ids})
@@ -63,21 +71,21 @@ class ProductShippingQuoteListView(ListView):
     model = ProductShippingQuote
     template_name = 'allin/quotes/product_shipping_quote.html' 
     context_object_name = 'products'
-    paginate_by = 10  
+    # paginate_by = 10  
 
 
 class ShippingQuoteListView(ListView):
     model = ShippingQuote
     template_name = 'allin/quotes/shipping_quotes.html' 
     context_object_name = 'shipping_quote'
-    paginate_by = 10  
+    # paginate_by = 10  
 
     
 class ProductQuoteListView(ListView):
     model = ProductQuote
     template_name = 'allin/quotes/products_quote.html' 
     context_object_name = 'products'
-    paginate_by = 10  
+    # paginate_by = 10  
 
  
 
@@ -86,14 +94,14 @@ class LooseContainerListView(ListView):
     model = LooseContainer
     template_name = 'allin/loose/loosecontainers.html' 
     context_object_name = 'containers'
-    paginate_by = 10  
+    # paginate_by = 10  
 
  
 class LooseCargoListView(ListView):
     model = LooseCargo
     template_name = 'allin/loose/loosecargos.html' 
     context_object_name = 'cargos'
-    paginate_by = 10
+    # paginate_by = 10
 
     # def get_queryset(self):
     #     queryset = super(LooseCargoListView, self).get_queryset()
@@ -111,28 +119,28 @@ class FullContainerListView(ListView):
     model = FullContainer
     template_name = 'allin/full/fullcontainers.html' 
     context_object_name = 'containers'
-    paginate_by = 10  
+    # paginate_by = 10  
 
 
 class FullCargoListView(ListView):
     model = FullCargo
     template_name = 'allin/full/fullcargos.html' 
     context_object_name = 'cargos'
-    paginate_by = 10  
+    # paginate_by = 10  
 
 
 class InvoiceListView(ListView):
     model = Invoice
     template_name = 'allin/sales/invoices.html' 
     context_object_name = 'invoices'
-    paginate_by = 10  
+    # paginate_by = 10  
 
 
 class ExpensesListView(ListView):
     model = Expense
     template_name = 'allin/sales/expenses.html' 
     context_object_name = 'expenses'
-    paginate_by = 10  
+    # paginate_by = 10  
 
 class ExpenseFilterView(ListView):
     model = Expense
@@ -175,7 +183,7 @@ class ProductListView(ListView):
     model = Product
     template_name = 'allin/sales/products.html' 
     context_object_name = 'products'
-    paginate_by = 10  
+    # paginate_by = 10  
 
     def get_queryset(self):
         queryset = super(ProductListView, self).get_queryset()
