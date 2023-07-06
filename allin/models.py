@@ -11,7 +11,8 @@ from choices import (CURRENCY_CHOICES,
                      CARGO_STATUS_CHOICES,
                      CARGO_TYPE_CHOICES,
                      QUOTE_STATUS,
-                     UNIT_PACKAGING_CHOICES,)
+                     UNIT_PACKAGING_CHOICES,
+                     CATEGORY_CHOICES)
 from decimal import Decimal
 
 
@@ -280,6 +281,7 @@ class Product(models.Model):
     TYPE_CHOICES = PRODUCTS_TYPE_CHOICES
     CARGO_TYPE_CHOICES = CARGO_TYPE_CHOICES
     UNIT_PACKAGING_CHOICES = UNIT_PACKAGING_CHOICES
+    CATEGORY_CHOICES = CATEGORY_CHOICES
     recieved = models.DateField(verbose_name='(Warehouse)recieved on',
                                 blank=True, null=True,auto_now_add=True)
     name = models.CharField(max_length = 150,blank=True, null=True)
@@ -290,6 +292,9 @@ class Product(models.Model):
                                     blank=True, null=True)
     units = models.CharField(max_length = 4, default='PCS', 
                              choices=UNIT_PACKAGING_CHOICES, blank=True, null=True)
+    prod_type = models.CharField(verbose_name='Product Category',
+                                 max_length = 4, default='OT', 
+                                 choices=CATEGORY_CHOICES)
     price = models.DecimalField(verbose_name='Unit Price',
                                 max_digits=10, decimal_places=3,
                                 blank=True, null=True)
@@ -314,11 +319,12 @@ class Product(models.Model):
     width = models.DecimalField(max_digits=10, decimal_places=3,
                                     blank=True, null=True)
     item_number = models.CharField(max_length=50, blank=True, null=True)
+    cbm_cost = models.DecimalField(max_digits=15, decimal_places=4,blank=True, null=True )
     cargo_types = models.CharField(max_length = 150, default='L', 
                              choices=CARGO_TYPE_CHOICES, blank=True, null=True)
     stock = models.IntegerField(default=0,blank=True, null=True)
     has_stock = models.BooleanField(default=False)
-    
+       
     supplier = models.ForeignKey(User, related_name='product_supplied', 
                                     on_delete=models.SET_NULL,
                                     blank=True, null=True)
@@ -358,6 +364,25 @@ class Product(models.Model):
 
         if self.price:
             self.ttprice = Decimal(self.price * self.qty)
+        
+        if self.prod_type == 'TY' or 'PA' or 'ST' or 'MS':
+            self.cbm_cost = self.cbms * 360
+        
+        elif self.prod_type == 'HW' or 'CO':
+            self.cbm_cost = self.cbms * 380
+
+        elif self.prod_type == 'DC' or 'EL':
+            self.cbm_cost = self.cbms * 370
+
+        elif self.prod_type == 'OT' or 'CC' or 'CL':
+            self.cbm_cost = self.cbms * 400
+        
+        else:
+            self.cbm_cost = self.cbms * 400
+        
+
+
+        
 
     
         
