@@ -31,8 +31,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'users',
-    # 'finance',
-    # 'shipping',
+    'finance',
+    'shipping',
     'allin',
 
     'allauth',
