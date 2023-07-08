@@ -10,7 +10,7 @@ django-crispy-forms
 crispy-bootstrap4
 
 gunicorn
-
+ipython
 
 
 python-environ==0.4.54

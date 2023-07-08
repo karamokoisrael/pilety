@@ -32,3 +32,7 @@ class TermsPage(TemplateView):
 class WhyUsPage(TemplateView):
     template_name = 'pilety/why-us-choose.html'
 
+
+class PriceLiftPage(TemplateView):
+    template_name = 'pilety/price_list.html'
+

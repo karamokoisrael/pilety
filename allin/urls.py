@@ -50,7 +50,8 @@ from allin.other_views import (Homepage,
                           ServicesPage,
                           TeamPage,
                           TermsPage,
-                          WhyUsPage
+                          WhyUsPage,
+                          PriceLiftPage,
                           )
 
 app_name = 'allin'
@@ -64,7 +65,7 @@ urlpatterns = [
     path('team', TeamPage.as_view(), name='team'),
     path('terms', TermsPage.as_view(), name='terms'),
     path('why-choose-us', WhyUsPage.as_view(), name='whyus'),
-    # path('', Homepage.as_view(), name='homepage'),
+    path('prices', PriceLiftPage.as_view(), name='price_list'),
     # path('', Homepage.as_view(), name='homepage'),
     
 
