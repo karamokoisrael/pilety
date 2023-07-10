@@ -239,17 +239,19 @@
                                 </table>
                                 <div class="invoice-info">
 
-                                <div class='left'>
-                                    <p>Tel:+8613157959722</p>
-                                    <p>mail:pilety@pilety.com</p>
-                                    <p>库地址:浙江省金华市义乌市正阳实验学校对面后店村2栋2单元1楼仓库</p>
-                                    <p>WAREHOUSE ADD:1F Warehouse Unit2,Building2,Houdian Village opposite Zhengyang experimental school Yiwu,Jinhua, Zhejiang province</p>
-                                </div>
-                                <div class='right'>
-                                    <img src="{% static 'img/logo/logo-two.png' %}" alt="Logo">
+                                    <div class='left'>
+                                        <p>Tel:+8613157959722</p>
+                                        <p>mail:pilety@pilety.com</p>
+                                        <p>库地址:浙江省金华市义乌市正阳实验学校对面后店村2栋2单元1楼仓库</p>
+                                        <p>WAREHOUSE ADD:1F Warehouse Unit2,Building2,Houdian Village opposite Zhengyang experimental school Yiwu,Jinhua, Zhejiang province</p>
+                                    </div>
+                                    <div class='right'>
+                                        <img src="{% static 'img/logo/logo-two.png' %}" alt="Logo">
 
+                                    </div>
                                 </div>
-                            </div>
+                                <a href="{% url 'allin:generate_invoice' cargo.invoice_number %}">Generate Invoice</a>
+
 
                             </div>
                             {% comment %} <div>

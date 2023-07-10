@@ -182,6 +182,7 @@ class LooseCargo(BaseCargo):
             invoice_number = str(random.randint(10000000, 99999999))
             if not LooseCargo.objects.filter(invoice_number=invoice_number).exists():
                 return invoice_number
+    
   
     
     def save(self, *args, **kwargs):
