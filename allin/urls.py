@@ -50,7 +50,10 @@ from allin.other_views import (Homepage,
                           ServicesPage,
                           TeamPage,
                           TermsPage,
-                          WhyUsPage
+                          WhyUsPage,
+                          PriceLiftPage,
+                          InvoiceGeneratorView,
+                          generate_invoice
                           )
 
 app_name = 'allin'
@@ -64,8 +67,11 @@ urlpatterns = [
     path('team', TeamPage.as_view(), name='team'),
     path('terms', TermsPage.as_view(), name='terms'),
     path('why-choose-us', WhyUsPage.as_view(), name='whyus'),
+    path('prices', PriceLiftPage.as_view(), name='price_list'),
+    # path('gen-inv/<str:invoice_number>', InvoiceGeneratorView.as_view(), name='generate_invoice'),
     # path('', Homepage.as_view(), name='homepage'),
-    # path('', Homepage.as_view(), name='homepage'),
+    path('gen-inv/<str:invoice_number>/', generate_invoice, name='generate_invoice'),
+
     
 
     path('l_containers/', LooseContainerListView.as_view(), name='l_containers'),

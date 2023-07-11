@@ -156,7 +156,10 @@ class LooseCargo(BaseCargo):
     status = models.CharField( max_length=3, choices=STATUS_CHOICES, 
                               default='RW')
     invoice_number = models.CharField(max_length=8, unique=True, blank=True, null=True)
-
+    cost = models.DecimalField(help_text='This is auto generated',
+                                verbose_name='Total Cost',
+                                max_digits=10, decimal_places=3,
+                                blank=True, null=True)
     reciever = models.ForeignKey(User, 
                                 related_name='loose_cargos_recieved',
                                 on_delete=models.SET_NULL,
@@ -182,6 +185,7 @@ class LooseCargo(BaseCargo):
             invoice_number = str(random.randint(10000000, 99999999))
             if not LooseCargo.objects.filter(invoice_number=invoice_number).exists():
                 return invoice_number
+    
   
     
     def save(self, *args, **kwargs):
@@ -196,6 +200,9 @@ class LooseCargo(BaseCargo):
 
         total_qty = self.products.aggregate(Sum('qty'))['qty__sum']
         self.ctns = total_qty or 0  
+
+        cost = self.products.aggregate(Sum('cbm_cost'))['cbm_cost__sum']
+        self.cost = cost or 0  
 
         if not self.invoice_number:
             self.invoice_number = self.generate_invoice_number()
@@ -365,20 +372,22 @@ class Product(models.Model):
         if self.price:
             self.ttprice = Decimal(self.price * self.qty)
         
-        if self.prod_type == 'TY' or 'PA' or 'ST' or 'MS':
-            self.cbm_cost = self.cbms * 360
+        if self.prod_type == 'HW2' or 'MS' or 'SH' or 'CU' or 'CF' or 'TV' or 'EL':
+            self.cbm_cost = Decimal(self.cbms * 450)
         
-        elif self.prod_type == 'HW' or 'CO':
-            self.cbm_cost = self.cbms * 380
+        elif self.prod_type == 'COS' or 'ST' or 'GE' or 'OR' or 'DC' or 'PA':
+            self.cbm_cost = Decimal(self.cbms * 400)
 
-        elif self.prod_type == 'DC' or 'EL':
-            self.cbm_cost = self.cbms * 370
+        elif self.prod_type == 'HW1' or 'CL' or 'FU':
+            self.cbm_cost = Decimal(self.cbms * 420)
 
-        elif self.prod_type == 'OT' or 'CC' or 'CL':
-            self.cbm_cost = self.cbms * 400
+        elif self.prod_type == 'TO' or 'SU':
+            self.cbm_cost = Decimal(self.cbms * 380)
         
         else:
-            self.cbm_cost = self.cbms * 400
+            self.cbm_cost = Decimal(self.cbms * 500)
+        
+        
         
 
 

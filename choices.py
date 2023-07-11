@@ -84,26 +84,28 @@ QUOTE_STATUS = (
 )
 
 CATEGORY_CHOICES = (
-    ('HW', 'Hardware - 1'), #380
-    ('HW', 'Hardware (wire mash, heavy hardware items)'), #380
-    ('EL', 'Electronics'), #370
-    ('TY', 'Toys'),#360
-    ('CO', 'Cosmetics'),#380
-    ('CL', 'Clothes'),#400
-    ('ST', 'Stationery'),#360
-    ('PA', 'Phone Accessories'),#360
-    ('CC', 'Carpets and Curtains'),#400
-    ('DC', 'Decor'),#370
-    ('MS', 'Motorcycle spare parts'),#360
-    ('OT', ''),#400 
-    ('OT', 'Other'),#400 
-    ('OT', 'Other'),#400 
-    ('OT', 'Other'),#400 
-    ('OT', 'Other'),#400 
-    ('OT', 'Other'),#400 
-    ('OT', 'Other'),#400 
-    ('OT', 'Other'),#400 
-    ('OT', 'Other'),#400 
-    ('OT', 'Other'),#400 
-    ('OT', 'Other'),#400 
+    ('HW1', 'Hardware - 1'), #420
+    ('HW2', 'HARDWARE (wire mash, heavy hardware items)'), #450
+    ('MAB', 'MABATI'),#500 
+    ('COS', 'COSMETICS/PERFUME/TOOTHPASTE'),#400
+    ('CL', 'CLOTHES'),#420
+    ('ST', 'STATIONARY'),#400
+    ('GE', 'GYM EQUIPMENTS'),#400 
+    ('MC', 'MACHINES'),#500 
+    ('CA', 'CAR SPARE PARTS'),#500 
+    ('MS', 'MOTORCYCLE SPARE PARTS'),#450
+    ('TO', 'TOYS'),#380 
+    ('SH', 'SHOES'),#450 
+    ('CU', 'CURTAINS'),#450
+    ('CF', 'CARPETS/ FLOOR MAT'),#450
+    ('OR', 'ORNAMENTS'),#400 
+    ('DC', 'DECORATIONS'),#400
+    ('SU', 'SUNGLASSES'),#380 
+    ('PA', 'PHONE ACCESSORIES'),#400
+    ('TV', 'TV’S'),#450 
+    ('EL', 'ELECTRONICS'), #450
+    ('FU', 'FURNITURE'),#420 
+    ('HO', 'HOSPITAL EQUIPMENTS I.E WHEEL CHAIRS'),#500 
+    ('OT', 'Other'),#500 
+    
 )
