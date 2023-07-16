@@ -18,8 +18,8 @@ from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.platypus import (Image, Paragraph, SimpleDocTemplate, Spacer,
                                 Table, TableStyle)
 
-from .models import LooseCargo, LooseContainer
-
+from .models import LooseCargo, LooseContainer, FullContainer
+from .utility import generate_fullco_excel_file, generate_looseco_excel_file
 
 class Homepage(TemplateView):
     template_name = 'homepage.html'
@@ -180,62 +180,42 @@ class InvoiceGeneratorView(View):
 
 
 
-def generate_excel_file(products, container):
-    # Check if "container" is present in kwargs
-    # container = kwargs.get("container", None)
-
-    wb = openpyxl.Workbook()
-    sheet = wb.active
-    sheet.append(["YIWU PILETY IMPORT AND EXPORT COMPANY LIMITED"])
-    sheet.append(["ADD: Room 301 Building 20, District 4, Futian, Yiwu City, Jinhua City, Zhejiang Province"])
-    sheet.append(["Email: pilety@pilety.com"])
-
-
-
-    # Add four blank rows at the beginning
-    for _ in range(4):
-        sheet.append([])
-
-    # Write the headers for the Product model fields
-    headers = ["recieved", "name", "chinese", "qty", 
-               "packaging", "units", "prod_type", "price", 
-               "ttprice", "cbm", "cbms", "wght", 
-               "weight", 
-               "item_number", "cbm_cost", "cargo_types", 
-               "stock", "has_stock",
-               "supplier", "l_cargo", "invoice"]
-    
-    headers = [item.upper() for item in headers]
-    
-    sheet.append(headers)
-
-    # Write product data
-    for product in products:
-        sheet.append(product)
-
-    sheet.append(['Container Number', container.number, 
-                  'Total CBM', container.cbms, 
-                  'Total ctns', container.ctns,
-                  'Total weight', container.weight])
-
-    return wb
-
-
-
-def generate_packing_list(request, container_id):
-    container = get_object_or_404(LooseContainer, id=container_id)
+def generate_fullco_packing_list(request, container_id):
+    container = get_object_or_404(FullContainer, id=container_id)
     products = container.cargos.values_list(
-        "products__recieved", "products__name", "products__chinese", "products__qty",
-        "products__packaging", "products__units", "products__prod_type", "products__price",
+        "products__recieved", "products__name",
+        "products__chinese", "products__qty", "products__f_cargo__mark", 
+        "products__packaging", "products__units", "products__price",
         "products__ttprice", "products__cbm", "products__cbms", "products__wght",
         "products__weight", 
-        "products__item_number", "products__cbm_cost", "products__cargo_types",
-        "products__stock", "products__has_stock", "products__supplier__username",
-        "products__l_cargo__invoice_number"
+        "products__item_number"
     )
 
     # Generate the Excel file
-    wb = generate_excel_file(products, container)
+    wb = generate_fullco_excel_file(products, container)
+
+    # Create a response with the Excel file
+    response = HttpResponse(content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+    response["Content-Disposition"] = f"attachment; filename=PackingList_{container_id}.xlsx"
+    wb.save(response)
+
+    return response
+
+
+
+def generate_looseco_packing_list(request, container_id):
+    container = get_object_or_404(LooseContainer, id=container_id)
+    products = container.cargos.values_list(
+        "products__recieved", "products__name",
+        "products__chinese", "products__qty", "products__l_cargo__mark", 
+        "products__packaging", "products__units", "products__price",
+        "products__ttprice", "products__cbm", "products__cbms", "products__wght",
+        "products__weight", 
+        "products__item_number", "products__l_cargo__reciever__telephone"
+    )
+
+    # Generate the Excel file
+    wb = generate_looseco_excel_file(products, container)
 
     # Create a response with the Excel file
     response = HttpResponse(content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
