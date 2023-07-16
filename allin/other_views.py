@@ -1,25 +1,25 @@
 import os
 import threading
-import openpyxl
 from io import BytesIO
 
+import openpyxl
 import pdfkit
 from django.conf import settings
 from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
 from django.template.loader import render_to_string
+from django.template.response import TemplateResponse
 from django.views import View
 from django.views.generic import TemplateView
+from openpyxl.styles import Alignment
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.platypus import (Image, Paragraph, SimpleDocTemplate, Spacer,
                                 Table, TableStyle)
 
-from .models import LooseCargo
-from django.http import HttpResponse
-from django.shortcuts import get_object_or_404
-from django.template.response import TemplateResponse
-from .models import LooseContainer
+from .models import LooseCargo, LooseContainer
+
 
 class Homepage(TemplateView):
     template_name = 'homepage.html'
@@ -180,9 +180,17 @@ class InvoiceGeneratorView(View):
 
 
 
-def generate_excel_file(products):
+def generate_excel_file(products, container):
+    # Check if "container" is present in kwargs
+    # container = kwargs.get("container", None)
+
     wb = openpyxl.Workbook()
     sheet = wb.active
+    sheet.append(["YIWU PILETY IMPORT AND EXPORT COMPANY LIMITED"])
+    sheet.append(["ADD: Room 301 Building 20, District 4, Futian, Yiwu City, Jinhua City, Zhejiang Province"])
+    sheet.append(["Email: pilety@pilety.com"])
+
+
 
     # Add four blank rows at the beginning
     for _ in range(4):
@@ -197,11 +205,18 @@ def generate_excel_file(products):
                "stock", "has_stock",
                "supplier", "l_cargo", "invoice"]
     
+    headers = [item.upper() for item in headers]
+    
     sheet.append(headers)
 
     # Write product data
     for product in products:
         sheet.append(product)
+
+    sheet.append(['Container Number', container.number, 
+                  'Total CBM', container.cbms, 
+                  'Total ctns', container.ctns,
+                  'Total weight', container.weight])
 
     return wb
 
@@ -220,7 +235,7 @@ def generate_packing_list(request, container_id):
     )
 
     # Generate the Excel file
-    wb = generate_excel_file(products)
+    wb = generate_excel_file(products, container)
 
     # Create a response with the Excel file
     response = HttpResponse(content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
