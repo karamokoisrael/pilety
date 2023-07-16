@@ -1,5 +1,6 @@
 import os
 import threading
+import openpyxl
 from io import BytesIO
 
 import pdfkit
@@ -15,7 +16,10 @@ from reportlab.platypus import (Image, Paragraph, SimpleDocTemplate, Spacer,
                                 Table, TableStyle)
 
 from .models import LooseCargo
-
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
+from django.template.response import TemplateResponse
+from .models import LooseContainer
 
 class Homepage(TemplateView):
     template_name = 'homepage.html'
@@ -144,8 +148,6 @@ def generate_invoice(request, invoice_number):
     return response
 
 
-
-
 class InvoiceGeneratorView(View):
     def get(self, request, invoice_number):
         # Retrieve the LooseCargo instance based on the invoice number
@@ -172,3 +174,57 @@ class InvoiceGeneratorView(View):
         # Return the download link for the generated PDF
         download_link = f'<a href="{pdf_file_path}">Download Invoice</a>'
         return HttpResponse(download_link)
+
+
+
+
+
+
+def generate_excel_file(products):
+    wb = openpyxl.Workbook()
+    sheet = wb.active
+
+    # Add four blank rows at the beginning
+    for _ in range(4):
+        sheet.append([])
+
+    # Write the headers for the Product model fields
+    headers = ["recieved", "name", "chinese", "qty", 
+               "packaging", "units", "prod_type", "price", 
+               "ttprice", "cbm", "cbms", "wght", 
+               "weight", 
+               "item_number", "cbm_cost", "cargo_types", 
+               "stock", "has_stock",
+               "supplier", "l_cargo", "invoice"]
+    
+    sheet.append(headers)
+
+    # Write product data
+    for product in products:
+        sheet.append(product)
+
+    return wb
+
+
+
+def generate_packing_list(request, container_id):
+    container = get_object_or_404(LooseContainer, id=container_id)
+    products = container.cargos.values_list(
+        "products__recieved", "products__name", "products__chinese", "products__qty",
+        "products__packaging", "products__units", "products__prod_type", "products__price",
+        "products__ttprice", "products__cbm", "products__cbms", "products__wght",
+        "products__weight", 
+        "products__item_number", "products__cbm_cost", "products__cargo_types",
+        "products__stock", "products__has_stock", "products__supplier__username",
+        "products__l_cargo__invoice_number"
+    )
+
+    # Generate the Excel file
+    wb = generate_excel_file(products)
+
+    # Create a response with the Excel file
+    response = HttpResponse(content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+    response["Content-Disposition"] = f"attachment; filename=PackingList_{container_id}.xlsx"
+    wb.save(response)
+
+    return response

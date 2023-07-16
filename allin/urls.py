@@ -53,7 +53,8 @@ from allin.other_views import (Homepage,
                           WhyUsPage,
                           PriceLiftPage,
                           InvoiceGeneratorView,
-                          generate_invoice
+                          generate_invoice,
+                          generate_packing_list
                           )
 
 app_name = 'allin'
@@ -120,6 +121,8 @@ urlpatterns = [
 
     # utility
     path('deliver_cargo/', deliver_cargo, name='deliver_cargo'),
+    path('generate_packing_list/<int:container_id>/', generate_packing_list, name='generate_packing_list'),
+
 
     
 ]
