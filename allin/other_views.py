@@ -2,20 +2,24 @@ import os
 import threading
 from io import BytesIO
 
+import openpyxl
 import pdfkit
 from django.conf import settings
 from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
 from django.template.loader import render_to_string
+from django.template.response import TemplateResponse
 from django.views import View
 from django.views.generic import TemplateView
+from openpyxl.styles import Alignment
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.platypus import (Image, Paragraph, SimpleDocTemplate, Spacer,
                                 Table, TableStyle)
 
-from .models import LooseCargo
-
+from .models import LooseCargo, LooseContainer, FullContainer
+from .utility import generate_fullco_excel_file, generate_looseco_excel_file
 
 class Homepage(TemplateView):
     template_name = 'homepage.html'
@@ -144,8 +148,6 @@ def generate_invoice(request, invoice_number):
     return response
 
 
-
-
 class InvoiceGeneratorView(View):
     def get(self, request, invoice_number):
         # Retrieve the LooseCargo instance based on the invoice number
@@ -172,3 +174,52 @@ class InvoiceGeneratorView(View):
         # Return the download link for the generated PDF
         download_link = f'<a href="{pdf_file_path}">Download Invoice</a>'
         return HttpResponse(download_link)
+
+
+
+
+
+
+def generate_fullco_packing_list(request, container_id):
+    container = get_object_or_404(FullContainer, id=container_id)
+    products = container.cargos.values_list(
+        "products__recieved", "products__name",
+        "products__chinese", "products__qty", "products__f_cargo__mark", 
+        "products__packaging", "products__units", "products__price",
+        "products__ttprice", "products__cbm", "products__cbms", "products__wght",
+        "products__weight", 
+        "products__item_number"
+    )
+
+    # Generate the Excel file
+    wb = generate_fullco_excel_file(products, container)
+
+    # Create a response with the Excel file
+    response = HttpResponse(content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+    response["Content-Disposition"] = f"attachment; filename=PackingList_{container_id}.xlsx"
+    wb.save(response)
+
+    return response
+
+
+
+def generate_looseco_packing_list(request, container_id):
+    container = get_object_or_404(LooseContainer, id=container_id)
+    products = container.cargos.values_list(
+        "products__recieved", "products__name",
+        "products__chinese", "products__qty", "products__l_cargo__mark", 
+        "products__packaging", "products__units", "products__price",
+        "products__ttprice", "products__cbm", "products__cbms", "products__wght",
+        "products__weight", 
+        "products__item_number", "products__l_cargo__reciever__telephone"
+    )
+
+    # Generate the Excel file
+    wb = generate_looseco_excel_file(products, container)
+
+    # Create a response with the Excel file
+    response = HttpResponse(content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+    response["Content-Disposition"] = f"attachment; filename=PackingList_{container_id}.xlsx"
+    wb.save(response)
+
+    return response
