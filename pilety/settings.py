@@ -16,7 +16,7 @@ SECRET_KEY = 'django-insecure-v%iw#h*!!ljx#*^_b9r6-mc!lt6k8kc*vr1@%ay51e0x3dm5t(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['141.164.47.7',  'localhost','127.0.0.1']
+ALLOWED_HOSTS = ['pilety.com', 'www.pilety.com', '141.164.47.7',  'localhost','127.0.0.1']
 
 
 # Application definition
