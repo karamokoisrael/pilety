@@ -10,7 +10,8 @@ https://docs.djangoproject.com/en/4.1/howto/deployment/wsgi/
 import os
 
 from django.core.wsgi import get_wsgi_application
+from settings.base import DJ_ENV
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'pilety.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', DJ_ENV)
 
 application = get_wsgi_application()
