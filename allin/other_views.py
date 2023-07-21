@@ -85,33 +85,16 @@ def generate_invoice(request, invoice_number):
 
     # Add the logo and company details
     logo = Image("invoice.png")
-    bottomlogo = Image("allin/firstvision.png")
     logo.drawWidth = 500
     logo.drawHeight = 225
     elements.append(logo)
 
-    # company_details = [
-    #     "PILETY IMPORT AND EXPORT COMPANY LIMITED",
-    #     "GUANGZHOU 六涌5座之一 广东省佛山市顺德区六涌5座之一(创富八路西120米)",
-    #     "OFFICE ADDRESS: Room 301, Building 20 Futian District 4, Yiwu,Jinhua City Zhejiang Province, China",
-    #     "六涌5座之一 广东省佛山市顺德区六涌5座之一(创富八路西120米)",
-    #     " OFFICE ADDRESS: Room 301, Building 20 Futian District 4, Yiwu,Jinhua City Zhejiang Province, China",
-    #     "六涌5座之一 广东省佛山市顺德区六涌5座之一(创富八路西120米)",
-    # ]
+   
 
     # Retrieve the default styles after registering the Chinese font
     styles = getSampleStyleSheet()
-
-    # Update the style for Chinese characters
-    chinese_style = ParagraphStyle(name='ChineseStyle', parent=styles['Normal'], fontName='boxicons')
-
-    title_style = ParagraphStyle(name='TitleStyle', parent=styles['Heading1'], alignment=1)
-    subtitle_style = ParagraphStyle(name='TitleStyle', parent=styles['Heading6'], alignment=1)
     normal_style = styles["Normal"]
-    # elements.append(Paragraph(company_details[0], title_style))
-    # elements.extend(Paragraph(detail, chinese_style) for detail in company_details[1:])
-    # elements.append(Spacer(1, 20))  # Add some space
-
+    
     # Create the table for product details
     table_data = [
         ["Name", "CBM", "Weight", "Quantity", "CBM Cost"],
