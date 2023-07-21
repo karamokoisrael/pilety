@@ -84,20 +84,20 @@ def generate_invoice(request, invoice_number):
     elements = []
 
     # Add the logo and company details
-    logo = Image("allin/pilety.png")
+    logo = Image("invoice.png")
     bottomlogo = Image("allin/firstvision.png")
-    logo.drawWidth = 100
-    logo.drawHeight = 100
+    logo.drawWidth = 500
+    logo.drawHeight = 225
     elements.append(logo)
 
-    company_details = [
-        "PILETY IMPORT AND EXPORT COMPANY LIMITED",
-        "GUANGZHOU 六涌5座之一 广东省佛山市顺德区六涌5座之一(创富八路西120米)",
-        "OFFICE ADDRESS: Room 301, Building 20 Futian District 4, Yiwu,Jinhua City Zhejiang Province, China",
-        # "六涌5座之一 广东省佛山市顺德区六涌5座之一(创富八路西120米)",
-        " OFFICE ADDRESS: Room 301, Building 20 Futian District 4, Yiwu,Jinhua City Zhejiang Province, China",
-        # "六涌5座之一 广东省佛山市顺德区六涌5座之一(创富八路西120米)",
-    ]
+    # company_details = [
+    #     "PILETY IMPORT AND EXPORT COMPANY LIMITED",
+    #     "GUANGZHOU 六涌5座之一 广东省佛山市顺德区六涌5座之一(创富八路西120米)",
+    #     "OFFICE ADDRESS: Room 301, Building 20 Futian District 4, Yiwu,Jinhua City Zhejiang Province, China",
+    #     "六涌5座之一 广东省佛山市顺德区六涌5座之一(创富八路西120米)",
+    #     " OFFICE ADDRESS: Room 301, Building 20 Futian District 4, Yiwu,Jinhua City Zhejiang Province, China",
+    #     "六涌5座之一 广东省佛山市顺德区六涌5座之一(创富八路西120米)",
+    # ]
 
     # Retrieve the default styles after registering the Chinese font
     styles = getSampleStyleSheet()
@@ -108,13 +108,13 @@ def generate_invoice(request, invoice_number):
     title_style = ParagraphStyle(name='TitleStyle', parent=styles['Heading1'], alignment=1)
     subtitle_style = ParagraphStyle(name='TitleStyle', parent=styles['Heading6'], alignment=1)
     normal_style = styles["Normal"]
-    elements.append(Paragraph(company_details[0], title_style))
-    elements.extend(Paragraph(detail, chinese_style) for detail in company_details[1:])
-    elements.append(Spacer(1, 20))  # Add some space
+    # elements.append(Paragraph(company_details[0], title_style))
+    # elements.extend(Paragraph(detail, chinese_style) for detail in company_details[1:])
+    # elements.append(Spacer(1, 20))  # Add some space
 
     # Create the table for product details
     table_data = [
-        ["Name", "CBM", "Weight", "Quantity", "Price", "Cost"],
+        ["Name", "CBM", "Weight", "Quantity", "CBM Cost"],
     ]
     for product in products:
         row = [
@@ -122,24 +122,28 @@ def generate_invoice(request, invoice_number):
             str(product.cbm),
             str(product.weight),
             str(product.qty),
-            str(product.price),
-            str(product.qty * product.price),
+            # str(product.price),
+            str(product.qty * product.cbm_cost),
         ]
         table_data.append(row)
 
-    row = [cargo.mark, str(cargo.cbms), str(cargo.weight), str(cargo.ctns),'', '',]
+    row = ["TOTAL", str(cargo.cbms), str(cargo.weight), str(cargo.ctns),str(cargo.cost),]
     table_data.append(row)
     table = Table(table_data)
     table.setStyle(TableStyle([
-        ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+        ('BACKGROUND', (0, 0), (-1, 0), colors.green),
         ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
         ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
         ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
         ('FONTSIZE', (0, 0), (-1, 0), 14),
-        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
-        ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 5),
+        ('BACKGROUND', (0, 1), (-1, -1), colors.white),
         ('TEXTCOLOR', (0, 1), (-1, -1), colors.black),
-        ('FONTSIZE', (0, 1), (-1, -1), 12),
+        ('FONTSIZE', (0, 1), (-1, -1), 10),
+        ('TEXTCOLOR', (0, -1), (-1, -1), colors.black),
+        ('FONTSIZE', (0, -1), (-1, -1), 12),
+        ('LINEBELOW', (0, -2), (-1, -1), 1, colors.green),  # Hide grid lines
+
     ]))
 
     elements.append(table)
@@ -147,7 +151,7 @@ def generate_invoice(request, invoice_number):
 
     # Create the first grid for Address 1
     address1_content = [
-        Paragraph("Dar es salaam Tanzania Dar es salaam Tanzania )", normal_style),
+        Paragraph("USHIRIKA BUILDING 8TH FLOOR,P.O.BOX 77592, Dar es salaam, Tanzania", normal_style),
     ]
     address1_table = Table([address1_content])
 
@@ -156,7 +160,7 @@ def generate_invoice(request, invoice_number):
 
     # Create the third grid for Address 2
     address2_content = [
-        Paragraph("Mwanza AddressMwanza AddressMwanza Address", normal_style),
+        Paragraph("Nyerere Road, Seif Plaza,Ghorofa ya nne (4), Mwanza", normal_style),
     ]
     address2_table = Table([address2_content])
 
