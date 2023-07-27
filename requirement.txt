@@ -25,14 +25,9 @@ django-celery-results
 postmark
 django-environ
 
-<<<<<<< HEAD
 
 pdfkit
 openpyxl
 
 
 
-
-六涌5座之一 广东省佛山市顺德区六涌5座之一(创富八路西120米)
-=======
->>>>>>> 4eae62d ( removed the unnecessary line)
