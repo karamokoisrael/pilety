@@ -132,36 +132,43 @@ def generate_invoice(request, invoice_number):
     elements.append(table)
     elements.append(Spacer(1, 20))  # Add some space
 
-    # Create the first grid for Address 1
-    address1_content = [
-        Paragraph("USHIRIKA BUILDING 8TH FLOOR,P.O.BOX 77592, Dar es salaam, Tanzania", normal_style),
-    ]
-    address1_table = Table([address1_content])
+    # # Create the first grid for Address 1
+    # address1_content = [
+    #     Paragraph("USHIRIKA BUILDING 8TH FLOOR,P.O.BOX 77592, Dar es salaam, Tanzania", normal_style),
+    # ]
+    # address1_table = Table([address1_content])
 
-    # Create the second grid for the image
-    image_table = Table([[Image("firstvision.png", width=2*inch, height=0.5*inch)]])
+    # # Create the second grid for the image
+    # image_table = Table([[Image("firstvision.png", width=2*inch, height=0.5*inch)]])
 
-    # Create the third grid for Address 2
-    address2_content = [
-        Paragraph("Nyerere Road, Seif Plaza,Ghorofa ya nne (4), Mwanza", normal_style),
-    ]
-    address2_table = Table([address2_content])
+    # # Create the third grid for Address 2
+    # address2_content = [
+    #     Paragraph("Nyerere Road, Seif Plaza,Ghorofa ya nne (4), Mwanza", normal_style),
+    # ]
+    # address2_table = Table([address2_content])
 
-    # Combine the three tables side by side in the footer
-    footer_table = Table([
-        [address1_table, Spacer(0, 0, True), image_table, Spacer(0, 0, True), address2_table],
-    ], colWidths=[2*inch, 0.5*inch, 2*inch, 0.5*inch, 2*inch])
+    # # Combine the three tables side by side in the footer
+    # footer_table = Table([
+    #     [address1_table, Spacer(0, 0, True), image_table, Spacer(0, 0, True), address2_table],
+    # ], colWidths=[2*inch, 0.5*inch, 2*inch, 0.5*inch, 2*inch])
 
-    # Set up the table style (hide grid lines)
-    footer_table.setStyle(TableStyle([
-        ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
-        ('VALIGN', (0, 0), (-1, -1), 'TOP'),
-        ('LINEBELOW', (0, 0), (-1, -1), 1, colors.white),  # Hide grid lines
-    ]))
+    # # Set up the table style (hide grid lines)
+    # footer_table.setStyle(TableStyle([
+    #     ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+    #     ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+    #     ('LINEBELOW', (0, 0), (-1, -1), 1, colors.white),  # Hide grid lines
+    # ]))
+
+
+
+    # add the bottom footer
+    footer = Image("invoice_footer.png")
+    footer.drawWidth = 400
+    footer.drawHeight = 100
 
     # Add the footer table to the elements
     elements.append(Spacer(1, 20))  # Add some space
-    elements.append(footer_table)
+    elements.append(footer)
 
     # Build the PDF document
     doc.build(elements)
