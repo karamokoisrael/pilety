@@ -30,36 +30,36 @@ class Homepage(TemplateView):
 
 
 class AboutPage(TemplateView):
-    template_name = 'pilety/about.html'
+    template_name = 'allin/pilety/about.html'
 
 
 class ContactPage(TemplateView):
-    template_name = 'pilety/contact.html'
+    template_name = 'allin/pilety/contact.html'
 
 
 
 class PolicyPage(TemplateView):
-    template_name = 'pilety/privacy-policy.html'
+    template_name = 'allin/pilety/privacy-policy.html'
 
 
 class ServicesPage(TemplateView):
-    template_name = 'pilety/request-quote.html'
+    template_name = 'allin/pilety/services.html'
 
 
 class TeamPage(TemplateView):
-    template_name = 'pilety/team.html'
+    template_name = 'allin/pilety/team.html'
 
 
 class TermsPage(TemplateView):
-    template_name = 'pilety/terms-conditions.html'
+    template_name = 'allin/pilety/terms-conditions.html'
 
 
 class WhyUsPage(TemplateView):
-    template_name = 'pilety/why-us-choose.html'
+    template_name = 'allin/pilety/why-us-choose.html'
 
 
 class PriceLiftPage(TemplateView):
-    template_name = 'pilety/price_list.html'
+    template_name = 'allin/pilety/price_list.html'
 
 
 
