@@ -13,7 +13,8 @@ from .models import (
     ProductQuote,
     ProductQuoteImages,
     ShippingQuote,
-    ProductShippingQuote
+    ProductShippingQuote,
+    ProductCategory,
 
 )
 
@@ -81,8 +82,15 @@ class ExpenseAdmin(admin.ModelAdmin):
     list_display = ('date', 'name', 'notes', 'recurrance', 'dispature', 'amount')
     search_fields = ('name', 'dispature__name', 'amount', 'date',)
 
+class ProductAdminForm(admin.ModelAdmin):
+    def formfield_for_choice_field(self, db_field, request, **kwargs):
+        if db_field.name == 'category_name':
+            kwargs['choices'] = [(category.name, category.name) for category in ProductCategory.objects.all()]
+        return super().formfield_for_choice_field(db_field, request, **kwargs)
+
 
 class ProductAdmin(admin.ModelAdmin):
+    form = ProductAdminForm
     list_display = ('name', 'cargo_types', 'qty', 'packaging', 'cbm', 'price', 'weight', 'height')
     search_fields = ('name', 'cargo_types')
 
@@ -137,6 +145,12 @@ class ShippingQuoteAdmin(admin.ModelAdmin):
 class ProductShippingQuoteAdmin(admin.ModelAdmin):
     list_display = ['product', 'name', 'cbm', 'weight', 'qty']
     search_fields = ['product__name']
+
+
+@admin.register(ProductCategory)
+class ProductCategory(admin.ModelAdmin):
+    list_display = ['name', 'price']
+    search_fields = ['name']
 
 
 

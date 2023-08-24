@@ -284,6 +284,14 @@ class Expense(models.Model):
     
     
 
+class ProductCategory(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    price = models.DecimalField(verbose_name='Price/CBM', max_digits=10, decimal_places=2)
+    
+    def __str__(self):
+        return self.name
+
+
 class Product(models.Model):
     TYPE_CHOICES = PRODUCTS_TYPE_CHOICES
     CARGO_TYPE_CHOICES = CARGO_TYPE_CHOICES
@@ -300,8 +308,9 @@ class Product(models.Model):
     units = models.CharField(max_length = 4, default='PCS', 
                              choices=UNIT_PACKAGING_CHOICES, blank=True, null=True)
     prod_type = models.CharField(verbose_name='Product Category',
-                                 max_length = 4, default='OT', 
-                                 choices=CATEGORY_CHOICES)
+                                 max_length = 4, 
+                                #  default='OT', 
+                                 choices=[])
     price = models.DecimalField(verbose_name='Unit Price',
                                 max_digits=10, decimal_places=3,
                                 blank=True, null=True)
@@ -372,33 +381,31 @@ class Product(models.Model):
         if self.price:
             self.ttprice = Decimal(self.price * self.qty)
         
-        if self.prod_type == 'HW2' or 'MS' or 'SH' or 'CU' or 'CF' or 'TV' or 'EL':
-            self.cbm_cost = Decimal(self.cbms * 450)
+        # if self.prod_type == 'HW2' or 'MS' or 'SH' or 'CU' or 'CF' or 'TV' or 'EL':
+        #     self.cbm_cost = Decimal(self.cbms * 450)
         
-        elif self.prod_type == 'COS' or 'ST' or 'GE' or 'OR' or 'DC' or 'PA':
-            self.cbm_cost = Decimal(self.cbms * 400)
+        # elif self.prod_type == 'COS' or 'ST' or 'GE' or 'OR' or 'DC' or 'PA':
+        #     self.cbm_cost = Decimal(self.cbms * 400)
 
-        elif self.prod_type == 'HW1' or 'CL' or 'FU':
-            self.cbm_cost = Decimal(self.cbms * 420)
+        # elif self.prod_type == 'HW1' or 'CL' or 'FU':
+        #     self.cbm_cost = Decimal(self.cbms * 420)
 
-        elif self.prod_type == 'TO' or 'SU':
-            self.cbm_cost = Decimal(self.cbms * 380)
+        # elif self.prod_type == 'TO' or 'SU':
+        #     self.cbm_cost = Decimal(self.cbms * 380)
         
-        else:
-            self.cbm_cost = Decimal(self.cbms * 500)
+        # else:
+        #     self.cbm_cost = Decimal(self.cbms * 500)
         
-        
-        
-
-
-        
-
-    
+     
         
     def save(self, *args, **kwargs):
         
         self.calculate()
-        super().save(*args, **kwargs)
+        if self.prod_type:
+            category = ProductCategory.objects.get(name=self.category_name)
+            self.cbm_cost = Decimal(self.cbms * category.price)
+        super(Product, self).save(*args, **kwargs)
+   
 
 
 class ProductQuote(models.Model):
