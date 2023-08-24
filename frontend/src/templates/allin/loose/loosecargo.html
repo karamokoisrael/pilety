@@ -56,10 +56,10 @@
                                     <th scope="row">CBM:</th>
                                     <td>{{ cargo.cbms }}</td>
                                   </tr>
-                                  <tr>
+                                  {% comment %} <tr>
                                     <th scope="row">Container no.:</th>
                                     <td>{{ cargo.container }}</td>
-                                  </tr>
+                                  </tr> {% endcomment %}
                                   <tr>
                                     <th scope="row"> Recieved Date:</th>
                                     <td>{{ cargo.recieved }}</td>
@@ -199,10 +199,20 @@
                                 </div>
                                 <div class="invoice-info">
                                     <div class="left">
-                                        <p><strong>Bill To:</strong>{{ receiver.name }} First Vision Tz</p>
+                                        
+                                        {% if cargo.receiver.username %}
+                                            
+                                        <p><strong>Bill To:</strong>{{cargo.receiver.username}} </p>
                                         
                                         <p>Dar-es-salaam, Tanzania</p>
                                         
+                                        {% else %}
+                                        <p><strong>Bill To:</strong>{{cargo.mark}} </p>
+                                        
+                                        <p>Dar-es-salaam, Tanzania</p>
+                                        
+                                        {% endif %}
+                                            
                                     </div>
                                     <div class="right">
                                         <p><strong>Invoice #:</strong> {{ cargo.invoice_number }}</p>
@@ -243,22 +253,25 @@
                                 <div class="invoice-info">
 
                                     <div class='left'>
-                                        <p>Tel:+8613157959722</p>
+                                        <p>Tel:+255 758 390 390</p>
+                                        <p>Tel:+255 222 182 280</p>
                                         <p>mail:pilety@pilety.com</p>
-                                        <p>库地址:浙江省金华市义乌市正阳实验学校对面后店村2栋2单元1楼仓库</p>
-                                        <p>DSM Address 1F Warehouse Unit2,Building2,Houdian Village opposite 
-                                            Zhengyang experimental school Yiwu,Jinhua, Zhejiang province</p>
+                                        <p>MNAZI MMOJA LUMUMBA STREET</p>
+                                        <p>USHIRIKA HOUSE OLD BUILDING 8TH FLOOR</p>
+                                       
                                     </div>
                                     <div class='right'>
-                                        <p>Tel:+8613157959722</p>
+                                        <p>Tel:+255 758 390 390</p>
+                                        <p>Tel:+255 677 992 122</p>
                                         <p>mail:pilety@pilety.com</p>
-                                        <p>库地址:浙江省金华市义乌市正阳实验学校对面后店村2栋2单元1楼仓库</p>
-                                        <p>Mwanza Address:1F Warehouse Unit2,Building2,Houdian Village opposite 
-                                            Zhengyang experimental school Yiwu,Jinhua, Zhejiang province</p>
-
+                                        <p>MWANZA BRANCH:NYERERE ROAD</p>
+                                        <p>SEIF PLAZA GHOROFA YA NNE</p>
+                                        
+                                        
                                     </div>
                                 </div>
                                 <a href="{% url 'allin:generate_invoice' cargo.invoice_number %}">Download Invoice</a>
+                                {% comment %} <a href="{% url 'allin:share_invoice' cargo.invoice_number %}" class="btn btn-secondary">Share Invoice</a> {% endcomment %}
 
 
                             </div>
@@ -300,6 +313,7 @@
             </div>
         </div>
     </div>
+    
 </section>
             
 

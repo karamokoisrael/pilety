@@ -25,7 +25,7 @@ django-celery-results
 postmark
 django-environ
 
-
+django-social-share
 pdfkit
 openpyxl
 
