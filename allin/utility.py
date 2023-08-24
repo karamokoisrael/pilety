@@ -1,5 +1,9 @@
-import openpyxl
+import os
 
+import openpyxl
+import requests
+from django.http import HttpResponse
+from django.views import View
 
 
 def generate_fullco_excel_file(products, container):
@@ -124,3 +128,45 @@ def populatedata():
             product.save()
         loose_cargo.save()
     loosecontainer.save()
+
+
+
+
+def send_pdf_via_whatsapp(request):
+    if request.method == 'GET':
+        # Replace with your WhatsApp Business API endpoint and token
+        api_endpoint = 'https://api.metasmile.com/v1/messages'
+        api_token = 'your_api_token'
+
+        # Replace with the recipient's phone number in international format
+        recipient_number = '+1234567890'
+
+        # Path to your generated PDF file
+        pdf_path = 'path_to_your_pdf_file.pdf'
+
+        # Prepare the PDF for sending
+        pdf_file = open(pdf_path, 'rb')
+        files = {'document': pdf_file}
+
+        # Prepare the API request payload
+        payload = {
+            'to': recipient_number,
+            'type': 'document',
+            'payload': 'PDF document',
+        }
+
+        # Send the PDF using the WhatsApp Business API
+        response = requests.post(
+            api_endpoint,
+            headers={'Authorization': f'Bearer {api_token}'},
+            data=payload,
+            files=files
+        )
+
+        pdf_file.close()
+
+        if response.status_code == 200:
+            return HttpResponse(f'PDF sent to {recipient_number}')
+        else:
+            return HttpResponse('Failed to send PDF', status=response.status_code)
+

@@ -52,8 +52,9 @@ from allin.other_views import (Homepage,
                           TermsPage,
                           WhyUsPage,
                           PriceLiftPage,
-                          InvoiceGeneratorView,
+                          # InvoiceGeneratorView,
                           generate_invoice,
+                          share_invoice,
                           generate_fullco_packing_list,
                           generate_looseco_packing_list
                           )
@@ -73,6 +74,7 @@ urlpatterns = [
     # path('gen-inv/<str:invoice_number>', InvoiceGeneratorView.as_view(), name='generate_invoice'),
     # path('', Homepage.as_view(), name='homepage'),
     path('gen-inv/<str:invoice_number>/', generate_invoice, name='generate_invoice'),
+    path('share-inv/<str:invoice_number>/', share_invoice, name='share_invoice'),
 
     
 
