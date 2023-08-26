@@ -40,6 +40,7 @@ from allin.views import (
 
     create_delivery,
     deliver_cargo,
+    softsignup,
 )
 
 from allin.other_views import (Homepage,
@@ -73,8 +74,6 @@ urlpatterns = [
     path('prices', PriceLiftPage.as_view(), name='price_list'),
     # path('gen-inv/<str:invoice_number>', InvoiceGeneratorView.as_view(), name='generate_invoice'),
     # path('', Homepage.as_view(), name='homepage'),
-    path('gen-inv/<str:invoice_number>/', generate_invoice, name='generate_invoice'),
-    path('share-inv/<str:invoice_number>/', share_invoice, name='share_invoice'),
 
     
 
@@ -120,6 +119,10 @@ urlpatterns = [
     path('delivery/<int:pk>/', DeliveryDetailView.as_view(), name='delivery'),
     path('shippingquote/<int:pk>/', ShippingQuoteDetailView.as_view(), name='shipping_quote'),
 
+
+    path('gen-inv/<str:invoice_number>/', generate_invoice, name='generate_invoice'),
+    path('share-inv/<str:invoice_number>/', share_invoice, name='share_invoice'),
+    path('softsignup/', softsignup, name='softsignup'),
 
 
     # utility

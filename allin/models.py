@@ -209,6 +209,7 @@ class LooseCargo(BaseCargo):
 
 
         super(LooseCargo, self).save(*args, **kwargs) # Call the real save() method
+        super(LooseCargo, self).save(*args, **kwargs) # Call the real save() method
 
 
 class FullCargo(BaseCargo):
@@ -282,7 +283,7 @@ class Expense(models.Model):
     def __str__(self):
         return f'{self.amount} ({self.name})'
     
-    
+  
 
 class ProductCategory(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -291,8 +292,61 @@ class ProductCategory(models.Model):
     def __str__(self):
         return self.name
 
+# for category in categories:
+# ProductCategoryChoices = tuple()
+
+#     category_prices[category.name]=category.price
+#     new_choice = ((category.name, category.name),)
+#     ProductCategoryChoices += (new_choice)
+
+
+
+cost_380=['TOYS',
+'SUNGLASSES']
+
+cost_400 = [
+    'COSMETICS/PERFUME/TOOTHPASTE',
+    'STATIONARY',
+    'GYM EQUIPMENTS',
+    'ORNAMENTS',
+    'DECORATIONS',
+    'PHONE ACCESSORIES'
+    ]
+
+cost_420 = [
+    'Hardware - 1',
+    'CLOTHES',
+    'FURNITURE'
+    ]
+
+cost_450 = [
+    'MOTORCYCLE SPAREPARTS',
+    'SHOES',
+    'CURTAINS',
+    'CARPETS/ FLOOR MAT',
+    'TV',
+    'ELECTRONICS'
+    ]
+
+cost_500 = [
+    'HARDWARE (wire mash, heavy hardware items)',
+    'MABATI',
+    'MACHINES',
+    'CAR SPAREPARTS',
+    'HOSPITAL',
+    'Other'
+    ]
+
 
 class Product(models.Model):
+    
+    # categories = ProductCategory.objects.all()
+    # ProductCategoryChoices = tuple((category.name, category.name) for category in categories)
+    # category_prices = {category.name: category.price for category in categories}
+
+    # ProductCategoryChoices=ProductCategoryChoices
+
+
     TYPE_CHOICES = PRODUCTS_TYPE_CHOICES
     CARGO_TYPE_CHOICES = CARGO_TYPE_CHOICES
     UNIT_PACKAGING_CHOICES = UNIT_PACKAGING_CHOICES
@@ -308,9 +362,9 @@ class Product(models.Model):
     units = models.CharField(max_length = 4, default='PCS', 
                              choices=UNIT_PACKAGING_CHOICES, blank=True, null=True)
     prod_type = models.CharField(verbose_name='Product Category',
-                                 max_length = 4, 
-                                #  default='OT', 
-                                 choices=[])
+                                 max_length = 150, 
+                                 default='Other', 
+                                 choices=CATEGORY_CHOICES)
     price = models.DecimalField(verbose_name='Unit Price',
                                 max_digits=10, decimal_places=3,
                                 blank=True, null=True)
@@ -361,6 +415,26 @@ class Product(models.Model):
     def check_required_field(self):
         pass
 
+    def fill_cbm_cost(self):
+
+
+        if self.prod_type in cost_450:
+            self.cbm_cost = Decimal(self.cbms * 450)
+        
+        elif self.prod_type in cost_400:
+            self.cbm_cost = Decimal(self.cbms * 400)
+
+        elif self.prod_type in cost_420:
+            self.cbm_cost = Decimal(self.cbms * 420)
+
+        elif self.prod_type in cost_380:
+            self.cbm_cost = Decimal(self.cbms * 380)
+        
+        elif self.prod_type in cost_500:
+            self.cbm_cost = Decimal(self.cbms * 500)
+        
+     
+        
     def calculate(self):
         if not self.cbm:
             if not (self.height and self.width and self.length):
@@ -381,29 +455,15 @@ class Product(models.Model):
         if self.price:
             self.ttprice = Decimal(self.price * self.qty)
         
-        # if self.prod_type == 'HW2' or 'MS' or 'SH' or 'CU' or 'CF' or 'TV' or 'EL':
-        #     self.cbm_cost = Decimal(self.cbms * 450)
-        
-        # elif self.prod_type == 'COS' or 'ST' or 'GE' or 'OR' or 'DC' or 'PA':
-        #     self.cbm_cost = Decimal(self.cbms * 400)
-
-        # elif self.prod_type == 'HW1' or 'CL' or 'FU':
-        #     self.cbm_cost = Decimal(self.cbms * 420)
-
-        # elif self.prod_type == 'TO' or 'SU':
-        #     self.cbm_cost = Decimal(self.cbms * 380)
-        
-        # else:
-        #     self.cbm_cost = Decimal(self.cbms * 500)
-        
-     
         
     def save(self, *args, **kwargs):
         
+        # self.cbm_cost = Decimal(self.cbms * category_prices[self.prod_type])
         self.calculate()
-        if self.prod_type:
-            category = ProductCategory.objects.get(name=self.category_name)
-            self.cbm_cost = Decimal(self.cbms * category.price)
+        self.fill_cbm_cost()
+        # if self.prod_type:
+        #     category = ProductCategory.objects.get(name=self.prod_type)
+        #     self.cbm_cost = Decimal(self.cbms * category.price)
         super(Product, self).save(*args, **kwargs)
    
 

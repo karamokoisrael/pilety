@@ -65,7 +65,8 @@ def create_delivery(request, cargo_ids):
     deliveries = Delivery.objects.all()
     return render(request, 'allin/sales/deliveries_form.html', {'deliveries': deliveries, 'cargo_ids': cargo_ids})
 
-
+def softsignup(request):
+    return render(request, 'allin/accounts/softsignup.html')
 
 class ProductShippingQuoteListView(ListView):
     model = ProductShippingQuote
@@ -110,9 +111,16 @@ class LooseCargoListView(ListView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["delivered"] = LooseCargo.objects.exclude(status__in=['DC', 'AT', 'RW'])
-        context["undelivered"] = LooseCargo.objects.exclude(status__in=['DV', 'RC'])
-        return context  
+        if self.request.user.is_authenticated:
+            context["delivered"] = LooseCargo.objects.filter(receiver=self.request.user).exclude(status__in=['DC', 'AT', 'RW'])
+            context["undelivered"] = LooseCargo.objects.filter(receiver=self.request.user).exclude(status__in=['DV', 'RC'])
+            return context  
+        elif self.request.user.is_staff:
+            context["delivered"] = LooseCargo.objects.exclude(status__in=['DC', 'AT', 'RW'])
+            context["undelivered"] = LooseCargo.objects.exclude(status__in=['DV', 'RC'])
+            return context
+        else:
+            return redirect('allin:softsignup')  
 
 
 class FullContainerListView(ListView):
@@ -281,8 +289,6 @@ class ProductQuoteCreateView(CreateView):
     success_url = '/products_quotes/'  
 
  
-
-
 
 class LooseContainerDetailView(DetailView):
     model = LooseContainer
