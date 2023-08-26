@@ -226,7 +226,7 @@
                                             <th>Quantity</th>
                                             <th>weight</th>
                                             <th>cbm</th>
-                                            {% comment %} <th>Cost</th> {% endcomment %}
+                                            <th>Cost</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -236,7 +236,7 @@
                                             <td>{{ item.qty }}</td>
                                             <td>{{ item.weight }}</td>
                                             <td>{{ item.cbm }}</td>
-                                            {% comment %} <td>{{ item.cbm_cost }}</td> {% endcomment %}
+                                            <td>{{ item.cbm_cost }}</td>
                                         </tr>
                                         {% endfor %}
                                         <tr>
@@ -244,7 +244,7 @@
                                             <td><strong>{{ cargo.ctns }}</strong></td>
                                             <td><strong>{{ cargo.weight }}</strong></td>
                                             <td><strong>{{ cargo.cbms }}</strong></td>
-                                            {% comment %} <td><strong>{{ cargo.cost }}</strong></td> {% endcomment %}
+                                            <td><strong>{{ cargo.cost }}</strong></td>
                                         </tr> 
 
                                     </tbody>
@@ -270,8 +270,8 @@
                                         
                                     </div>
                                 </div>
-                                <a href="{% url 'allin:generate_invoice' cargo.invoice_number %}">Download Invoice</a>
-                                {% comment %} <a href="{% url 'allin:share_invoice' cargo.invoice_number %}" class="btn btn-secondary">Share Invoice</a> {% endcomment %}
+                                <a href="{% url 'allin:generate_invoice' cargo.invoice_number %} " class="btn btn-primary">Download Invoice</a>
+                                <a href="{% url 'allin:share_invoice' cargo.invoice_number %}" class="btn btn-primary">Print Invoice</a>
 
 
                             </div>

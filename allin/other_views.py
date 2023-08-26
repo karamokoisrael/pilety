@@ -106,7 +106,7 @@ def generate_invoice(request, invoice_number):
             str(product.weight),
             str(product.qty),
             # str(product.price),
-            str(product.qty * product.cbm_cost),
+            str(product.cbm_cost),
         ]
         table_data.append(row)
 
@@ -198,7 +198,7 @@ def share_invoice(request, invoice_number):
             str(product.weight),
             str(product.qty),
             # str(product.price),
-            str(product.qty * product.cbm_cost),
+            str(product.cbm_cost),
         ]
         table_data.append(row)
 
