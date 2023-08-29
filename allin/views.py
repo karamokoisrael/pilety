@@ -112,8 +112,8 @@ class LooseCargoListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if self.request.user.is_authenticated:
-            context["delivered"] = LooseCargo.objects.filter(receiver=self.request.user).exclude(status__in=['DC', 'AT', 'RW'])
-            context["undelivered"] = LooseCargo.objects.filter(receiver=self.request.user).exclude(status__in=['DV', 'RC'])
+            context["delivered"] = LooseCargo.objects.filter(reciever=self.request.user).exclude(status__in=['DC', 'AT', 'RW'])
+            context["undelivered"] = LooseCargo.objects.filter(reciever=self.request.user).exclude(status__in=['DV', 'RC'])
             return context  
         elif self.request.user.is_staff:
             context["delivered"] = LooseCargo.objects.exclude(status__in=['DC', 'AT', 'RW'])
