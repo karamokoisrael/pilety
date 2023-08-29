@@ -23,7 +23,7 @@
                     <a href="{% url 'allin:vehicles' %}" class="nav-item nav-link" >Vehicles</a>
                  {% endif %}
             </div>
-            {% if request.user.is_superuser %}
+            {% comment %} {% if request.user.is_superuser %} {% endcomment %}
 
                     {% comment %} <a href="{% url 'allin:vehicles' %}" class="nav-item nav-link" >Vehicles</a> {% endcomment %}
                     
@@ -36,7 +36,8 @@
                             
                         </div>
                     </div>
-                {% else %}
+                    {% comment %} Next to do is if the staff can be allowed to access the admin panel {% endcomment %}
+                {% comment %} {% else %}
 
                         
                     <div class="nav-item dropdown">
@@ -47,9 +48,9 @@
                             <a href="{% url 'account_logout' %}" class="dropdown-item" >Logout</a>
                             
                         </div>
-                    </div>
+                    </div> {% endcomment %}
                     
-                    {% endif %}
+                    {% comment %} {% endif %} {% endcomment %}
             
            
         </div>

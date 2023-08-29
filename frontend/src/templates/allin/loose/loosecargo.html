@@ -259,6 +259,9 @@
                                         <p>MNAZI MMOJA LUMUMBA STREET</p>
                                         <p>USHIRIKA HOUSE OLD BUILDING 8TH FLOOR</p>
                                        
+                                        {% comment %} <a href="{% url 'allin:generate_invoice' cargo.invoice_number %}?action=share" class="default-btn btn-two btn">Share Invoice</a> {% endcomment %}
+                                        
+                                        <a href="{% url 'allin:generate_invoice' cargo.invoice_number %} " class="default-btn btn-two btn">Download Invoice</a>
                                     </div>
                                     <div class='right'>
                                         <p>Tel:+255 758 390 390</p>
@@ -267,11 +270,11 @@
                                         <p>MWANZA BRANCH:NYERERE ROAD</p>
                                         <p>SEIF PLAZA GHOROFA YA NNE</p>
                                         
-                                        
+                                        <a href="{% url 'allin:generate_invoice' cargo.invoice_number %}?action=share" class="default-btn btn-two btn">Share Invoice</a>
+
+                                        {% comment %} <a href="{% url 'allin:share_invoice' cargo.invoice_number %}" class="default-btn btn-two btn">Print Invoice</a> {% endcomment %}
                                     </div>
                                 </div>
-                                <a href="{% url 'allin:generate_invoice' cargo.invoice_number %} " class="btn btn-primary">Download Invoice</a>
-                                <a href="{% url 'allin:share_invoice' cargo.invoice_number %}" class="btn btn-primary">Print Invoice</a>
 
 
                             </div>

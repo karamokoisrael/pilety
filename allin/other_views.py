@@ -11,6 +11,8 @@ from django.template.loader import render_to_string
 from django.template.response import TemplateResponse
 from django.views import View
 from django.views.generic import TemplateView
+from django.shortcuts import render, redirect
+
 from openpyxl.styles import Alignment
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter
@@ -147,13 +149,30 @@ def generate_invoice(request, invoice_number):
     # Seek to the beginning of the buffer
     buffer.seek(0)
 
-    # Return the PDF file as a download response
-    response = HttpResponse(buffer, content_type='application/pdf')
-    response['Content-Disposition'] = f'attachment; filename={invoice_number}.pdf'
+    # Check if the user wants to download or share the PDF
+    action = request.GET.get('action')
+
+    if action == 'share':
+        # Return the PDF file as a response without attachment disposition
+        response = HttpResponse(buffer, content_type='application/pdf')
+        response['Content-Disposition'] = 'inline; filename="invoice.pdf"'
+    else:
+        # Return the PDF file as a download response
+        response = HttpResponse(buffer, content_type='application/pdf')
+        response['Content-Disposition'] = f'attachment; filename={invoice_number}.pdf'
 
     # Return the response with success message
     success_message = "Successfully generated the invoice."
     response['X-Invoice-Status'] = success_message
+
+
+    # # Return the PDF file as a download response
+    # response = HttpResponse(buffer, content_type='application/pdf')
+    # response['Content-Disposition'] = f'attachment; filename={invoice_number}.pdf'
+
+    # # Return the response with success message
+    # success_message = "Successfully generated the invoice."
+    # response['X-Invoice-Status'] = success_message
 
     return response
 
@@ -290,3 +309,20 @@ def generate_looseco_packing_list(request, container_id):
     wb.save(response)
 
     return response
+
+
+
+def track_cargo(request, tracking_number):
+    # Retrieve the LooseCargo instance based on the invoice number
+    
+    if request.user.is_authenticated:
+        cargo = LooseCargo.objects.get(invoice_number=tracking_number)
+        # Retrieve the associated products
+        products = cargo.products.all()
+    
+        return render(request, 'allin/sales/tracking.html', {'cargo':cargo, 'products':products})
+    else:
+        cargo = LooseCargo.objects.get(invoice_number=tracking_number)
+
+        return render(request, 'allin/sales/tracking.html', {'cargo':cargo})
+        
