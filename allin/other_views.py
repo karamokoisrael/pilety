@@ -13,6 +13,7 @@ from django.views import View
 from django.views.generic import TemplateView
 from django.shortcuts import render, redirect
 
+from twilio.rest import Client
 from openpyxl.styles import Alignment
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter
@@ -156,6 +157,40 @@ def generate_invoice(request, invoice_number):
         # Return the PDF file as a response without attachment disposition
         response = HttpResponse(buffer, content_type='application/pdf')
         response['Content-Disposition'] = 'inline; filename="invoice.pdf"'
+    
+    elif action =='send_to_whatsapp':
+
+        # Initialize the Twilio client
+        client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
+
+        # Specify the recipient's phone number (cargo.phonenumber)
+        recipient_phone_number = cargo.reciever.telephone
+
+        # Create a buffer to store the PDF
+        buffer = BytesIO()
+
+        # Save the generated PDF to the buffer
+        doc.build(elements)
+        buffer.seek(0)
+
+        # Send the PDF via WhatsApp using Twilio
+        try:
+            message = client.messages.create(
+                body="Here is your invoice",
+                from_=settings.TWILIO_WHATSAPP_NUMBER,
+                to=f'whatsapp:{recipient_phone_number}'
+            )
+
+            # Send the PDF as media attachment
+            message.media_url = "data:application/pdf;base64," + base64.b64encode(buffer.read()).decode()
+            message.save()
+
+            # Return a success message
+            success_message = "Invoice sent via WhatsApp successfully."
+            return HttpResponse(success_message)
+        except Exception as e:
+            error_message = f"Error sending invoice via WhatsApp: {str(e)}"
+            return HttpResponse(error_message, status=500)
     else:
         # Return the PDF file as a download response
         response = HttpResponse(buffer, content_type='application/pdf')
@@ -175,6 +210,12 @@ def generate_invoice(request, invoice_number):
     # response['X-Invoice-Status'] = success_message
 
     return response
+
+
+
+
+
+
 
 def share_invoice(request, invoice_number):
     # Retrieve the LooseCargo instance based on the invoice number
