@@ -314,22 +314,31 @@ def generate_looseco_packing_list(request, container_id):
 def update_invoice_number(request, pk):
     '''This function takes a container and changes the cargo invoice number 
     and increments it by increasing order'''
-    if request.method == 'POST':
-        invoice_number = int(request.POST['initial_invoice_number'])
+    if request.user.is_staff:
+        if request.method == 'POST':
+            invoice_number = int(request.POST['initial_invoice_number'])
+            
+            container = LooseContainer.objects.get(id = pk)
+            container_cargos = container.cargos.all()
+            for cargo in container_cargos:
+                cargo.invoice_number = invoice_number + 0
+                cargo.save()
+                invoice_number += 1
+            container.is_modified = True
+            container.save()
+            return redirect('allin:l_container', container.id)
         
-        container = LooseContainer.objects.get(id = pk)
-        container_cargos = container.cargos.all()
-        for cargo in container_cargos:
-            cargo.invoice_number = invoice_number + 0
-            cargo.save()
-            invoice_number += 1
-        container.is_modified = True
-        container.save()
-        return redirect('allin:l_container', container.id)
-    
-    # else:    #it should returfn a message that its not a post message
+    else:
+        return redirect('allin:error_handler')
+        
+        # else:    #it should returfn a message that its not a post message
 
-    #     return redirect('allin:l_container', container.id)
+        #     return redirect('allin:l_container', container.id)
+
+
+# def update_cost_per_cbm():
+#     '''setting the price per cbm for a specific goods in a specific cargo'''
+#     cargo = LooseCargo.objects.get()
 
 def track_cargo(request, tracking_number):
     # Retrieve the LooseCargo instance based on the invoice number

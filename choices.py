@@ -153,41 +153,41 @@ CATEGORIES = (
     
 )
 
-cost_380 = ['Kids Toys',#380
-'Sunglasses'#380
+cost_380 = ['Kids Toys',
+'Sunglasses'
 ]
 
-cost_400 = ['Scales',#400
-'Cosmetics',#400
-'Stationeries',#400
-'Hardware',#400
-'Utensils',#400
-'Home Decorations',#400
-'Tooth Paste & Brush',#400
-'Gym Equipments',#400
-'Ornaments)',#400
-'Phone accessories',#400
-'Big toys',#400
-'Kids Equipments',#400
+cost_400 = ['Scales',
+'Cosmetics',
+'Stationeries',
+'Hardware',
+'Utensils',
+'Home Decorations',
+'Tooth Paste & Brush',
+'Gym Equipments',
+'Ornaments)',
+'Phone accessories',
+'Big toys',
+'Kids Equipments',
 ]
 cost_420 = [
-    'Boxers/Men Underwear', #420
-    'Shoes',#420
-    'Socks',#420
-    'Baby Clothes',#420
-    'Furnitures',#420
+    'Boxers/Men Underwear', 
+    'Shoes',
+    'Socks',
+    'Baby Clothes',
+    'Furnitures',
     'Heavy Hardware'
     ]
 
 cost_450 = [
-    'Nails Paint/Polish',#450
-    'Perfume/Spray',#450
-    'Heavy Furnitures',#450
+    'Nails Paint/Polish',
+    'Perfume/Spray',
+    'Heavy Furnitures',
     ]
 cost_500 = [
-    'Spareparts',#500
-    'Pallets',#500
-    'Hospital Equipments',#500
-    'Iron Sheets',#500
-    'Heavy Bales',#500
+    'Spareparts',
+    'Pallets',
+    'Hospital Equipments',
+    'Iron Sheets',
+    'Heavy Bales',
 ]    

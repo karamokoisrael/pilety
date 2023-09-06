@@ -301,41 +301,79 @@ class ProductCategory(models.Model):
 
 
 
-cost_380=['TOYS',
-'SUNGLASSES']
+cost_380 = ['Kids Toys',
+'Sunglasses'
+]
 
-cost_400 = [
-    'COSMETICS/PERFUME/TOOTHPASTE',
-    'STATIONARY',
-    'GYM EQUIPMENTS',
-    'ORNAMENTS',
-    'DECORATIONS',
-    'PHONE ACCESSORIES'
-    ]
-
+cost_400 = ['Scales',
+'Cosmetics',
+'Stationeries',
+'Hardware',
+'Utensils',
+'Home Decorations',
+'Tooth Paste & Brush',
+'Gym Equipments',
+'Ornaments)',
+'Phone accessories',
+'Big toys',
+'Kids Equipments',
+]
 cost_420 = [
-    'Hardware - 1',
-    'CLOTHES',
-    'FURNITURE'
+    'Boxers/Men Underwear', 
+    'Shoes',
+    'Socks',
+    'Baby Clothes',
+    'Furnitures',
+    'Heavy Hardware'
     ]
 
 cost_450 = [
-    'MOTORCYCLE SPAREPARTS',
-    'SHOES',
-    'CURTAINS',
-    'CARPETS/ FLOOR MAT',
-    'TV',
-    'ELECTRONICS'
+    'Nails Paint/Polish',
+    'Perfume/Spray',
+    'Heavy Furnitures',
     ]
-
 cost_500 = [
-    'HARDWARE (wire mash, heavy hardware items)',
-    'MABATI',
-    'MACHINES',
-    'CAR SPAREPARTS',
-    'HOSPITAL',
-    'Other'
-    ]
+    'Spareparts',
+    'Pallets',
+    'Hospital Equipments',
+    'Iron Sheets',
+    'Heavy Bales',
+    ]    
+# cost_380=['TOYS',
+# 'SUNGLASSES']
+
+# cost_400 = [
+#     'COSMETICS/PERFUME/TOOTHPASTE',
+#     'STATIONARY',
+#     'GYM EQUIPMENTS',
+#     'ORNAMENTS',
+#     'DECORATIONS',
+#     'PHONE ACCESSORIES'
+#     ]
+
+# cost_420 = [
+#     'Hardware - 1',
+#     'CLOTHES',
+#     'FURNITURE'
+#     ]
+
+# cost_450 = [
+#     'MOTORCYCLE SPAREPARTS',
+#     'SHOES',
+#     'CURTAINS',
+#     'CARPETS/ FLOOR MAT',
+#     'TV',
+#     'ELECTRONICS'
+#     ]
+
+# cost_500 = [
+#     'HARDWARE (wire mash, heavy hardware items)',
+#     'MABATI',
+#     'MACHINES',
+#     'CAR SPAREPARTS',
+#     'HOSPITAL',
+#     'Other'
+#     ]
 
 
 class Product(models.Model):
@@ -356,8 +394,8 @@ class Product(models.Model):
     name = models.CharField(max_length = 150,blank=True, null=True)
     chinese = models.CharField(verbose_name='chinese desc', 
                                max_length = 150, blank=True, null=True)
-    qty = models.IntegerField(verbose_name='qty (ctn)',blank=True, null=True)
-    packaging = models.IntegerField(verbose_name='units/ctn', 
+    qty = models.PositiveIntegerField(verbose_name='qty (ctn)',blank=True, null=True)
+    packaging = models.PositiveIntegerField(verbose_name='units/ctn', 
                                     blank=True, null=True)
     units = models.CharField(max_length = 4, default='PCS', 
                              choices=UNIT_PACKAGING_CHOICES, blank=True, null=True)
@@ -389,10 +427,11 @@ class Product(models.Model):
     width = models.DecimalField(max_digits=10, decimal_places=3,
                                     blank=True, null=True)
     item_number = models.CharField(max_length=50, blank=True, null=True)
+    cost_per_cbm = models.PositiveIntegerField(blank=True, null=True)
     cbm_cost = models.DecimalField(max_digits=15, decimal_places=4,blank=True, null=True )
     cargo_types = models.CharField(max_length = 150, default='L', 
                              choices=CARGO_TYPE_CHOICES, blank=True, null=True)
-    stock = models.IntegerField(default=0,blank=True, null=True)
+    stock = models.PositiveIntegerField(default=0,blank=True, null=True)
     has_stock = models.BooleanField(default=False)
        
     supplier = models.ForeignKey(User, related_name='product_supplied', 
@@ -417,21 +456,25 @@ class Product(models.Model):
 
     def fill_cbm_cost(self):
 
+        if not self.cost_per_cbm:
 
-        if self.prod_type in cost_450:
-            self.cbm_cost = Decimal(self.cbms * 450)
-        
-        elif self.prod_type in cost_400:
-            self.cbm_cost = Decimal(self.cbms * 400)
+            if self.prod_type in cost_450:
+                self.cbm_cost = Decimal(self.cbms * 450)
+            
+            elif self.prod_type in cost_400:
+                self.cbm_cost = Decimal(self.cbms * 400)
 
-        elif self.prod_type in cost_420:
-            self.cbm_cost = Decimal(self.cbms * 420)
+            elif self.prod_type in cost_420:
+                self.cbm_cost = Decimal(self.cbms * 420)
 
-        elif self.prod_type in cost_380:
-            self.cbm_cost = Decimal(self.cbms * 380)
-        
-        elif self.prod_type in cost_500:
-            self.cbm_cost = Decimal(self.cbms * 500)
+            elif self.prod_type in cost_380:
+                self.cbm_cost = Decimal(self.cbms * 380)
+            
+            elif self.prod_type in cost_500:
+                self.cbm_cost = Decimal(self.cbms * 500)
+        else:
+            self.cbm_cost = Decimal(self.cbms * self.cost_per_cbm)
+
         
      
         
