@@ -78,7 +78,7 @@ class BaseContainer(models.Model):
 
 class LooseContainer(BaseContainer):
     name = models.CharField(max_length = 150, blank=True, null=True)
-
+    is_modified = models.BooleanField(default=False, blank=True, null=True)
     def __str__(self):
         return f'{self.name}'
     
@@ -155,7 +155,7 @@ class LooseCargo(BaseCargo):
     
     status = models.CharField( max_length=3, choices=STATUS_CHOICES, 
                               default='RW')
-    invoice_number = models.CharField(max_length=8, unique=True, blank=True, null=True)
+    invoice_number = models.PositiveIntegerField(unique=True, blank=True, null=True)
     cost = models.DecimalField(help_text='This is auto generated',
                                 verbose_name='Total Cost',
                                 max_digits=10, decimal_places=3,
@@ -180,11 +180,11 @@ class LooseCargo(BaseCargo):
     def __str__(self):
         return f'{self.mark}'
 
-    def generate_invoice_number(self):
-        while True:
-            invoice_number = str(random.randint(10000000, 99999999))
-            if not LooseCargo.objects.filter(invoice_number=invoice_number).exists():
-                return invoice_number
+    # def generate_invoice_number(self):
+    #     while True:
+    #         invoice_number = str(random.randint(10000000, 99999999))
+    #         if not LooseCargo.objects.filter(invoice_number=invoice_number).exists():
+    #             return invoice_number
     
   
     
@@ -204,8 +204,8 @@ class LooseCargo(BaseCargo):
         cost = self.products.aggregate(Sum('cbm_cost'))['cbm_cost__sum']
         self.cost = cost or 0  
 
-        if not self.invoice_number:
-            self.invoice_number = self.generate_invoice_number()
+        # if not self.invoice_number:
+        #     self.invoice_number = self.generate_invoice_number()
 
 
         super(LooseCargo, self).save(*args, **kwargs) # Call the real save() method

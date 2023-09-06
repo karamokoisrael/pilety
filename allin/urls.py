@@ -41,6 +41,7 @@ from allin.views import (
     create_delivery,
     deliver_cargo,
     softsignup,
+    error_handler,
 )
 
 from allin.other_views import (Homepage,
@@ -57,7 +58,8 @@ from allin.other_views import (Homepage,
                           generate_invoice,
                           share_invoice,
                           generate_fullco_packing_list,
-                          generate_looseco_packing_list
+                          generate_looseco_packing_list,
+                          update_invoice_number,
                           )
 
 app_name = 'allin'
@@ -109,7 +111,7 @@ urlpatterns = [
     
 
 
-    path('l_containers/<int:pk>/', LooseContainerDetailView.as_view(), name='l_container'),
+    path('l_container/<int:pk>/', LooseContainerDetailView.as_view(), name='l_container'),
     path('l_cargos/<int:pk>/', LooseCargoDetailView.as_view(), name='l_cargo'),
     path('f_containers/<int:pk>/', FullContainerDetailView.as_view(), name='f_container'),
     path('f_cargos/<int:pk>/', FullCargoDetailView.as_view(), name='f_cargo'),
@@ -119,10 +121,13 @@ urlpatterns = [
     path('delivery/<int:pk>/', DeliveryDetailView.as_view(), name='delivery'),
     path('shippingquote/<int:pk>/', ShippingQuoteDetailView.as_view(), name='shipping_quote'),
 
+    path('update_invoices/<int:pk>/', update_invoice_number, name='update_invoice_number'),
 
     path('gen-inv/<str:invoice_number>/', generate_invoice, name='generate_invoice'),
     path('share-inv/<str:invoice_number>/', share_invoice, name='share_invoice'),
     path('softsignup/', softsignup, name='softsignup'),
+    path('404/', error_handler, name='error_handler'),
+
 
 
     # utility
