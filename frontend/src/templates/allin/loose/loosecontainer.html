@@ -63,21 +63,25 @@
                     
                 </tbody>
               </table>
-              <a href="{% url 'allin:generate_looseco_packing_list' container.id %}" class="btn btn-primary">Generate Packing List</a>
+              <a href="{% url 'allin:generate_looseco_packing_list' container.id %}" class="btn btn-warning rounded-pill">Generate Packing List</a>
               
               {% if request.user.is_staff %}
                 
                 {% if not container.is_modified %}
 
-                  <h1>Update Invoice Number for Container: {{ container_number }}</h1>
+                <div class="container mt-5">
+                                  
                   <form method="POST" action="{% url 'allin:update_invoice_number' container.id %}">
                     {% csrf_token %}
-                  
-                    <label for="initial_invoice_number">Initial Invoice Number:</label>
-                    <input type="number" name="initial_invoice_number" id="initial_invoice_number" required>
-                    <br>
-                    <input type="submit" value="Update Invoice Number">
+                    <div class="form-group">
+                      <label for="initial_invoice_number">Initial Invoice Number:</label>
+                      <input type="number" class="form-control" name="initial_invoice_number" id="initial_invoice_number" required>
+                      <br>
+                      <input type="submit" class='btn btn-dark rounded-pill' value="Update Invoice Numbers">
+                    </div>
                   </form>
+              </div>
+
                   
                 {% endif %}
               {% endif %}
