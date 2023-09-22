@@ -28,4 +28,5 @@ django-environ
 django-social-share
 pdfkit
 openpyxl
+twilio
 
