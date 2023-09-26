@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Expenses</h1>
+  <a href="{% url 'allin:create_expenses' %}">Add Expense</a>
+
+  <form method="get" action="{% url 'allin:filter_expenses' %}">
+    {{ filter_form.as_p }}
+    <button type="submit">Filter</button>
+  </form>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Category</th>
+        <th>Notes</th>
+        <th>Amount</th>
+    </tr>
+    </thead>
+    <tbody>
+      {% for expense in expenses %}
+        <tr>
+          <td>{{ expense.date }}</td>
+          <td>{{ expense.name }}</td>
+          <td>{{ expense.notes }}</td>
+          <td>{{ expense.amount }}</td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="3">No expenses found.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+
+<h1>Monthly Expenses</h1>
+
+{% comment %}
+Get the monthly expenses by category as a dictionary
+{% endcomment %}
+{% with expenses_by_category=Expense.objects.filter(date__month=current_month).values('name__name').annotate(total=Sum('amount')) %}
+{% with expenses_by_month=Expense.objects.filter(date__month=current_month).annotate(month=TruncMonth('date')).values('month').annotate(total=Sum('amount')).order_by('month') %}
+{% with total_expenses=Expense.objects.filter(date__month=current_month).aggregate(Sum('amount')) %}
+
+{% comment %}
+Render the pie chart
+{% endcomment %}
+<canvas id="pieChart"></canvas>
+<script>
+document.getElementById('expenses-data').textContent = "{{ expenses_by_category|json_encode }}";
+{% include 'expenses.js' %}
+</script>
+
+{% comment %}
+Render the line graph
+{% endcomment %}
+<canvas id="lineGraph"></canvas>
+<script>
+document.getElementById('expenses-data').textContent = "{{ expenses_by_month|json_encode }}";
+{% include 'expenses.js' %}
+</script>
+
+{% comment %}
+Render the total monthly expenses
+{% endcomment %}
+<p>Total monthly expenses: {{ total_expenses.amount__sum }}</p>
+
+{% endwith %}
+{% endwith %}
+{% endwith %}
+
+
+
+{% endblock %}

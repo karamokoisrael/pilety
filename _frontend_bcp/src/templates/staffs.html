@@ -1,0 +1,59 @@
+{% load static %}
+
+
+<div class="container-fluid position-relative p-0">
+    <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0 bg-dark">
+        
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="fa fa-bars"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto py-0">
+                <a href="{% url 'allin:f_containers' %}" class="nav-item nav-link" > Full Containers</a>
+                <a href="{% url 'allin:l_containers' %}" class="nav-item nav-link" >Loose Containers</a>
+                <a href="{% url 'allin:f_cargos' %}" class="nav-item nav-link" > Full Cargos</a>
+                <a href="{% url 'allin:l_cargos' %}" class="nav-item nav-link">Loose Cargos</a>
+                <a href="{% url 'allin:products' %}" class="nav-item nav-link">Stocks</a>
+                {% comment %} <a href="{% url 'allin:product_quotes' %}" class="nav-item nav-link" >Product Quotes</a>
+                <a href="{% url 'allin:shipping_quotes' %}" class="nav-item nav-link" >Shipping Quotes</a> {% endcomment %}
+                <a href="{% url 'allin:deliveries' %}" class="nav-item nav-link" >Deliveries</a>
+                
+                {% if request.user.is_superuser %}
+
+                    <a href="{% url 'allin:vehicles' %}" class="nav-item nav-link" >Vehicles</a>
+                 {% endif %}
+            </div>
+            {% comment %} {% if request.user.is_superuser %} {% endcomment %}
+
+                    {% comment %} <a href="{% url 'allin:vehicles' %}" class="nav-item nav-link" >Vehicles</a> {% endcomment %}
+                    
+                    <div class="nav-item dropdown">
+                        <a href="#" class="btn btn-warning rounded-pill py-2 px-4 nav-link dropdown-toggle" data-bs-toggle="dropdown">{{request.user}}</a>
+                        <div class="dropdown-menu m-0">
+                            
+                            <a href="{% url 'admin:index' %}" class="dropdown-item">Admin</a>
+                            <a href="{% url 'account_logout' %}" class="dropdown-item" >Logout</a>
+                            
+                        </div>
+                    </div>
+                    {% comment %} Next to do is if the staff can be allowed to access the admin panel {% endcomment %}
+                {% comment %} {% else %}
+
+                        
+                    <div class="nav-item dropdown">
+                        <a href="#" class="btn btn-warning rounded-pill py-2 px-4 nav-link dropdown-toggle" data-bs-toggle="dropdown">{{request.user}}</a>
+                        <div class="dropdown-menu m-0">
+                            
+                            <a href="{% url 'admin:index' %}" class="nav-item nav-link">Admin</a>
+                            <a href="{% url 'account_logout' %}" class="dropdown-item" >Logout</a>
+                            
+                        </div>
+                    </div> {% endcomment %}
+                    
+                    {% comment %} {% endif %} {% endcomment %}
+            
+           
+        </div>
+    </nav>
+
+</div>

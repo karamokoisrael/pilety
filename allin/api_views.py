@@ -1,6 +1,7 @@
 import base64
 import os
 from io import BytesIO
+from rest_framework import generics, permissions
 
 from django.http import HttpResponse
 from reportlab.lib import colors
@@ -13,6 +14,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from twilio.rest import Client
+from django.conf import settings
 
 from .models import (FullCargo, FullContainer, LooseCargo, LooseContainer,
                      Product)
@@ -92,6 +94,22 @@ class ContainersListView(APIView):
                 return Response({'error': 'Invalid action'}, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+class LooseContainerRetrieveAPIView(generics.RetrieveAPIView):
+    queryset = LooseContainer.objects.all()
+    serializer_class = LooseContainerSerializer
+    permission_classes = (permissions.AllowAny, )
+
+
+class FullContainerRetrieveAPIView(generics.RetrieveAPIView):
+    queryset = FullContainer.objects.all()
+    serializer_class = FullContainerSerializer
+    permission_classes = (permissions.AllowAny, )
+
+class ProductStockListAPIView(generics.ListAPIView):
+    queryset = Product.objects.filter(has_stock=True)
+    serializer_class = ProductSerializer
+    permission_classes = (permissions.AllowAny, )
 
 
 

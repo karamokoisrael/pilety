@@ -1,0 +1,514 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<!-- Start Sidebar Modal -->
+<div class="sidebar-modal">  
+	<div class="modal right fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">
+							<i class="bx bx-x"></i>
+						</span>
+					</button>
+					</button>
+					<h2 class="modal-title" id="myModalLabel2">
+						<a href="/">
+							<img src="{% static 'img/logo/logo-one.png' %}" alt="Logo">
+						</a>
+					</h2>
+				</div>
+				<div class="modal-body">
+					<div class="sidebar-modal-widget">
+						<h3 class="title">About Us</h3>
+						<!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, asperiores doloribus eum laboriosam praesentium delectus unde magni aut perspiciatis cumque deserunt dolore voluptate, autem pariatur? Dicta pariatur.</p> -->
+					</div>
+					<div class="sidebar-modal-widget">
+						<h3 class="title">Contact Info</h3>
+						<ul class="contact-info">
+							<li>
+								<i class="bx bx-location-plus"></i>
+								Address
+								<span>New York - 1060, Str. First 78 Great Western Road</span>
+							</li>
+							<li>
+								<i class="bx bx-envelope"></i>
+								Email
+								<a href="##92faf7fefefdd2e2e0f7e4fde8bcf1fdff"><span class="__cf_email__" data-cfemail="1f777a7373705f6f6d7a697065317c7072">[email&#160;protected]</span></a>
+								<a href="##bed7d0d8d1fececcdbc8d1c490ddd1d3"><span class="__cf_email__" data-cfemail="3f565159507f4f4d5a495045115c5052">[email&#160;protected]</span></a>
+							</li>
+							<li>
+								<i class="bx bxs-phone-call"></i>
+								Phone
+								<a href="tel:+502-464-679">+502-464-679</a>
+								<a href="tel:+265-497-466">+265-497-466</a>
+							</li>
+						</ul>
+					</div>
+					<div class="sidebar-modal-widget">
+						<h3 class="title">Connect With Us</h3>
+						<ul class="social-list">
+							<li>
+								<a href="#">
+									<i class='bx bxl-twitter'></i>
+								</a>
+							</li>
+							<li>
+								<a href="#">
+									<i class='bx bxl-facebook'></i>
+								</a>
+							</li>
+							<li>
+								<a href="#">
+									<i class='bx bxl-instagram'></i>
+								</a>
+							</li>
+							<li>
+								<a href="#">
+									<i class='bx bxl-linkedin'></i>
+								</a>
+							</li>
+							<li>
+								<a href="#">
+									<i class='bx bxl-youtube'></i>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- End Sidebar Modal -->
+
+
+<!-- Start Page Title Area -->
+<div class="page-title-area item-bg-1 jarallax"  data-jarallax='{"speed": 0.3}'>
+	<div class="container">
+		<div class="page-title-content">
+			<div class="row align-items-center">
+				<div class="col-lg-6 col-sm-6">
+					<h2>Team</h2>
+				</div>
+				<div class="col-lg-6 col-sm-6">
+					<ul>
+						<li>
+							<a href="/">
+								Home 
+							</a>
+						</li>
+						<li>Team</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- End Page Title Area -->
+
+<!-- Start Team Area -->
+<section class="team-area ptb-100">
+	<div class="container">
+		<div class="section-title">
+			<span>Professional Team</span>
+			<h2>Our support professionals are here</h2>
+			<p>At Pilety, we are committed to providing exceptional 
+				customer service and support. We strive to build 
+				long-term relationships with our clients based on 
+				trust, reliability, and professionalism. With our 
+				extensive network of partners and suppliers around 
+				the world, we can help your business expand 
+				globally and reach new markets.</p>
+		</div>
+		<div class="row">
+			<div class="col-lg-4 col-sm-6">
+				<div class="single-team">
+					<img src="{% static 'img/team/1.jpg' %}" alt="Image">
+					<div class="team-content">
+						<h3>Jonkin Jullinor</h3>
+						<span>Product supplier</span>
+					</div>
+					<ul>
+						<li>
+							<a href="#">
+								<i class="bx bxl-facebook"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="bx bxl-twitter"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="bx bxl-instagram"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="bx bxl-linkedin"></i>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-lg-4 col-sm-6">
+				<div class="single-team">
+					<img src="{% static 'img/team/2.jpg' %}" alt="Image">
+					<div class="team-content">
+						<h3>Naimuk Waninolin</h3>
+						<span>Office executive support</span>
+					</div>
+					<ul>
+						<li>
+							<a href="#">
+								<i class="bx bxl-facebook"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="bx bxl-twitter"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="bx bxl-instagram"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="bx bxl-linkedin"></i>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-lg-4 col-sm-6">
+				<div class="single-team">
+					<img src="{% static 'img/team/3.jpg' %}" alt="Image">
+					<div class="team-content">
+						<h3>Moris Julfikar</h3>
+						<span>Regional supplier</span>
+					</div>
+					<ul>
+						<li>
+							<a href="#">
+								<i class="bx bxl-facebook"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="bx bxl-twitter"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="bx bxl-instagram"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="bx bxl-linkedin"></i>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-lg-4 col-sm-6">
+				<div class="single-team">
+					<img src="{% static 'img/team/4.jpg' %}" alt="Image">
+					<div class="team-content">
+						<h3>Waxin Alexgander</h3>
+						<span>International supplier</span>
+					</div>
+					<ul>
+						<li>
+							<a href="#">
+								<i class="bx bxl-facebook"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="bx bxl-twitter"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="bx bxl-instagram"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="bx bxl-linkedin"></i>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-lg-4 col-sm-6">
+				<div class="single-team">
+					<img src="{% static 'img/team/5.jpg' %}" alt="Image">
+					<div class="team-content">
+						<h3>Waxin Alexgander</h3>
+						<span>International supplier</span>
+					</div>
+					<ul>
+						<li>
+							<a href="#">
+								<i class="bx bxl-facebook"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="bx bxl-twitter"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="bx bxl-instagram"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="bx bxl-linkedin"></i>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-lg-4 col-sm-6">
+				<div class="single-team">
+					<img src="{% static 'img/team/6.jpg' %}" alt="Image">
+					<div class="team-content">
+						<h3>Waxin Alexgander</h3>
+						<span>International supplier</span>
+					</div>
+					<ul>
+						<li>
+							<a href="#">
+								<i class="bx bxl-facebook"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="bx bxl-twitter"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="bx bxl-instagram"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="bx bxl-linkedin"></i>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-lg-4 col-sm-6">
+				<div class="single-team">
+					<img src="{% static 'img/team/7.jpg' %}" alt="Image">
+					<div class="team-content">
+						<h3>Waxin Alexgander</h3>
+						<span>International supplier</span>
+					</div>
+					<ul>
+						<li>
+							<a href="#">
+								<i class="bx bxl-facebook"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="bx bxl-twitter"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="bx bxl-instagram"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="bx bxl-linkedin"></i>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-lg-4 col-sm-6">
+				<div class="single-team">
+					<img src="{% static 'img/team/8.jpg' %}" alt="Image">
+					<div class="team-content">
+						<h3>Waxin Alexgander</h3>
+						<span>International supplier</span>
+					</div>
+					<ul>
+						<li>
+							<a href="#">
+								<i class="bx bxl-facebook"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="bx bxl-twitter"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="bx bxl-instagram"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="bx bxl-linkedin"></i>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-lg-4 col-sm-6">
+				<div class="single-team">
+					<img src="{% static 'img/team/9.jpg' %}" alt="Image">
+					<div class="team-content">
+						<h3>Waxin Alexgander</h3>
+						<span>International supplier</span>
+					</div>
+					<ul>
+						<li>
+							<a href="#">
+								<i class="bx bxl-facebook"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="bx bxl-twitter"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="bx bxl-instagram"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="bx bxl-linkedin"></i>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-lg-4 col-sm-6">
+				<div class="single-team">
+					<img src="{% static 'img/team/10.jpg' %}" alt="Image">
+					<div class="team-content">
+						<h3>Waxin Alexgander</h3>
+						<span>International supplier</span>
+					</div>
+					<ul>
+						<li>
+							<a href="#">
+								<i class="bx bxl-facebook"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="bx bxl-twitter"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="bx bxl-instagram"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="bx bxl-linkedin"></i>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-lg-4 col-sm-6">
+				<div class="single-team">
+					<img src="{% static 'img/team/11.jpg' %}" alt="Image">
+					<div class="team-content">
+						<h3>Waxin Alexgander</h3>
+						<span>International supplier</span>
+					</div>
+					<ul>
+						<li>
+							<a href="#">
+								<i class="bx bxl-facebook"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="bx bxl-twitter"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="bx bxl-instagram"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="bx bxl-linkedin"></i>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-lg-4 col-sm-6">
+				<div class="single-team">
+					<img src="{% static 'img/team/12.jpg' %}" alt="Image">
+					<div class="team-content">
+						<h3>Waxin Alexgander</h3>
+						<span>International supplier</span>
+					</div>
+					<ul>
+						<li>
+							<a href="#">
+								<i class="bx bxl-facebook"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="bx bxl-twitter"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="bx bxl-instagram"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="bx bxl-linkedin"></i>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+</section>
+<!-- End Team Area -->
+
+
+
+
+
+{% endblock %}
+
+
+
+		

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<section class="track-area ptb-100">
+	<div class="container">
+		<div class="row">
+            <div class="col-lg-12">
+				<div class="tab quote-list-tab">
+					<ul class="tabs">
+						<li>
+							<a href="#">
+								<!-- <i class="flaticon-truck"></i> -->
+								Deliveries
+							</a>
+						</li>
+						
+					</ul>
+					<div class="tab_content">
+						<div>
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Driver</th>
+                                    <th>Vehicle</th>
+                                    <th>Status</th>
+                                    
+                                    
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for item in deliveries %}
+                                    <tr>
+                                        <td>{{ item.date }}</td>
+                                        <td>{{ item.driver }}</td>
+                                        <td>{{ item.vehicle }}</td>
+                                        <td>{{ item.get_status_display }}</td>
+                                        
+                                        <td><a href="{% url 'allin:delivery' item.id %}">Details</a></td>
+
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+            
+
+
+{% endblock %}

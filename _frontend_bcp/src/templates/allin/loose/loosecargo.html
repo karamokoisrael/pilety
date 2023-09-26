@@ -1,0 +1,324 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<section class="track-area ptb-100">
+	<div class="container">
+		<div class="row">
+            <div class="col-lg-12">
+				<div class="tab quote-list-tab">
+					<ul class="tabs">
+						<li>
+							<a href="#">
+								 <i class="flaticon-truck"></i> 
+								Loose Cargos
+							</a>
+						</li>
+                        <li>
+							<a href="#">
+								<i class="flaticon-package"></i>
+								Products
+							</a>
+						</li>
+                        <li>
+							<a href="#">
+								<i class="flaticon-warehouse"></i>
+								Stocks
+							</a>
+						</li>
+                        <li>
+							<a href="#">
+								<i class="flaticon-warehouse"></i>
+								Invoice
+							</a>
+						</li>
+                        
+					</ul>
+					<div class="tab_content">
+                        
+                        <div class="tabs_item"><h2>{{cargo.mark}} Cargo Summary</h2>
+                            <table class="table table-bordered">
+                                <tbody>
+                                  <tr>
+                                    <th scope="row" style="width: 30%">Item Mark:</th>
+                                    <td>{{ cargo.mark }}</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">Qty(ctn):</th>
+                                    <td>{{ cargo.ctns }}</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">Weight:</th>
+                                    <td>{{ cargo.weight }}</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">CBM:</th>
+                                    <td>{{ cargo.cbms }}</td>
+                                  </tr>
+                                  {% comment %} <tr>
+                                    <th scope="row">Container no.:</th>
+                                    <td>{{ cargo.container }}</td>
+                                  </tr> {% endcomment %}
+                                  <tr>
+                                    <th scope="row"> Recieved Date:</th>
+                                    <td>{{ cargo.recieved }}</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">Departure Date:</th>
+                                    <td>{{ cargo.depature }}</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">Arrived Date:</th>
+                                    <td>{{ cargo.arrived }}</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">Checked By:</th>
+                                    <td>{{ cargo.dispature }}</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">Status:</th>
+                                    <td>{{ cargo.get_status_display }}</td>
+                                  </tr>
+                                  
+                                  <!-- <tr>
+                                    <th scope="row">Checked By:</th>
+                                    <td>{{ cargo.checked_by }}</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">Checked By:</th>
+                                    <td>{{ cargo.checked_by }}</td>
+                                  </tr> -->
+                                  
+                                </tbody>
+                            </table>
+
+
+                            
+                        </div>
+                        
+                        
+                        <div class="tabs_item">
+                            <h2>Products in the Cargo</h2>
+                            <div>
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Chinese</th>
+                                        <th>Qty(ctn)</th>
+                                        <th>Units/Ctn</th>
+                                        <th>Price</th>
+                                        <th>T.T Price</th>
+                                        <th>CBM/ctn</th>
+                                        <th>T.T CBM</th>
+                                        <th> Weight</th>
+                                        <th>T.T Weight</th>
+                                        <th>Receiver</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for item in products %}
+                                        <tr>
+                                            <td>{{ item.name }}</td>
+                                            <td>{{ item.chinese }}</td>
+                                            <td>{{ item.qty }}</td>
+                                            <td>{{ item.packaging }}{{ item.units}}</td>
+                                            <td>{{ item.price }}</td>
+                                            <td>{{ item.ttprice }}</td>
+                                            <td>{{ item.cbm }}</td>
+                                            <td>{{ item.cbms }}</td>
+                                            <td>{{ item.wght }}</td>
+                                            <td>{{ item.weight }}</td>
+                                            <td>{{ item.buyer }}</td>
+                                            {% comment %} <td><a href="{% url 'allin:product' item.id %}">Details</a></td> {% endcomment %}
+    
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                   
+                        
+                        <div class="tabs_item">
+                            <h2>Available stocks from this Cargo</h2>
+                            <div>
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Chinese</th>
+                                        <th>Qty(ctn)</th>
+                                        <th>Units/Ctn</th>
+                                        <th>Price</th>
+                                        <th>T.T Price</th>
+                                        <th>CBM/ctn</th>
+                                        <th>T.T CBM</th>
+                                        <th> Weight</th>
+                                        <th>T.T Weight</th>
+                                        <th>Receiver</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for item in stocks %}
+                                        <tr>
+                                            <td>{{ item.name }}</td>
+                                            <td>{{ item.chinese }}</td>
+                                            <td>{{ item.qty }}</td>
+                                            <td>{{ item.packaging }}{{ item.units}}</td>
+                                            <td>{{ item.price }}</td>
+                                            <td>{{ item.ttprice }}</td>
+                                            <td>{{ item.cbm }}</td>
+                                            <td>{{ item.cbms }}</td>
+                                            <td>{{ item.wght }}</td>
+                                            <td>{{ item.weight }}</td>
+                                            <td>{{ item.buyer }}</td>
+                                            {% comment %} <td><a href="{% url 'allin:product' item.id %}">Details</a></td> {% endcomment %}
+                                    {% empty %}
+                                        There is no available stock in this cargo
+                                        </tr>
+                                    
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                         
+                        <div class="tabs_item">
+                            
+                            <div >
+                                <div class="invoice-header">
+                                    <img src="{% static 'img/logo/logo-two.png' %}" alt="Logo">
+                                    <h1>义乌市匹箭提进出口有限公司</h1>
+                                    <p><strong>OFFICE ADDRESS: Room 301, Building 20
+                                        Futian District 4, Yiwu,Jinhua City
+                                        Zhejiang Province, China</strong></p>
+
+                                    
+                                </div>
+                                <div class="invoice-info">
+                                    <div class="left">
+                                        
+                                        {% if cargo.receiver.username %}
+                                            
+                                        <p><strong>Bill To:</strong>{{cargo.receiver.username}} </p>
+                                        
+                                        <p>Dar-es-salaam, Tanzania</p>
+                                        
+                                        {% else %}
+                                        <p><strong>Bill To:</strong>{{cargo.mark}} </p>
+                                        
+                                        <p>Dar-es-salaam, Tanzania</p>
+                                        
+                                        {% endif %}
+                                            
+                                    </div>
+                                    <div class="right">
+                                        <p><strong>Invoice #:</strong> {{ cargo.invoice_number }}</p>
+                                        <p><strong>Date:</strong> {{ cargo.recieved }}</p>
+                                    </div>
+                                </div>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Product</th>
+                                            <th>Quantity</th>
+                                            <th>weight</th>
+                                            <th>cbm</th>
+                                            <th>Cost</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for item in products %}
+                                        <tr>
+                                            <td>{{ item.name }}</td>
+                                            <td>{{ item.qty }}</td>
+                                            <td>{{ item.weight }}</td>
+                                            <td>{{ item.cbm }}</td>
+                                            <td>{{ item.cbm_cost }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                        <tr>
+                                            <td><strong>Total</strong></td>
+                                            <td><strong>{{ cargo.ctns }}</strong></td>
+                                            <td><strong>{{ cargo.weight }}</strong></td>
+                                            <td><strong>{{ cargo.cbms }}</strong></td>
+                                            <td><strong>{{ cargo.cost }}</strong></td>
+                                        </tr> 
+
+                                    </tbody>
+                                   
+                                </table>
+                                <div class="invoice-info">
+
+                                    <div class='left'>
+                                        <p>Tel:+255 758 390 390</p>
+                                        <p>Tel:+255 222 182 280</p>
+                                        <p>mail:pilety@pilety.com</p>
+                                        <p>MNAZI MMOJA LUMUMBA STREET</p>
+                                        <p>USHIRIKA HOUSE OLD BUILDING 8TH FLOOR</p>
+                                       
+                                        {% comment %} <a href="{% url 'allin:generate_invoice' cargo.invoice_number %}?action=share" class="default-btn btn-two btn">Share Invoice</a> {% endcomment %}
+                                        
+                                        <a href="{% url 'allin:generate_invoice' cargo.invoice_number %}?action=send_to_whatsapp" class="default-btn btn-two btn">Download Invoice</a>
+                                    </div>
+                                    <div class='right'>
+                                        <p>Tel:+255 758 390 390</p>
+                                        <p>Tel:+255 677 992 122</p>
+                                        <p>mail:pilety@pilety.com</p>
+                                        <p>MWANZA BRANCH:NYERERE ROAD</p>
+                                        <p>SEIF PLAZA GHOROFA YA NNE</p>
+                                        
+                                        <a href="{% url 'allin:generate_invoice' cargo.invoice_number %}?action=share" class="default-btn btn-two btn">Share Invoice</a>
+
+                                        {% comment %} <a href="{% url 'allin:share_invoice' cargo.invoice_number %}" class="default-btn btn-two btn">Print Invoice</a> {% endcomment %}
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            {% comment %} <div>
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>Item Name</th>
+                                        <th>Qty</th>
+                                        <th>weight</th>
+                                        <th>CBM</th>
+                                        
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for item in products %}
+                                        <tr>
+                                            <td>{{ item.name }}</td>
+                                            <td>{{ item.ctns }}</td>
+                                            <td>{{ item.weight }}</td>
+                                            <td>{{ item.cbm }}</td>
+                                        </tr>    
+                                    
+                                    {% endfor %}
+                                        <tr>
+                                            <td>Total</td>
+                                            <td>{{ cargo.ctns }}</td>
+                                            <td>{{ cargo.cbms }}</td>
+                                            <td>{{ cargo.weight }}</td>
+                                        </tr> 
+                                    </tbody>
+                                </table>
+                            </div> {% endcomment %}
+                        </div>
+                            
+                    </div>
+                
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</section>
+            
+
+
+{% endblock %}

@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<section class="track-area ptb-100">
+	<div class="container">
+		<div class="row">
+      <div class="col-lg-12">
+				<div class="tab quote-list-tab">
+					<ul class="tabs">
+						<li>
+							<a href="#">
+								<i class="flaticon-distribution"></i> 
+								Container Summary
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								Cargos in the Container
+								<i class="flaticon-quote"></i>
+							</a>
+						</li>
+					</ul>
+					<div class="tab_content">
+						<div class="tabs_item">
+              <table class="table table-bordered">
+                <tbody>
+                  <tr>
+                    <th scope="row" style="width: 30%">Container Name:</th>
+                    <td>{{ container.name }}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Date Recieved:</th>
+                    <td>{{ container.arrived }}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"> Dipature:</th>
+                    <td>{{ container.depature}}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Total Weight:</th>
+                    <td>{{ container.weight }}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Total cbm:</th>
+                    <td>{{ container.cbms }}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Status:</th>
+                    <td>{{ container.get_status_display }}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Cartons:</th>
+                    <td>{{ container.ctns }}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Container Number:</th>
+                    <td>{{ container.number }}</td>
+                  </tr>
+                  
+                  
+                    
+                </tbody>
+              </table>
+              <a href="{% url 'allin:generate_fullco_packing_list' container.id %}" class="btn btn-primary">Generate Packing List</a>
+
+              
+            </div>
+            <div class="tabs_item">
+              <div>
+                <table class="table">
+                  <thead>
+                    <tr>
+                          
+                      <th>Mark</th>
+                      <th>Cartons</th>
+                      <th>CBM</th>
+                      <th>Weight</th>
+                      <th>Recieved </th>
+                      <th>Checked By</th>
+                      <th>status</th>
+                          
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for item in cargos %}
+                      <tr>
+                        <td>{{ item.mark }}</td>
+                        <td>{{ item.ctns }}</td>
+                        <td>{{ item.cbms }}</td>
+                        <td>{{ item.weight }}</td>
+                        <td>{{ item.depature }}</td>
+                        <td>{{ item.dispature }}</td>
+                        <td>{{ item.get_status_display }}</td>
+                        
+                        <td><a href="{% url 'allin:f_cargo' item.id %}">Details</a></td>
+
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+                </div>
+              </div>
+                    
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+            
+
+
+{% endblock %}

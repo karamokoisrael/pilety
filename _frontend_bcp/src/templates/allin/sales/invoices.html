@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<section class="track-area ptb-100">
+	<div class="container">
+		<div class="row">
+            <div class="col-lg-12">
+				<div class="tab quote-list-tab">
+					<ul class="tabs">
+						<li>
+							<a href="#">
+								<!-- <i class="flaticon-truck"></i> -->
+								{{cargo.mark}} 
+							</a>
+						</li>
+						<!-- <li>
+							<a href="#">
+								Request A Quote
+								<i class="flaticon-quote"></i>
+							</a>
+						</li> -->
+					</ul>
+					<div class="tab_content">
+						<div>
+                            <table class="table table-bordered">
+                                <tbody>
+                                  <tr>
+                                    <th scope="row" style="width: 30%">Item Mark:</th>
+                                    <td>{{ cargo.mark }}</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">Qty(ctn):</th>
+                                    <td>{{ cargo.ctns }}</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">Weight:</th>
+                                    <td>{{ cargo.weight }}</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">CBM:</th>
+                                    <td>{{ cargo.cbms }}</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">Container no.:</th>
+                                    <td>{{ cargo.container }}</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row"> Recieved date:</th>
+                                    <td>{{ cargo.recieved }}</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">Departure:</th>
+                                    <td>{{ cargo.depature }}</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">Arrived:</th>
+                                    <td>{{ cargo.arrived }}</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">Checked By:</th>
+                                    <td>{{ cargo.dispature }}</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">Status:</th>
+                                    <td>{{ cargo.get_status_display }}</td>
+                                  </tr>
+                                  
+                                  <!-- <tr>
+                                    <th scope="row">Checked By:</th>
+                                    <td>{{ cargo.checked_by }}</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">Checked By:</th>
+                                    <td>{{ cargo.checked_by }}</td>
+                                  </tr> -->
+                                  
+                                </tbody>
+                              </table>
+
+                              <div class="tab_content">
+                                <div>
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th> Name</th>
+                                            <th>Item No.</th>
+                                            {% comment %} <th>Cargo Type</th> {% endcomment %}
+                                            <th> Qty</th>
+                                            <th> Packagin</th>
+                                            <th> Weight</th>
+                                            <th>CBM</th>
+                                            <th>Height</th>
+                                            <th>Length</th>
+                                            <th>Width</th>
+                                            <th>Owner</th>
+                                            <th>Stock</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for item in products %}
+                                            <tr>
+                                                <td>{{ item.name }}</td>
+                                                <td>{{ item.item_number }}</td>
+                                                {% comment %} <td>{{ item.get_cargo_types_display }}</td> {% endcomment %}
+                                                <td>{{ item.qty }}</td>
+                                                <td>{{ item.packaging }}</td>
+                                                <td>{{ item.weight }}</td>
+                                                <td>{{ item.cbm }}</td>
+                                                <td>{{ item.height }}</td>
+                                                <td>{{ item.length }}</td>
+                                                <td>{{ item.width }}</td>
+                                                <td>{{ item.owner }}</td>
+                                                
+                                                {% if item.has_stock %}
+                                                <td>{{ item.stock }}</td>
+                                                {% else %}
+                                                <td>No stock</td>
+                                                {% endif %}
+                                                
+                                                <td><a href="{% url 'allin:product' item.id %}">Details</a></td>
+        
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                              
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+            
+
+
+{% endblock %}

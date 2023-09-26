@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<section class="track-area ptb-100">
+	<div class="container">
+		<div class="row">
+            <div class="col-lg-12">
+				<div class="tab quote-list-tab">
+					<ul class="tabs">
+						<li>
+							<a href="#">
+								<!-- <i class="flaticon-truck"></i> -->
+								All Cargo
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<!-- <i class="flaticon-truck"></i> -->
+								Undelivered
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<!-- <i class="flaticon-truck"></i> -->
+								On delivery
+							</a>
+						</li>
+						
+					</ul>
+					<div class="tab_content">
+                        <div class='tabs_item'>
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    {% comment %} <th>Receiver</th> {% endcomment %}
+                                    <th>Mark</th>
+                                    <th>Ctns</th>
+                                    <th>Weight</th>
+                                    <th>CBM</th>
+                                    <th>Container</th>
+                                    <th>Recieved</th>
+                                    <th>Departure</th>
+                                    <th>Arrived</th>
+                                    <th>Dispature</th>
+                                    <th>Status</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for item in cargos %}
+                                    <tr>
+                                        {% comment %} <td>{{ item.reciever }}</td> {% endcomment %}
+                                        <td>{{ item.mark }}</td>
+                                        <td>{{ item.ctns }}</td>
+                                        <td>{{ item.weight }}</td>
+                                        <td>{{ item.cbms }}</td>
+                                        <td>{{ item.container }}</td>
+                                        <td>{{ item.recieved }}</td>
+                                        <td>{{ item.depature }}</td>
+                                        <td>{{ item.arrived }}</td>
+                                        <td>{{ item.dispature }}</td>
+                                        <td>{{ item.get_status_display }}</td>
+                                        <td><a href="{% url 'allin:l_cargo' item.id %}">Details</a></td>
+                                        {% comment %} <td><input type="checkbox" name="selected_goods" value="{{ item.id }}"></td> {% endcomment %}
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+
+                        </div>
+
+						<div class='tabs_item'>
+                            <form method="POST" action="{% url 'allin:deliver_cargo' %}">
+                                {% csrf_token %}
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        {% comment %} <th>Receiver</th> {% endcomment %}
+                                        <th>Mark</th>
+                                        <th>Ctns</th>
+                                        <th>Weight</th>
+                                        <th>CBM</th>
+                                        <th>Container</th>
+                                        <th>Recieved</th>
+                                        <th>Departure</th>
+                                        <th>Arrived</th>
+                                        <th>Dispature</th>
+                                        <th>Status</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for item in undelivered %}
+                                        <tr>
+                                            {% comment %} <td>{{ item.reciever }}</td> {% endcomment %}
+                                            <td>{{ item.mark }}</td>
+                                            <td>{{ item.ctns }}</td>
+                                            <td>{{ item.weight }}</td>
+                                            <td>{{ item.cbms }}</td>
+                                            <td>{{ item.container }}</td>
+                                            <td>{{ item.recieved }}</td>
+                                            <td>{{ item.depature }}</td>
+                                            <td>{{ item.arrived }}</td>
+                                            <td>{{ item.dispature }}</td>
+                                            <td>{{ item.get_status_display }}</td>
+                                            <td><a href="{% url 'allin:l_cargo' item.id %}">Details</a></td>
+                                            <td><input type="checkbox" name="selected_goods" value="{{ item.id }}"></td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                                <button id="deliver-button" type="submit" class="btn btn-primary rounded-pill disabled-button">Deliver</button>
+                                
+                            </form>
+                        </div>
+                        
+
+                        <div class='tabs_item'>
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    {% comment %} <th>Receiver</th> {% endcomment %}
+                                    <th>Mark</th>
+                                    <th>Ctns</th>
+                                    <th>Weight</th>
+                                    <th>CBM</th>
+                                    <th>Container </th>
+                                    <th>Recieved</th>
+                                    <th>Departure</th>
+                                    {% comment %} <th>Arrived</th> {% endcomment %}
+                                    <th>Dispature </th>
+                                    <th>Status</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for item in delivered %}
+                                    <tr>
+                                        {% comment %} <td>{{ item.reciever }}</td> {% endcomment %}
+                                        <td>{{ item.mark }}</td>
+                                        <td>{{ item.ctns }}</td>
+                                        <td>{{ item.weight }}</td>
+                                        <td>{{ item.cbms }}</td>
+                                        <td>{{ item.container }}</td>
+                                        <td>{{ item.recieved }}</td>
+                                        <td>{{ item.depature }}</td>
+                                        {% comment %} <td>{{ item.arrived }}</td> {% endcomment %}
+                                        <td>{{ item.dispature }}</td>
+                                        <td>{{ item.get_status_display }}</td>
+                                        <td><a href="{% url 'allin:l_cargo' item.id %}">Details</a></td>
+                                        <td><input type="checkbox" name="selected_goods" value="{{ item.id }}"></td>
+                                    </tr>
+                                {% empty %}
+                                <p>Nothing is enrouted or delivered just Yet. Please Wait a bit longer</p>
+
+                                {% endfor %}
+                                </tbody>
+                            </table>
+
+                        <div>
+                                
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+            
+
+
+{% endblock %}

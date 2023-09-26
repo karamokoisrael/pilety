@@ -1,0 +1,56 @@
+<div >
+    <div class="invoice-header">
+        <img src="{% static 'img/logo/logo-two.png' %}" alt="Logo">
+        <h1>义乌市匹箭提进出口有限公司</h1>
+        <p><strong>OFFICE ADDRESS: Room 301, Building 20
+            Futian District 4, Yiwu,Jinhua City
+            Zhejiang Province, China</strong></p>
+
+        
+    </div>
+    <div class="invoice-info">
+        <div class="left">
+            <p><strong>Bill To:</strong>{{ receiver.name }} First Vision Tz</p>
+            
+            <p>Dar-es-salaam, Tanzania</p>
+            
+        </div>
+        <div class="right">
+            <p><strong>Invoice #:</strong> {{ cargo.invoice_number }}</p>
+            <p><strong>Date:</strong> {{ cargo.recieved }}</p>
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>weight</th>
+                <th>cbm</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in products %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td>{{ item.qty }}</td>
+                <td>{{ item.weight }}</td>
+                <td>{{ item.cbm }}</td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td><strong>Total</strong></td>
+                <td><strong>{{ cargo.ctns }}</strong></td>
+                <td><strong>{{ cargo.weight }}</strong></td>
+                <td><strong>{{ cargo.cbms }}</strong></td>
+            </tr> 
+
+        </tbody>
+       
+    </table>
+    <div>
+        <p>Tel:+8613157959722</p>
+        <p>mail:pilety@pilety.com</p>
+        <p>库地址:浙江省金华市义乌市正阳实验学校对面后店村2栋2单元1楼仓库</p>
+        <p>WAREHOUSE ADD:1F Warehouse Unit2,Building2,Houdian Village opposite Zhengyang experimental school Yiwu,Jinhua, Zhejiang province</p></div>
+</div>

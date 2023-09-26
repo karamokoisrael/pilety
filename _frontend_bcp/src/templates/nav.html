@@ -1,0 +1,103 @@
+{% load static %}
+
+<!-- Start Pilety Navbar Area -->
+<div class="prevoz-nav-style ">
+    <div class="navbar-area">
+        
+
+        
+        {% if request.user.is_authenticated and request.user.is_staff %}
+            
+            {% include 'staffs.html' %}            
+            
+        {% elif request.user.is_authenticated %}
+        <div class="container-fluid position-relative p-0">
+            <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0 bg-dark">
+                <a href="{% url 'allin:homepage' %}" class="navbar-brand p-0">
+
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="fa fa-bars"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto py-0">
+                        <a href="{% url 'allin:services' %}" class="nav-item nav-link">Services</a>
+                        <a href="{% url 'allin:about' %}" class="nav-item nav-link">About</a>
+                        <a href="{% url 'allin:contact' %}" class="nav-item nav-link">Contact</a>
+
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                            <div class="dropdown-menu m-0">
+                                <a href="{% url 'allin:whyus' %}" class="dropdown-item">why us</a>
+                                <a href="{% url 'allin:team' %}" class="dropdown-item">team</a>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="nav-item dropdown">
+                        <a href="#" class="btn btn-warning rounded-pill py-2 px-4 nav-link dropdown-toggle" data-bs-toggle="dropdown">{{request.user}}</a>
+                        <div class="dropdown-menu m-0">
+                            
+                          
+                            <a href="{% url 'account_logout' %}" class="dropdown-item" >Logout</a>
+                            
+                        </div>
+                    </div>
+                    
+        
+                   
+                </div>
+            </nav>
+        
+            
+        </div>
+        {% else %}
+        <div class="container-fluid position-relative p-0">
+            <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0 bg-dark">
+                {% comment %} <a href="{% url 'allin:' %}" class="navbar-brand p-0"> {% endcomment %}
+                    {% comment %} <h1 class="text-primary m-0"><i class="fa fa-map-marker-alt me-3"></i>Tourist</h1> {% endcomment %}
+                    <img src="{% static 'img/logo/logo1.png' %}" alt="Logo"> 
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="fa fa-bars"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto py-0">
+                        <a href="{% url 'allin:services' %}" class="nav-item nav-link">Services</a>
+                        <a href="{% url 'allin:about' %}" class="nav-item nav-link">About</a>
+                        <a href="{% url 'allin:contact' %}" class="nav-item nav-link">Contact</a>
+
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                            <div class="dropdown-menu m-0">
+                                <a href="{% url 'allin:whyus' %}" class="dropdown-item">why us</a>
+                                <a href="{% url 'allin:team' %}" class="dropdown-item">team</a>
+                                
+                                
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="nav-item dropdown">
+                        <a href="#" class="btn btn-warning rounded-pill py-2 px-4 nav-link dropdown-toggle" data-bs-toggle="dropdown">Login/Sign up</a>
+                        <div class="dropdown-menu m-0">
+                            
+                          
+                            <a href="{% url 'account_login' %}" class="dropdown-item" >Login</a>
+                            <a href="{% url 'account_signup' %}" class="dropdown-item" >Sign up</a>
+                            
+                        </div>
+                    </div>
+                    
+        
+                   
+                </div>
+            </nav>
+        
+            
+        </div>
+        {% endif %}
+    </div>
+</div>
+            
