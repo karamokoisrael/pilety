@@ -132,7 +132,7 @@ class FullContainer(BaseContainer):
 class BaseCargo(models.Model):
     
     mark = models.CharField(max_length = 150, blank=True, null=True)
-    recieved = models.DateField(auto_now=False, auto_now_add=False,
+    recieved = models.DateTimeField(auto_now=False, auto_now_add=False,
                                         blank=True, null=True)
     depature = models.DateField(auto_now=False, auto_now_add=False,
                                         blank=True, null=True)
