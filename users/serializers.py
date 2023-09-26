@@ -5,7 +5,7 @@ from users.models import (User, UserAddress
 class UserAddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserAddress
-        field = [ 'address', 'city', 'postal', 'state', 'country']
+        fields = [ 'address', 'city']
         read_only_fields = ['id', 'user']
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -15,7 +15,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
     
     class Meta:
         model = User
-        fields =['telephone', 'email', 'notes', 'mc_number']
+        fields =['telephone', 'email', 'notes', 'address']
         read_only_fields = ['id']
 
 

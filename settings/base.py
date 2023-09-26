@@ -89,6 +89,7 @@ INSTALLED_APPS = [
     'finance',
     'shipping',
     'allin',
+    'drf_yasg',
 
     'allauth',
     'allauth.account',

@@ -1,19 +1,20 @@
 from django.urls import path
 from . import views, other_views
+from .api_urls import api_routes
 
 
 app_name = 'allin'
 
-urlpatterns = [
-    path('', views.Homepage.as_view(), name='homepage'),
-    path('about/', views.AboutPage.as_view(), name='about'),
-    path('contact', views.ContactPage.as_view(), name='contact'),
-    path('policy', views.PolicyPage.as_view(), name='policy'),
-    path('services', views.ServicesPage.as_view(), name='services'),
-    path('team', views.TeamPage.as_view(), name='team'),
-    path('terms', views.TermsPage.as_view(), name='terms'),
-    path('why-choose-us', views.WhyUsPage.as_view(), name='whyus'),
-    path('prices', views.PriceLiftPage.as_view(), name='price_list'),
+urlpatterns = api_routes + [
+    path('', other_views.Homepage.as_view(), name='homepage'),
+    path('about/', other_views.AboutPage.as_view(), name='about'),
+    path('contact', other_views.ContactPage.as_view(), name='contact'),
+    path('policy', other_views.PolicyPage.as_view(), name='policy'),
+    path('services', other_views.ServicesPage.as_view(), name='services'),
+    path('team', other_views.TeamPage.as_view(), name='team'),
+    path('terms', other_views.TermsPage.as_view(), name='terms'),
+    path('why-choose-us', other_views.WhyUsPage.as_view(), name='whyus'),
+    path('prices', other_views.PriceLiftPage.as_view(), name='price_list'),
     # path('gen-inv/<str:invoice_number>', views.InvoiceGeneratorView.as_view(), name='generate_invoice'),
     # path('', views.Homepage.as_view(), name='homepage'),
 
@@ -77,4 +78,4 @@ urlpatterns = [
 
 
     
-]
+] 

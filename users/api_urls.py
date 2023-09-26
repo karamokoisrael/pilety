@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 # from users.api_views import *
+# from allin.api_urls import api_routes
 from users.api_views import (UserListAPIView, UserAddressListAPIView,
                              UserListCreateAPIView, UserAddressListCreateAPIView,
                              UserRetrieveUpdateDestroyAPIView,
@@ -27,5 +28,5 @@ urlpatterns = [
     path('User_detail/<int:pk>/', UserRetrieveUpdateDestroyAPIView .as_view()),
     path('User_detail/ad/<int:pk>/', UserAddressRetrieveUpdateDestroyAPIView.as_view()),
     
-
 ]
+# ] + api_routes
