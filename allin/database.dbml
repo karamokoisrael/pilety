@@ -1,0 +1,153 @@
+
+Table User {
+  username varchar(90) [unique, null]
+  telephone varchar(100) [null]
+  email varchar(240) [unique, null]
+  is_active boolean [default: true]
+  is_staff boolean [default: false]
+  img varchar [null]
+  notes text [null]
+  id int [pk]
+}
+
+Table UserAddress {
+  id int [pk]
+  user_id int [ref: > User.id]
+  address varchar(100) [null]
+  city varchar(100) [null]
+}
+
+Table DeliveryVehicle {
+  id int [pk]
+  name varchar(150)
+  car_model varchar(150)
+  color varchar(150)
+  plate_number varchar(150)
+  status varchar(150)
+  mileage decimal(6, 3)
+  last_checkup date [default: `auto_now`]
+}
+
+Table Delivery {
+  id int [pk]
+  driver_id int [ref: > User.id]
+  vehicle_id int [ref: > DeliveryVehicle.id]
+  date date [default: `auto_now`]
+  status varchar(2) [default: 'WH', note: 'Choices: Add valid status options']
+  delivery_number varchar(8) [unique]
+}
+
+Table LooseContainer {
+  id int [pk]
+  number varchar(150) [null]
+  depature date [null]
+  arrived date [null]
+  weight decimal(15, 7) [null]
+  cbms decimal(10, 7) [null]
+  ctns int [null]
+  status varchar(3) [default: 'RW']
+  name varchar(150) [null]
+  is_modified boolean [null]
+  
+}
+
+Table FullContainer {
+  id int [pk]
+  number varchar(150) [null]
+  depature date [null]
+  arrived date [null]
+  weight decimal(15, 7) [null]
+  cbms decimal(10, 7) [null]
+  ctns int [null]
+  status varchar(3) [default: 'RW']
+  name varchar(150) [null]
+  invoice bytea [null]
+  reciever_id int [ref: > User.id]
+}
+
+
+Table LooseCargo {
+  id int [pk]
+  mark varchar(150) [null]
+  recieved date [null]
+  depature date [null]
+  arrived date [null]
+  weight decimal(10, 5) [null]
+  cbms decimal(10, 7) [null]
+  ctns int [null]
+  status varchar(3) [default: 'RW']
+  invoice_number int [unique, null]
+  cost decimal(10, 3) [null]
+  delivery int [ref: > Delivery.id]
+  reciever int [ref: > User.id]
+  dispature int [ref: > User.id]
+  container int [ref: > LooseContainer.id]
+}
+
+Table FullCargo {
+  mark varchar(150) [null]
+  recieved date [null]
+  depature date [null]
+  arrived date [null]
+  weight decimal(10, 5) [null]
+  cbms decimal(10, 7) [null]
+  ctns int [null]
+  status varchar(3) [default: 'RW']
+  dispature_id int [ref: > User.id]
+  container_id int [ref: > FullContainer.id]
+  id int [pk]
+}
+
+Table Product {
+  id int [pk]
+  supplier int [ref: > User.id]
+  l_cargo int [ref: > LooseCargo.id]
+  f_cargo int [ref: > FullCargo.id]
+  recieved date [null]
+  name varchar(150) [null]
+  chinese varchar(150) [null]
+  qty int [null]
+  packaging int [null]
+  units varchar(4) [null]
+  prod_type varchar(150) [default: 'Other']
+  price decimal(10, 3) [null]
+  ttprice decimal(10, 3) [null]
+  cbm decimal(10, 7) [null]
+  cbms decimal(10, 7) [null]
+  wght decimal(10, 3) [null]
+  weight decimal(10, 3) [null]
+  height decimal(10, 3) [null]
+  length decimal(10, 3) [null]
+  width decimal(10, 3) [null]
+  item_number varchar(50) [null]
+  cost_per_cbm int [null]
+  cbm_cost decimal(15, 4) [null]
+  cargo_types varchar(150) [default: 'L']
+  stock int [default: 0]
+  has_stock boolean [default: false]
+
+  
+}
+
+
+Table ExpenseCategory {
+  id int [pk]
+  name varchar(50)
+}
+
+Table Expense {
+  id int [pk]
+  dispature_id int [ref: > User.id]
+  name_id int [ref: > ExpenseCategory.id]
+  amount decimal(10, 2)
+  is_reccuring boolean
+  recurrance varchar(4) [default: 'N']
+  notes text
+  date date [default: `auto_now`]
+}
+
+Table ProductCategory {
+  id int [pk]
+  name varchar(100) [unique]
+  price decimal(10, 2) [null]
+}
