@@ -18,21 +18,6 @@ from django.contrib import messages
 def error_handler(request, *args, **kwargs):
     return render(request, 'pilety/404.html', {'error_message': 'An internal server error occurred.'}, status=500)
 
-class DeliveryVehicleListView(ListView):
-    model = DeliveryVehicle
-    template_name = 'allin/sales/vehicles.html' 
-    context_object_name = 'vehicles'
-    # paginate_by = 10  
-
-
-class DeliveryListView(ListView):
-    model = Delivery
-    template_name = 'allin/sales/deliveries.html' 
-    context_object_name = 'deliveries'
-    # paginate_by = 10  
-
-
-
 def deliver_cargo(request):
     if request.method == 'POST':
         selected_goods_to_deliver = request.POST.getlist('selected_goods')
@@ -67,6 +52,21 @@ def create_delivery(request, cargo_ids):
 
 def softsignup(request):
     return render(request, 'allin/accounts/softsignup.html')
+
+class DeliveryVehicleListView(ListView):
+    model = DeliveryVehicle
+    template_name = 'allin/sales/vehicles.html' 
+    context_object_name = 'vehicles'
+    # paginate_by = 10  
+
+
+class DeliveryListView(ListView):
+    model = Delivery
+    template_name = 'allin/sales/deliveries.html' 
+    context_object_name = 'deliveries'
+    # paginate_by = 10  
+
+
 
 class ProductShippingQuoteListView(ListView):
     model = ProductShippingQuote
