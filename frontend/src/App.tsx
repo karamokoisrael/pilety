@@ -1,19 +1,18 @@
-import React from "react";
 import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
 import Home from "./pages/Home";
-import SignIn from "./pages/SignIn";
-import Inventory from "./pages/Inventory";
-import SignUp from "./pages/SignUp";
-import ManageStore from "./pages/ManageStore";
-import CreateNewStore from "./pages/CreateNewStore";
-import CreateNewProducts from "./pages/CreateNewProduct";
-import ProductsDetails from "./pages/ProductsDetails";
-import Reports from "./pages/Reports";
-import FullContainersList from "./pages/FullContainersList";
-import FullCargosList from "./pages/FullCargosList";
-import LooseContainersList from "./pages/LooseContainerList";
-import LooseCargosList from "./pages/LooseCargosList";
-import StocksAvailable from "./pages/StocksAvailable";
+import Inventory from "./pages/Inventory/Inventory";
+import ManageStore from "./pages/Stores/ManageStore";
+import CreateNewStore from "./pages/Products/CreateNewStore";
+import CreateNewProducts from "./pages/Products/CreateNewProduct";
+import ProductsDetails from "./pages/Products/ProductsDetails";
+import Reports from "./pages/Reports/Reports";
+import FullContainersList from "./pages/Containers/FullContainersList";
+import FullCargosList from "./pages/Cargos/FullCargosList";
+import LooseContainersList from "./pages/Containers/LooseContainerList";
+import LooseCargosList from "./pages/Cargos/LooseCargosList";
+import StocksAvailable from "./pages/Stores/StocksAvailable";
+import SignUp from "./pages/Auth/SignUp";
+import SignIn from "./pages/Auth/SignIn";
 
 export function App() {
   return (

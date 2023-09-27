@@ -1,5 +1,4 @@
-import React from 'react';
-import Logo from '../assets/logo-one.png';
+import Logo from '../../assets/logo-one.png';
 
 export default function SignIn() {
   return (

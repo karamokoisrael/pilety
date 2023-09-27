@@ -1,4 +1,4 @@
-import sideLogo  from '../assets/logo-one.png'
+import sideLogo  from '../../assets/logo-one.png'
 export default function SignUp(){
     return (
         <div className="bg-white h-screen flex gap-2 " >

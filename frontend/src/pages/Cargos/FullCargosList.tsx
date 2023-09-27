@@ -1,9 +1,10 @@
-import ProductOverview from "../components/ProductsInfo";
-import TopNavBar from "../components/navBar";
-import SideBar from "../components/sideBar";
+import TopNavBar from "../../components/navBar";
+import OverallInventory from "../../components/overallInventory";
+import SideBar from "../../components/sideBar";
+import ProductsList from "../Products/Products";
 
 
-export default function ProductsDetails(){
+export default function FullCargosList(){
     return (<div>
         <TopNavBar/>
         <div className="flex flex-col  lg:flex-row">
@@ -13,7 +14,8 @@ export default function ProductsDetails(){
             {/* <div className="divider lg:divider-horizontal"></div>  */}
 
             <div className="grid flex-grow h-32 card w-full">
-              <ProductOverview/>
+                <div><OverallInventory/></div>
+                <div className="bg-base-200 rounded mt-4 mr-2"><ProductsList/></div>
             </div>
         </div>
         

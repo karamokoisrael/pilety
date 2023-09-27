@@ -1,7 +1,7 @@
-import ProductsList from "../components/Products";
-import TopNavBar from "../components/navBar";
-import OverallInventory from "../components/overallInventory";
-import SideBar from "../components/sideBar";
+import TopNavBar from "../../components/navBar";
+import OverallInventory from "../../components/overallInventory";
+import SideBar from "../../components/sideBar";
+import ProductsList from "../Products/Products";
 
 
 export default function LooseCargosList(){

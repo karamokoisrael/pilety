@@ -1,9 +1,10 @@
-import TopNavBar from "../components/navBar";
-import SideBar from "../components/sideBar";
-import ReportsOverview from "./utilitites/reports";
+import TopNavBar from "../../components/navBar";
+import OverallInventory from "../../components/overallInventory";
+import SideBar from "../../components/sideBar";
+import ProductsList from "../Products/Products";
 
 
-export default function Reports(){
+export default function LooseContainersList(){
     return (<div>
         <TopNavBar/>
         <div className="flex flex-col  lg:flex-row">
@@ -13,9 +14,9 @@ export default function Reports(){
             {/* <div className="divider lg:divider-horizontal"></div>  */}
 
             <div className="grid flex-grow h-32 card w-full">
-                <ReportsOverview/>
+                <div><OverallInventory/></div>
+                <div className="bg-base-200 rounded mt-4 mr-2"><ProductsList/></div>
             </div>
-
         </div>
         
         </div>
